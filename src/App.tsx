@@ -1,5 +1,11 @@
 import React from "react";
 
+// --- LINKS AMAZON ---
+const LINKS = {
+  anunnaki0: "https://amzn.eu/d/akZ7CqJ", // Codice Anunnaki — La Creazione dell’Uomo (Vol. Ø)
+  limitless: "https://amzn.eu/d/dtR64tc", // Limitless — Codice dell’Essere
+};
+
 export default function App() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0a1230] via-[#091026] to-[#000814] text-white">
@@ -56,26 +62,29 @@ export default function App() {
         </div>
       </Section>
 
-      {/* LIBRI con COPERTINE */}
+      {/* LIBRI con COPERTINE (ordine aggiornato) */}
       <Section id="libri" title="Libri" subtitle="Serie e titoli disponibili ora e in arrivo.">
         <div className="grid md:grid-cols-3 gap-6">
+          {/* 1) Creazione dell’Uomo */}
           <Book
-            img="/cover-anunnaki-vol1p1.png"
-            title="Codice Anunnaki — Gli Dèi del Cielo e della Terra (Vol. I • Parte I)"
-            subtitle="Il nuovo capitolo della collana."
-            href="#"
+            img="/cover-anunnaki-alt.png"
+            title="Codice Anunnaki — La Creazione dell’Uomo (Vol. Ø)"
+            subtitle="Origini, miti e genealogie."
+            href={LINKS.anunnaki0}
           />
+          {/* 2) Limitless */}
           <Book
             img="/cover-limitless.png"
             title="Limitless — Codice dell’Essere"
             subtitle="Principi ed esercizi operativi."
-            href="#"
+            href={LINKS.limitless}
           />
+          {/* 3) Gli Dèi del Cielo e della Terra — in arrivo */}
           <Book
-            img="/cover-anunnaki-alt.png"
-            title="Codice Anunnaki — La Creazione dell’Uomo (Vol. 0)"
-            subtitle="Origini, miti e genealogie."
-            href="#"
+            img="/cover-anunnaki-vol1p1.png"
+            title="Codice Anunnaki — Gli Dèi del Cielo e della Terra (Vol. I • Parte I)"
+            subtitle="Il nuovo capitolo della collana."
+            href=""  // vuoto => badge "In arrivo"
           />
         </div>
       </Section>
@@ -187,7 +196,10 @@ function Book({img,title,subtitle,href}:{img:string;title:string;subtitle:string
       <div className="p-6">
         <h3 className="font-semibold text-lg">{title}</h3>
         <p className="text-white/80 text-sm mt-2">{subtitle}</p>
-        <a href={href} className="mt-4 inline-flex items-center btn-gold">Acquista</a>
+        {href
+          ? <a href={href} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center btn-gold">Acquista</a>
+          : <span className="mt-4 inline-flex items-center bg-yellow-600/30 text-yellow-400 px-4 py-2 rounded-lg text-sm font-semibold">In arrivo</span>
+        }
       </div>
     </article>
   );
