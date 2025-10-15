@@ -181,8 +181,8 @@ function Card({title,body}:{title:string;body:string}) {
 function Book({img,title,subtitle,href}:{img:string;title:string;subtitle:string;href:string}) {
   return (
     <article className="rounded-2xl border border-white/10 bg-white/5 overflow-hidden">
-      <div className="aspect-[3/4] w-full bg-black/40">
-        <img src={img} alt={title} className="h-full w-full object-cover" />
+      + <div className="aspect-[2/3] w-full bg-black/40 flex items-center justify-center">
++   <img src={img} alt={title} className="h-full w-auto object-contain rounded-lg" />
       </div>
       <div className="p-6">
         <h3 className="font-semibold text-lg">{title}</h3>
