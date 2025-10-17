@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
 /* ===========================
    LINKS
@@ -17,12 +17,123 @@ const VIDEOS = {
     "https://www.tiktok.com/@codicedellessere/video/7560749700723297558?is_from_webapp=1&sender_device=pc&web_id=7506816116242318870",
 };
 
+// Social
+const SOCIALS = {
+  instagram: "https://www.instagram.com/codicedellessere",   // <- aggiorna se serve
+  tiktok: "https://www.tiktok.com/@codicedellessere",
+  youtube: "https://www.youtube.com/@codicedellessere",      // <- aggiorna se serve
+};
+
+/* ===========================
+   STILI GLOBALI (bagliore + titoli)
+=========================== */
+function GlobalGlowStyles() {
+  return (
+    <style
+      // @ts-ignore
+      dangerouslySetInnerHTML={{
+        __html: `
+/* --- BAGLIORE AUREO ANIMATO --- */
+.social-btn, .btn-gold, .btn-outline {
+  position: relative; overflow: visible;
+}
+.social-btn::after, .btn-gold::after, .btn-outline::after {
+  content: ""; position: absolute; inset: -6px; border-radius: 14px; pointer-events: none;
+  box-shadow: 0 0 0 rgba(212,175,55,0); opacity: 0; transition: opacity .25s ease;
+}
+.social-btn:hover::after,
+.btn-gold:hover::after,
+.btn-outline:hover::after {
+  opacity: 1; animation: glowPulse 1.8s ease-in-out infinite;
+}
+@keyframes glowPulse{
+  0%{box-shadow:0 0 0 rgba(212,175,55,0),0 0 0 rgba(212,175,55,0)}
+  50%{box-shadow:0 0 24px rgba(212,175,55,.35),0 0 48px rgba(212,175,55,.18)}
+  100%{box-shadow:0 0 0 rgba(212,175,55,0),0 0 0 rgba(212,175,55,0)}
+}
+
+/* --- TITOLI DI SEZIONE: hover + accensione in viewport --- */
+.section-heading h2 {
+  position: relative;
+  transition: text-shadow .35s ease, color .35s ease;
+}
+.section-heading h2:hover {
+  color: #d4af37;
+  text-shadow: 0 0 10px rgba(212,175,55,.35), 0 0 24px rgba(212,175,55,.18);
+}
+.section-heading.inview h2 {
+  animation: titleGlow 900ms ease-out 1;
+}
+@keyframes titleGlow {
+  0%   { color: #ffffff; text-shadow: 0 0 0 rgba(212,175,55,0); }
+  40%  { color: #d4af37; text-shadow: 0 0 12px rgba(212,175,55,.45), 0 0 28px rgba(212,175,55,.22); }
+  100% { color: #ffffff; text-shadow: 0 0 0 rgba(212,175,55,0); }
+}
+      `,
+      }}
+    />
+  );
+}
+
+/* ===========================
+   SOCIAL COMPONENTS
+=========================== */
+function SocialLink({
+  href, title, children,
+}: { href: string; title: string; children: React.ReactNode }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      title={title}
+      className="social-btn inline-flex items-center justify-center w-10 h-10 rounded-xl
+                 border border-white/10 bg-white/5 text-white/80
+                 hover:text-gold hover:border-gold/60
+                 transition"
+    >
+      {children}
+    </a>
+  );
+}
+
+function SocialBar({ size = "md" }: { size?: "sm" | "md" }) {
+  const icon = size === "sm" ? "w-5 h-5" : "w-6 h-6";
+  const gap = size === "sm" ? "gap-2" : "gap-3";
+  return (
+    <div className={`inline-flex ${gap}`}>
+      {/* Instagram */}
+      <SocialLink href={SOCIALS.instagram} title="Instagram">
+        <svg viewBox="0 0 24 24" className={icon} fill="none" stroke="currentColor" strokeWidth="1.5">
+          <rect x="3" y="3" width="18" height="18" rx="5" />
+          <circle cx="12" cy="12" r="3.6" />
+          <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none" />
+        </svg>
+      </SocialLink>
+      {/* TikTok */}
+      <SocialLink href={SOCIALS.tiktok} title="TikTok">
+        <svg viewBox="0 0 24 24" className={icon} fill="currentColor">
+          <path d="M14 3h3a4.5 4.5 0 0 0 4 4v3a7.5 7.5 0 0 1-4-1.2v7.2A6 6 0 1 1 11 10v3a3 3 0 1 0 3 3V3z"/>
+        </svg>
+      </SocialLink>
+      {/* YouTube */}
+      <SocialLink href={SOCIALS.youtube} title="YouTube">
+        <svg viewBox="0 0 24 24" className={icon} fill="currentColor">
+          <path d="M23 12s0-3.5-.45-5.1a3 3 0 0 0-2.1-2.1C18.8 4.3 12 4.3 12 4.3s-6.8 0-8.45.5a3 3 0 0 0-2.1 2.1C1 8.5 1 12 1 12s0 3.5.45 5.1a3 3 0 0 0 2.1 2.1c1.65.5 8.45.5 8.45.5s6.8 0 8.45-.5a3 3 0 0 0 2.1-2.1C23 15.5 23 12 23 12zM10 15.5v-7l6 3.5-6 3.5z"/>
+        </svg>
+      </SocialLink>
+    </div>
+  );
+}
+
 /* ===========================
    APP
 =========================== */
 export default function App() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0a1230] via-[#091026] to-[#000814] text-white">
+      <GlobalGlowStyles />
+
       <header className="sticky top-0 z-40 backdrop-blur bg-[#0a1230]/70 border-b border-white/10">
         <div className="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
           <a href="#home" className="flex items-center gap-3 group">
@@ -35,6 +146,7 @@ export default function App() {
               Codice dell’Essere
             </span>
           </a>
+
           <nav className="hidden md:flex items-center gap-6 text-sm">
             <Nav href="#missione">Missione</Nav>
             <Nav href="#libri">Libri</Nav>
@@ -42,10 +154,11 @@ export default function App() {
             <Nav href="#servizi">Servizi</Nav>
             <Nav href="#contatti">Contatti</Nav>
           </nav>
-          <div className="hidden md:block">
-            <a href="#libri" className="btn-gold">
-              Acquista i Libri
-            </a>
+
+          {/* Barra social + CTA */}
+          <div className="hidden md:flex items-center gap-4">
+            <SocialBar />
+            <a href="#libri" className="btn-gold rounded-xl">Acquista i Libri</a>
           </div>
         </div>
       </header>
@@ -69,12 +182,8 @@ export default function App() {
               storica e pratica quotidiana
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <a href="#libri" className="btn-gold">
-                Scopri i libri
-              </a>
-              <a href="#contatti" className="btn-outline">
-                Contattami
-              </a>
+              <a href="#libri" className="btn-gold rounded-xl">Scopri i libri</a>
+              <a href="#contatti" className="btn-outline rounded-xl">Contattami</a>
             </div>
           </div>
         </div>
@@ -178,7 +287,7 @@ export default function App() {
                   placeholder="La tua email"
                   className="flex-1 rounded-xl bg-black/40 border border-white/15 px-4 py-3 outline-none focus:ring-2 focus:ring-[#d4af37]/50"
                 />
-                <button className="btn-gold">Iscrivimi</button>
+                <button className="btn-gold rounded-xl">Iscrivimi</button>
               </div>
               <p className="text-xs text-white/60 mt-2">
                 Iscrivendoti accetti l’informativa privacy.
@@ -206,19 +315,9 @@ export default function App() {
                   info@codicedellessere.it
                 </a>
               </p>
-              <p>
-                Social:{" "}
-                <span className="ml-2 inline-flex items-center gap-3">
-                  <a href="#" className="hover:text-gold">
-                    TikTok
-                  </a>
-                  <a href="#" className="hover:text-gold">
-                    Instagram
-                  </a>
-                  <a href="#" className="hover:text-gold">
-                    YouTube
-                  </a>
-                </span>
+              <p className="flex items-center gap-3">
+                <span>Social:</span>
+                <SocialBar />
               </p>
             </div>
           </div>
@@ -228,21 +327,21 @@ export default function App() {
           >
             <div className="grid sm:grid-cols-2 gap-4">
               <Field label="Nome">
-                <input className="input" placeholder="Il tuo nome" />
+                <input className="input rounded-xl" placeholder="Il tuo nome" />
               </Field>
               <Field label="Email">
-                <input type="email" required className="input" placeholder="you@example.com" />
+                <input type="email" required className="input rounded-xl" placeholder="you@example.com" />
               </Field>
               <div className="sm:col-span-2">
                 <label className="text-sm text-white/80">Messaggio</label>
                 <textarea
                   rows={5}
-                  className="input h-auto"
+                  className="input h-auto rounded-xl"
                   placeholder="Raccontami del tuo progetto"
                 />
               </div>
             </div>
-            <button className="mt-4 w-full btn-gold">Invia</button>
+            <button className="mt-4 w-full btn-gold rounded-xl">Invia</button>
           </form>
         </div>
       </section>
@@ -250,17 +349,17 @@ export default function App() {
       <footer className="border-t border-white/10">
         <div className="mx-auto max-w-7xl px-4 py-10 text-sm text-white/70">
           <div className="flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-6 justify-between">
+            {/* Mini social bar come sigillo */}
+            <div className="mb-2 md:mb-0">
+              <SocialBar size="sm" />
+            </div>
+
             <p>© {new Date().getFullYear()} Codice dell’Essere • Tutti i diritti riservati</p>
+
             <div className="flex items-center gap-6">
-              <a href="#" className="hover:text-gold">
-                Privacy
-              </a>
-              <a href="#" className="hover:text-gold">
-                Cookie
-              </a>
-              <a href="#" className="hover:text-gold">
-                Contatti
-              </a>
+              <a href="#" className="hover:text-gold">Privacy</a>
+              <a href="#" className="hover:text-gold">Cookie</a>
+              <a href="#" className="hover:text-gold">Contatti</a>
             </div>
           </div>
         </div>
@@ -293,9 +392,31 @@ function Section({
   subtitle?: string;
   children: React.ReactNode;
 }) {
+  const headingRef = useRef<HTMLDivElement | null>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    if (!headingRef.current) return;
+    const el = headingRef.current;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          setTimeout(() => setInView(false), 1000); // ri-triggerabile
+        }
+      },
+      { rootMargin: "-10% 0px -60% 0px", threshold: 0.2 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
   return (
     <section id={id} className="mx-auto max-w-7xl px-4 py-16 md:py-24">
-      <div className="flex items-end justify-between gap-4 mb-8">
+      <div
+        ref={headingRef}
+        className={`section-heading flex items-end justify-between gap-4 mb-8 ${inView ? "inview" : ""}`}
+      >
         <div>
           <h2 className="text-2xl md:text-3xl font-bold">{title}</h2>
           {subtitle && <p className="text-white/80 mt-2">{subtitle}</p>}
@@ -337,7 +458,7 @@ function Book({
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-4 inline-flex items-center btn-gold"
+            className="mt-4 inline-flex items-center btn-gold rounded-xl"
           >
             Acquista
           </a>
