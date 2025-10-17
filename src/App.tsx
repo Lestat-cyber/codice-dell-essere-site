@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useMemo } from "react";
 
 // --- LINKS AMAZON ---
 const LINKS = {
   anunnaki0: "https://amzn.eu/d/akZ7CqJ", // Codice Anunnaki — La Creazione dell’Uomo (Vol. Ø)
   limitless: "https://amzn.eu/d/dtR64tc", // Limitless — Codice dell’Essere
+};
+
+// --- LINKS VIDEO REALI ---
+const VIDEOS = {
+  mentalismo: "https://youtu.be/4sRxrqUhaaQ?si=7-KKSdo82qLwaOBN",
+  corrispondenza: "https://youtu.be/vnsz0sSfCF8?si=_gy5C9Gqh2heAKT3",
+  tiktokAnunnaki: "https://www.tiktok.com/@codicedellessere/video/7560749700723297558?is_from_webapp=1&sender_device=pc&web_id=7506816116242318870",
 };
 
 export default function App() {
@@ -62,29 +69,26 @@ export default function App() {
         </div>
       </Section>
 
-      {/* LIBRI con COPERTINE (ordine aggiornato) */}
+      {/* LIBRI con COPERTINE */}
       <Section id="libri" title="Libri" subtitle="Serie e titoli disponibili ora e in arrivo.">
         <div className="grid md:grid-cols-3 gap-6">
-          {/* 1) Creazione dell’Uomo */}
           <Book
             img="/cover-anunnaki-alt.png"
             title="Codice Anunnaki: La Creazione dell’Uomo (Vol. Ø)"
             subtitle="L'origine dimenticata dell'essere umano e il segreto della sua scintilla divina."
             href={LINKS.anunnaki0}
           />
-          {/* 2) Limitless */}
           <Book
             img="/cover-limitless.png"
             title="Codice dell'Essere - Limitless"
             subtitle="La mente come strumento sacro. La volontà come arte della manifestazione."
             href={LINKS.limitless}
           />
-          {/* 3) Gli Dèi del Cielo e della Terra — in arrivo */}
           <Book
             img="/cover-anunnaki-vol1p1.png"
             title="Codice Anunnaki: Gli Dèi del Cielo e della Terra (Vol. I • Parte I)"
             subtitle="Le forze che plasmarono il mondo stanno tornando a risvegliare la memoria del cielo."
-            href=""  // vuoto => badge "In arrivo"
+            href=""
           />
         </div>
       </Section>
@@ -92,9 +96,9 @@ export default function App() {
       {/* VIDEO */}
       <Section id="video" title="Video" subtitle="Estratti da YouTube e TikTok.">
         <div className="grid md:grid-cols-3 gap-6">
-          <Video title="Le 7 Leggi Ermetiche" />
-          <Video title="I Viaggi Astrali" />
-          <Video title="Codice Anunnaki — Introduzione" />
+          <VideoEmbed title="Legge del Mentalismo" url={VIDEOS.mentalismo} />
+          <VideoEmbed title="Legge della Corrispondenza" url={VIDEOS.corrispondenza} />
+          <VideoEmbed title="Reel TikTok — Codice Anunnaki" url={VIDEOS.tiktokAnunnaki} />
         </div>
       </Section>
 
@@ -172,20 +176,28 @@ function Nav({href, children}:{href:string; children:React.ReactNode}) {
   return <a href={href} className="hover:text-gold transition-colors">{children}</a>;
 }
 function Badge({children}:{children:React.ReactNode}) {
-  return <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs tracking-wide">{children}</span>
+  return <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs tracking-wide">{children}</span>;
 }
 function Section({id,title,subtitle,children}:{id?:string,title:string,subtitle?:string,children:React.ReactNode}) {
   return (
     <section id={id} className="mx-auto max-w-7xl px-4 py-16 md:py-24">
       <div className="flex items-end justify-between gap-4 mb-8">
-        <div><h2 className="text-2xl md:text-3xl font-bold">{title}</h2>{subtitle && <p className="text-white/80 mt-2">{subtitle}</p>}</div>
+        <div>
+          <h2 className="text-2xl md:text-3xl font-bold">{title}</h2>
+          {subtitle && <p className="text-white/80 mt-2">{subtitle}</p>}
+        </div>
       </div>
       {children}
     </section>
   );
 }
 function Card({title,body}:{title:string;body:string}) {
-  return <div className="rounded-2xl border border-white/10 bg-white/5 p-6"><h3 className="text-lg font-semibold">{title}</h3><p className="text-white/80 mt-2 text-sm leading-relaxed">{body}</p></div>
+  return (
+    <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+      <h3 className="text-lg font-semibold">{title}</h3>
+      <p className="text-white/80 mt-2 text-sm leading-relaxed">{body}</p>
+    </div>
+  );
 }
 function Book({img,title,subtitle,href}:{img:string;title:string;subtitle:string;href:string}) {
   return (
@@ -198,20 +210,55 @@ function Book({img,title,subtitle,href}:{img:string;title:string;subtitle:string
         <p className="text-white/80 text-sm mt-2">{subtitle}</p>
         {href
           ? <a href={href} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center btn-gold">Acquista</a>
-          : <span className="mt-4 inline-flex items-center bg-yellow-600/30 text-yellow-400 px-4 py-2 rounded-lg text-sm font-semibold">In arrivo</span>
-        }
+          : <span className="mt-4 inline-flex items-center bg-yellow-600/30 text-yellow-400 px-4 py-2 rounded-lg text-sm font-semibold">In arrivo</span>}
       </div>
     </article>
   );
 }
-function Video({title}:{title:string}) {
+
+/** EMBED video universale **/
+function VideoEmbed({ title, url }: { title: string; url: string }) {
+  const { kind, embedUrl } = useMemo(() => {
+    const u = url?.trim();
+    if (!u) return { kind: "empty", embedUrl: "" };
+    if (u.includes("youtube.com") || u.includes("youtu.be")) {
+      let id = "";
+      if (u.includes("youtu.be/")) id = u.split("youtu.be/")[1].split(/[?&]/)[0];
+      else if (u.includes("watch?v=")) id = u.split("watch?v=")[1].split("&")[0];
+      else if (u.includes("/shorts/")) id = u.split("/shorts/")[1].split(/[?&]/)[0];
+      return { kind: "youtube", embedUrl: `https://www.youtube.com/embed/${id}` };
+    }
+    if (u.includes("tiktok.com")) return { kind: "tiktok", embedUrl: u };
+    return { kind: "unknown", embedUrl: u };
+  }, [url]);
+
   return (
-    <div className="rounded-2xl border border-white/10 overflow-hidden bg-white/5">
-      <div className="aspect-video w-full bg-black/40 flex items-center justify-center text-white/60 text-sm"><span>Embed video: {title}</span></div>
+    <div className="rounded-2xl border border-white/10 overflow-hidden bg-white/5 hover:shadow-[0_0_25px_rgba(212,175,55,0.15)] transition-all duration-300">
+      <div className="aspect-video w-full bg-black/40">
+        {kind === "youtube" && (
+          <iframe src={embedUrl} title={title} allowFullScreen className="w-full h-full" />
+        )}
+        {kind === "tiktok" && (
+          <>
+            <blockquote className="tiktok-embed" cite={embedUrl}
+              data-video-id={(embedUrl.split("/video/")[1] || "").split("?")[0]}
+              style={{ maxWidth: "100%", minWidth: "300px", margin: 0, height: "100%" }}>
+              <section />
+            </blockquote>
+            <script async src="https://www.tiktok.com/embed.js"></script>
+          </>
+        )}
+        {kind === "empty" && (
+          <div className="w-full h-full flex items-center justify-center text-white/60 text-sm p-4">
+            Video in arrivo
+          </div>
+        )}
+      </div>
       <div className="p-4"><h3 className="font-semibold">{title}</h3></div>
     </div>
   );
 }
+
 function Field({label,children}:{label:string;children:React.ReactNode}) {
   return (<div><label className="text-sm text-white/80">{label}</label>{children}</div>);
 }
