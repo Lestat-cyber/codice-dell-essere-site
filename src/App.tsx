@@ -68,22 +68,22 @@ export default function App() {
           {/* 1) Creazione dell’Uomo */}
           <Book
             img="/cover-anunnaki-alt.png"
-            title="Codice Anunnaki — La Creazione dell’Uomo (Vol. Ø)"
-            subtitle="Origini, miti e genealogie."
+            title="Codice Anunnaki: La Creazione dell’Uomo (Vol. Ø)"
+            subtitle="L'origine dimenticata dell'essere umano e il segreto della sua scintilla divina."
             href={LINKS.anunnaki0}
           />
           {/* 2) Limitless */}
           <Book
             img="/cover-limitless.png"
-            title="Limitless — Codice dell’Essere"
-            subtitle="Principi ed esercizi operativi."
+            title="Codice dell'Essere - Limitless"
+            subtitle="La mente come strumento sacro. La volontà come arte della manifestazione."
             href={LINKS.limitless}
           />
           {/* 3) Gli Dèi del Cielo e della Terra — in arrivo */}
           <Book
             img="/cover-anunnaki-vol1p1.png"
-            title="Codice Anunnaki — Gli Dèi del Cielo e della Terra (Vol. I • Parte I)"
-            subtitle="Il nuovo capitolo della collana."
+            title="Codice Anunnaki: Gli Dèi del Cielo e della Terra (Vol. I • Parte I)"
+            subtitle="Le forze che plasmarono il mondo stanno tornando a risvegliare la memoria del cielo."
             href=""  // vuoto => badge "In arrivo"
           />
         </div>
