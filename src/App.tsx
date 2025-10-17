@@ -25,7 +25,7 @@ export default function App() {
             <Nav href="#contatti">Contatti</Nav>
           </nav>
           <div className="hidden md:block">
-            <a href="#libri" className="btn-gold">Acquista i libri</a>
+            <a href="#libri" className="btn-gold">Acquista i Libri</a>
           </div>
         </div>
       </header>
@@ -39,11 +39,11 @@ export default function App() {
               <Badge>Divulgatore</Badge><Badge>Scrittore</Badge><Badge>Editore</Badge>
             </div>
             <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">
-              Risveglia ciò che sei.
-              <span className="block text-gold">Trasforma conoscenza in potere.</span>
+              Risveglia ciò che Sei
+              <span className="block text-gold">Trasforma Conoscenza in Potere</span>
             </h1>
             <p className="mt-6 text-white/80 text-lg md:text-xl max-w-2xl">
-              Progetto editoriale e multimediale che unisce Antiche Sapienze, ricerca storica e pratica quotidiana.
+              Progetto editoriale e multimediale che unisce Antiche Sapienze, ricerca storica e pratica quotidiana
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a href="#libri" className="btn-gold">Scopri i libri</a>
