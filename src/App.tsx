@@ -217,38 +217,84 @@ function Book({img,title,subtitle,href}:{img:string;title:string;subtitle:string
 }
 
 /** EMBED video universale **/
+import React, { useEffect, useMemo, useRef } from "react";
+
+/** EMBED video universale **/
 function VideoEmbed({ title, url }: { title: string; url: string }) {
-  const { kind, embedUrl } = useMemo(() => {
-    const u = url?.trim();
-    if (!u) return { kind: "empty", embedUrl: "" };
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  const { kind, embedUrl, tiktokId } = useMemo(() => {
+    const u = (url || "").trim();
+    if (!u) return { kind: "empty", embedUrl: "", tiktokId: "" };
+
+    // YouTube
     if (u.includes("youtube.com") || u.includes("youtu.be")) {
       let id = "";
       if (u.includes("youtu.be/")) id = u.split("youtu.be/")[1].split(/[?&]/)[0];
       else if (u.includes("watch?v=")) id = u.split("watch?v=")[1].split("&")[0];
       else if (u.includes("/shorts/")) id = u.split("/shorts/")[1].split(/[?&]/)[0];
-      return { kind: "youtube", embedUrl: `https://www.youtube.com/embed/${id}` };
+      return { kind: "youtube", embedUrl: `https://www.youtube.com/embed/${id}`, tiktokId: "" };
     }
-    if (u.includes("tiktok.com")) return { kind: "tiktok", embedUrl: u };
-    return { kind: "unknown", embedUrl: u };
+
+    // TikTok
+    if (u.includes("tiktok.com")) {
+      const id = (u.split("/video/")[1] || "").split("?")[0];
+      return { kind: "tiktok", embedUrl: u, tiktokId: id };
+    }
+
+    return { kind: "unknown", embedUrl: u, tiktokId: "" };
   }, [url]);
+
+  // Assicura che lo script TikTok processi il blockquote quando cambia l'URL
+  useEffect(() => {
+    if (kind !== "tiktok") return;
+    // Se lo script non è presente, lo aggiungiamo
+    const hasScript = !!document.querySelector('script[src*="tiktok.com/embed.js"]');
+    if (!hasScript) {
+      const s = document.createElement("script");
+      s.src = "https://www.tiktok.com/embed.js";
+      s.async = true;
+      document.body.appendChild(s);
+      return;
+    }
+    // Forza il reprocess inserendo un nuovo script "vuoto" (hack supportato)
+    const reproc = document.createElement("script");
+    reproc.src = "https://www.tiktok.com/embed.js";
+    reproc.async = true;
+    document.body.appendChild(reproc);
+    return () => {
+      // cleanup opzionale: non rimuovo per evitare flicker su più embed
+    };
+  }, [kind, embedUrl]);
 
   return (
     <div className="rounded-2xl border border-white/10 overflow-hidden bg-white/5 hover:shadow-[0_0_25px_rgba(212,175,55,0.15)] transition-all duration-300">
-      <div className="aspect-video w-full bg-black/40">
-        {kind === "youtube" && (
-          <iframe src={embedUrl} title={title} allowFullScreen className="w-full h-full" />
+      {/* Per YouTube manteniamo l'aspect ratio. Per TikTok lasciamo che il widget gestisca l'altezza. */}
+      <div className={kind === "youtube" ? "aspect-video w-full bg-black/40" : "w-full bg-black/40"}>
+        {kind === "youtube" && embedUrl && (
+          <iframe
+            src={embedUrl}
+            title={title}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+            className="w-full h-full"
+          />
         )}
-        {kind === "tiktok" && (
-          <>
-            <blockquote className="tiktok-embed" cite={embedUrl}
-              data-video-id={(embedUrl.split("/video/")[1] || "").split("?")[0]}
-              style={{ maxWidth: "100%", minWidth: "300px", margin: 0, height: "100%" }}>
-              <section />
+
+        {kind === "tiktok" && embedUrl && (
+          <div ref={containerRef} className="w-full flex items-stretch justify-center">
+            <blockquote
+              className="tiktok-embed"
+              cite={embedUrl}
+              data-video-id={tiktokId}
+              style={{ maxWidth: "605px", minWidth: "325px", width: "100%", margin: 0 }}
+            >
+              <section></section>
             </blockquote>
-            <script async src="https://www.tiktok.com/embed.js"></script>
-          </>
+          </div>
         )}
-        {kind === "empty" && (
+
+        {(kind === "empty" || !embedUrl) && (
           <div className="w-full h-full flex items-center justify-center text-white/60 text-sm p-4">
             Video in arrivo
           </div>
