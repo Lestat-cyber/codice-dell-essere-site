@@ -219,7 +219,7 @@ function Book({img,title,subtitle,href}:{img:string;title:string;subtitle:string
 /** EMBED video universale **/
 import React, { useEffect, useMemo, useRef } from "react";
 
-/** EMBED video universale **/
+/** EMBED video universale (YouTube orizzontale, TikTok verticale, stile Codice dell’Essere Premium) **/
 function VideoEmbed({ title, url }: { title: string; url: string }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -245,32 +245,36 @@ function VideoEmbed({ title, url }: { title: string; url: string }) {
     return { kind: "unknown", embedUrl: u, tiktokId: "" };
   }, [url]);
 
-  // Assicura che lo script TikTok processi il blockquote quando cambia l'URL
+  // Carica script TikTok una sola volta
   useEffect(() => {
     if (kind !== "tiktok") return;
-    // Se lo script non è presente, lo aggiungiamo
-    const hasScript = !!document.querySelector('script[src*="tiktok.com/embed.js"]');
-    if (!hasScript) {
-      const s = document.createElement("script");
-      s.src = "https://www.tiktok.com/embed.js";
-      s.async = true;
-      document.body.appendChild(s);
-      return;
-    }
-    // Forza il reprocess inserendo un nuovo script "vuoto" (hack supportato)
-    const reproc = document.createElement("script");
-    reproc.src = "https://www.tiktok.com/embed.js";
-    reproc.async = true;
-    document.body.appendChild(reproc);
-    return () => {
-      // cleanup opzionale: non rimuovo per evitare flicker su più embed
-    };
+    const script = document.createElement("script");
+    script.src = "https://www.tiktok.com/embed.js";
+    script.async = true;
+    document.body.appendChild(script);
   }, [kind, embedUrl]);
 
   return (
-    <div className="rounded-2xl border border-white/10 overflow-hidden bg-white/5 hover:shadow-[0_0_25px_rgba(212,175,55,0.15)] transition-all duration-300">
-      {/* Per YouTube manteniamo l'aspect ratio. Per TikTok lasciamo che il widget gestisca l'altezza. */}
-      <div className={kind === "youtube" ? "aspect-video w-full bg-black/40" : "w-full bg-black/40"}>
+    <div
+      className="rounded-2xl border border-white/10 overflow-hidden bg-white/5
+                 transition-all duration-500 hover:scale-[1.02]
+                 hover:shadow-[0_0_40px_rgba(212,175,55,0.25)] flex flex-col items-center"
+    >
+      {/* Titolo sopra il video */}
+      <div className="w-full text-center py-3 bg-white/5 border-b border-white/10">
+        <h3 className="text-lg font-semibold tracking-wide text-gold drop-shadow-[0_0_4px_rgba(212,175,55,0.4)]">
+          {title}
+        </h3>
+      </div>
+
+      {/* Contenitore video */}
+      <div
+        className="w-full bg-black/40 flex items-center justify-center"
+        style={{
+          aspectRatio: kind === "youtube" ? "21/9" : kind === "tiktok" ? "9/16" : undefined,
+          height: kind === "tiktok" ? "540px" : undefined,
+        }}
+      >
         {kind === "youtube" && embedUrl && (
           <iframe
             src={embedUrl}
@@ -282,12 +286,18 @@ function VideoEmbed({ title, url }: { title: string; url: string }) {
         )}
 
         {kind === "tiktok" && embedUrl && (
-          <div ref={containerRef} className="w-full flex items-stretch justify-center">
+          <div ref={containerRef} className="flex items-center justify-center w-full h-full">
             <blockquote
               className="tiktok-embed"
               cite={embedUrl}
               data-video-id={tiktokId}
-              style={{ maxWidth: "605px", minWidth: "325px", width: "100%", margin: 0 }}
+              style={{
+                maxWidth: "360px",
+                minWidth: "280px",
+                width: "100%",
+                margin: 0,
+                height: "100%",
+              }}
             >
               <section></section>
             </blockquote>
@@ -300,7 +310,6 @@ function VideoEmbed({ title, url }: { title: string; url: string }) {
           </div>
         )}
       </div>
-      <div className="p-4"><h3 className="font-semibold">{title}</h3></div>
     </div>
   );
 }
