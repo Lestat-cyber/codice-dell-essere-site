@@ -19,7 +19,12 @@ export default function Analytics() {
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
+
+      // Consent Mode (fallback): consenti analytics in UE
+      gtag('consent', 'default', { 'analytics_storage': 'granted' });
+
       gtag('config', '${GA_ID}');
+      console.log('[GA] inizializzato');
     `;
     document.head.appendChild(s2);
   }, []);
