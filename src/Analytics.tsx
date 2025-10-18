@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 
-const GA_ID = "G-G93JBY8BHY"; // <-- il tuo ID
+const GA_ID = "G-G93JBY8BHY";
 
 export default function Analytics() {
   useEffect(() => {
-    // evita doppio inserimento
+    // Evita doppia iniezione
     if (document.getElementById("ga-gtag-script")) return;
 
     const s1 = document.createElement("script");
