@@ -8,7 +8,7 @@ import Analytics from "./Analytics";
 const LINKS = {
   anunnaki0: "https://amzn.eu/d/akZ7CqJ", // Codice Anunnaki — La Creazione dell’Uomo (Vol. Ø)
   limitless: "https://amzn.eu/d/dtR64tc", // Limitless — Codice dell’Essere
-  anunnaki1Hardcover: "https://amzn.to/49wt8t4", // <-- INSERISCI URL ANTEPRIMA RIGIDA (Vol. I • Parte I)
+  anunnaki1Hardcover: "https://amzn.to/49wt8t4", // Codice Anunnaki — Gli Dei del Cielo e della Terra (Vol. I • Parte I)
 };
 
 // Video reali
