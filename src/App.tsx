@@ -194,7 +194,7 @@ export default function App() {
       </div>
 
       {/* Colonna destra: cover ultima uscita */}
-      <div className="relative flex flex-col items-center justify-center text-center md:ml-10 w-full md:w-auto">
+      <div className="relative flex flex-col items-center justify-center text-center w-full md:w-auto mx-auto md:mx-0">
   {/* Alone dorato dietro la cover */}
   <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center">
     <div className="absolute h-64 w-64 rounded-full bg-gradient-to-br from-amber-400/60 via-yellow-300/40 to-emerald-300/20 blur-3xl"></div>
