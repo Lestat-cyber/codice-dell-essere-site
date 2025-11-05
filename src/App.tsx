@@ -194,11 +194,11 @@ export default function App() {
       </div>
 
       {/* Colonna destra: cover ultima uscita */}
-      <div className="relative text-center md:text-right md:ml-10">
+      <div className="relative flex flex-col items-center justify-center text-center md:ml-10 w-full md:w-auto">
   {/* Alone dorato dietro la cover */}
-  <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-    <div className="absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-amber-400/60 via-yellow-300/40 to-emerald-300/20 blur-3xl"></div>
-    <div className="absolute left-1/2 top-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-200/10 blur-2xl ring-1 ring-amber-200/20"></div>
+  <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center">
+    <div className="absolute h-64 w-64 rounded-full bg-gradient-to-br from-amber-400/60 via-yellow-300/40 to-emerald-300/20 blur-3xl"></div>
+    <div className="absolute h-80 w-80 rounded-full bg-amber-200/10 blur-2xl ring-1 ring-amber-200/20"></div>
   </div>
 
   <img
@@ -208,9 +208,9 @@ export default function App() {
     loading="eager"
   />
 
-  {/* Testo centrato sotto il libro */}
+  {/* Testo centrato */}
   <div className="mt-4 flex flex-col items-center text-center font-inknut">
-    <p className="text-white/90 text-lg md:text-xl tracking-wide leading-snug">
+    <p className="text-white/90 text-lg md:text-xl tracking-wide leading-snug max-w-sm">
       Il seguito tanto atteso: Gli Dei del Cielo e della Terra
     </p>
     <a
