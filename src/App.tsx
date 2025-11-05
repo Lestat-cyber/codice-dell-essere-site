@@ -222,16 +222,16 @@ export default function App() {
             href={LINKS.anunnaki0}
           />
           <Book
-            img="/cover-limitless.png"
-            title="Codice dell'Essere - Limitless"
-            subtitle="La mente come strumento sacro. La volontà come arte della manifestazione."
-            href={LINKS.limitless}
-          />
-          <Book
             img="/cover-anunnaki-vol1p1.png"
             title="Codice Anunnaki: Gli Dèi del Cielo e della Terra (Vol. I • Parte I)"
             subtitle="Le forze che plasmarono il mondo stanno tornando a risvegliare la memoria del cielo."
-            href=""
+            href={LINKS.anunnaki1}
+          />
+          <Book
+             img="/cover-limitless.png"
+            title="Codice dell'Essere - Limitless"
+            subtitle="La mente come strumento sacro. La volontà come arte della manifestazione."
+            href={LINKS.limitless}
           />
         </div>
       </Section>
