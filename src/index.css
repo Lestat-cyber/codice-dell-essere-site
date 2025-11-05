@@ -1,3 +1,10 @@
+/* Inknut Antiqua */
+@import url('https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@400;600;700;800&display=swap');
+
+.font-inknut {
+  font-family: "Inknut Antiqua", ui-serif, Georgia, "Times New Roman", serif;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
