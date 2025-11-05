@@ -170,7 +170,7 @@ export default function App() {
   <div className="mx-auto max-w-7xl px-4 py-20 md:py-28 relative">
     <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-12">
       {/* Colonna sinistra: testo */}
-      <div className="max-w-3xl">
+      <div className="max-w-3xl font-inknut">
         <div className="flex flex-wrap gap-2 mb-6">
           <Badge>Divulgatore</Badge>
           <Badge>Scrittore</Badge>
@@ -208,7 +208,7 @@ export default function App() {
           loading="eager"
         />
 
-        <p className="mt-4 text-white/70 text-sm uppercase tracking-wide">
+        <p className="mt-4 text-white/80 text-base sm:text-lg md:text-xl tracking-wide font-inknut">
           Il seguito tanto atteso: Gli Dei del Cielo e della Terra
         </p>
 
@@ -216,7 +216,7 @@ export default function App() {
           href={LINKS.anunnaki1}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-3 inline-block px-6 py-3 btn-gold rounded-xl"
+          className="mt-3 inline-block px-6 py-3 btn-gold rounded-xl font-inknut"
         >
           Acquista Ora
         </a>
