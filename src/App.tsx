@@ -195,33 +195,34 @@ export default function App() {
 
       {/* Colonna destra: cover ultima uscita */}
       <div className="relative text-center md:text-right md:ml-10">
-        {/* Alone dorato dietro la cover */}
-        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-amber-400/60 via-yellow-300/40 to-emerald-300/20 blur-3xl"></div>
-          <div className="absolute left-1/2 top-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-200/10 blur-2xl ring-1 ring-amber-200/20"></div>
-        </div>
+  {/* Alone dorato dietro la cover */}
+  <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+    <div className="absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-amber-400/60 via-yellow-300/40 to-emerald-300/20 blur-3xl"></div>
+    <div className="absolute left-1/2 top-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-200/10 blur-2xl ring-1 ring-amber-200/20"></div>
+  </div>
 
-        <img
-          src="/assets/anunnaki2-cover.webp"
-          alt="Codice Anunnaki — Gli Dei del Cielo e della Terra (Vol. I • Parte I)"
-          className="relative w-56 sm:w-64 rounded-xl shadow-2xl mx-auto md:ml-auto hover:scale-105 transition-transform duration-500 drop-shadow-[0_0_35px_rgba(255,200,80,0.35)]"
-          loading="eager"
-        />
+  <img
+    src="/assets/anunnaki2-cover.webp"
+    alt="Codice Anunnaki — Gli Dei del Cielo e della Terra (Vol. I • Parte I)"
+    className="relative w-56 sm:w-64 rounded-xl shadow-2xl mx-auto hover:scale-105 transition-transform duration-500 drop-shadow-[0_0_35px_rgba(255,200,80,0.35)]"
+    loading="eager"
+  />
 
-        <p className="mt-4 text-white/80 text-base sm:text-lg md:text-xl tracking-wide font-inknut">
-          Il seguito tanto atteso: Gli Dei del Cielo e della Terra
-        </p>
-
-        <a
-          href={LINKS.anunnaki1}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-3 inline-block px-6 py-3 btn-gold rounded-xl font-inknut"
-        >
-          Acquista Ora
-        </a>
-      </div>
-    </div>
+  {/* Testo centrato sotto il libro */}
+  <div className="mt-4 flex flex-col items-center text-center font-inknut">
+    <p className="text-white/90 text-lg md:text-xl tracking-wide leading-snug">
+      Il seguito tanto atteso: Gli Dei del Cielo e della Terra
+    </p>
+    <a
+      href={LINKS.anunnaki1}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="mt-3 inline-block px-6 py-3 btn-gold rounded-xl"
+    >
+      Acquista Ora
+    </a>
+  </div>
+</div>
   </div>
 </section>
 
