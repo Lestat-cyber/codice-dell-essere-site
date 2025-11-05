@@ -208,10 +208,13 @@ export default function App() {
     loading="eager"
   />
 
-  {/* Testo centrato */}
+  {/* Didascalia in due righe */}
   <div className="mt-4 flex flex-col items-center text-center font-inknut">
     <p className="text-white/90 text-lg md:text-xl tracking-wide leading-snug max-w-sm">
-      Il seguito tanto atteso: Gli Dei del Cielo e della Terra
+      Il seguito tanto atteso:
+    </p>
+    <p className="text-white/90 text-lg md:text-xl tracking-wide leading-snug max-w-sm font-bold">
+      Gli Dei del Cielo e della Terra
     </p>
     <a
       href={LINKS.anunnaki1}
