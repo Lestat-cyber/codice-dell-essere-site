@@ -167,11 +167,14 @@ export default function App() {
       {/* HERO */}
      <section id="home" className="relative overflow-hidden">
   <Aura />
+
   <div className="mx-auto max-w-7xl px-4 py-20 md:py-28 relative">
-    <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-12">
+    {/* Wrapper due colonne */}
+    <div className="flex flex-col md:flex-row items-center justify-between gap-12">
+
       {/* Colonna sinistra: testo */}
-      <div className="max-w-3xl font-inknut">
-        <div className="flex flex-wrap gap-2 mb-6">
+      <div className="max-w-3xl font-inknut text-center md:text-left">
+        <div className="flex flex-wrap gap-2 mb-6 justify-center md:justify-start">
           <Badge>Divulgatore</Badge>
           <Badge>Scrittore</Badge>
           <Badge>Editore</Badge>
@@ -182,50 +185,55 @@ export default function App() {
           <span className="block text-gold">Trasforma Conoscenza in Potere</span>
         </h1>
 
-        <p className="mt-6 text-white/80 text-lg md:text-xl max-w-2xl">
+        <p className="mt-6 text-white/80 text-lg md:text-xl max-w-2xl mx-auto md:mx-0">
           Progetto editoriale e multimediale che unisce Antiche Sapienze, ricerca
           storica e pratica quotidiana
         </p>
 
-        <div className="mt-8 flex flex-wrap gap-3">
+        <div className="mt-8 flex flex-wrap gap-3 justify-center md:justify-start">
           <a href="#libri" className="btn-gold rounded-xl">Scopri i libri</a>
           <a href="#contatti" className="btn-outline rounded-xl">Contattami</a>
         </div>
       </div>
+      {/* Fine colonna sinistra */}
 
-      {/* Colonna destra: cover ultima uscita */}
+      {/* Colonna destra: cover ultima uscita centrata */}
       <div className="relative flex flex-col items-center justify-center text-center w-full md:w-auto mx-auto md:mx-0">
-  {/* Alone dorato dietro la cover */}
-  <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center">
-    <div className="absolute h-64 w-64 rounded-full bg-gradient-to-br from-amber-400/60 via-yellow-300/40 to-emerald-300/20 blur-3xl"></div>
-    <div className="absolute h-80 w-80 rounded-full bg-amber-200/10 blur-2xl ring-1 ring-amber-200/20"></div>
-  </div>
+        {/* Alone dorato dietro la cover */}
+        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center">
+          <div className="absolute h-64 w-64 rounded-full bg-gradient-to-br from-amber-400/60 via-yellow-300/40 to-emerald-300/20 blur-3xl"></div>
+          <div className="absolute h-80 w-80 rounded-full bg-amber-200/10 blur-2xl ring-1 ring-amber-200/20"></div>
+        </div>
 
-  <img
-    src="/assets/anunnaki2-cover.webp"
-    alt="Codice Anunnaki — Gli Dei del Cielo e della Terra (Vol. I • Parte I)"
-    className="relative w-56 sm:w-64 rounded-xl shadow-2xl mx-auto hover:scale-105 transition-transform duration-500 drop-shadow-[0_0_35px_rgba(255,200,80,0.35)]"
-    loading="eager"
-  />
+        <img
+          src="/assets/anunnaki2-cover.webp"
+          alt="Codice Anunnaki — Gli Dei del Cielo e della Terra (Vol. I • Parte I)"
+          className="relative w-56 sm:w-64 rounded-xl shadow-2xl mx-auto hover:scale-105 transition-transform duration-500 drop-shadow-[0_0_35px_rgba(255,200,80,0.35)]"
+          loading="eager"
+        />
 
-  {/* Didascalia in due righe */}
-  <div className="mt-4 flex flex-col items-center text-center font-inknut">
-    <p className="text-white/90 text-lg md:text-xl tracking-wide leading-snug max-w-sm">
-      Il seguito tanto atteso:
-    </p>
-    <p className="text-white/90 text-lg md:text-xl tracking-wide leading-snug max-w-sm font-bold">
-      Gli Dei del Cielo e della Terra
-    </p>
-    <a
-      href={LINKS.anunnaki1}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="mt-3 inline-block px-6 py-3 btn-gold rounded-xl"
-    >
-      Acquista Ora
-    </a>
-  </div>
-</div>
+        {/* Didascalia in due righe centrata */}
+        <div className="mt-4 flex flex-col items-center text-center font-inknut">
+          <p className="text-white/90 text-lg md:text-xl tracking-wide leading-snug max-w-sm">
+            Il seguito tanto atteso:
+          </p>
+          <p className="text-white/90 text-lg md:text-xl tracking-wide leading-snug max-w-sm font-bold">
+            Gli Dei del Cielo e della Terra
+          </p>
+          <a
+            href={LINKS.anunnaki1}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 inline-block px-6 py-3 btn-gold rounded-xl"
+          >
+            Acquista Ora
+          </a>
+        </div>
+      </div>
+      {/* Fine colonna destra */}
+
+    </div>
+    {/* Fine wrapper due colonne */}
   </div>
 </section>
 
