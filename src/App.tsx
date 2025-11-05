@@ -6,6 +6,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 // Amazon
 const LINKS = {
   anunnaki0: "https://amzn.eu/d/akZ7CqJ", // Codice Anunnaki — La Creazione dell’Uomo (Vol. Ø)
+  anunnaki1: "https://amzn.to/3LLoUnt", // Codice Anunnaki — Gli Dei del Cielo e della Terra (Vol. 1 | Prima Parte) 
   limitless: "https://amzn.eu/d/dtR64tc", // Limitless — Codice dell’Essere
 };
 
