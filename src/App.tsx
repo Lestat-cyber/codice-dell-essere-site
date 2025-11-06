@@ -6,7 +6,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 // Amazon
 const LINKS = {
   anunnaki0: "https://amzn.eu/d/akZ7CqJ", // Codice Anunnaki — La Creazione dell’Uomo (Vol. Ø)
-  anunnaki1: "https://amzn.to/3LLoUnt", // Codice Anunnaki — Gli Dei del Cielo e della Terra (Vol. 1 | Prima Parte) 
+  anunnaki1: "https://amzn.to/3LLoUnt",   // Codice Anunnaki — Gli Dei del Cielo e della Terra (Vol. I • Parte I)
   limitless: "https://amzn.eu/d/dtR64tc", // Limitless — Codice dell’Essere
 };
 
@@ -20,13 +20,13 @@ const VIDEOS = {
 
 // Social
 const SOCIALS = {
-  instagram: "https://www.instagram.com/codicedellessere",   // <- aggiorna se serve
+  instagram: "https://www.instagram.com/codicedellessere",
   tiktok: "https://www.tiktok.com/@codicedellessere",
-  youtube: "https://www.youtube.com/@codicedellessere",      // <- aggiorna se serve
+  youtube: "https://www.youtube.com/@codicedellessere",
 };
 
 /* ===========================
-   STILI GLOBALI (bagliore + titoli)
+   STILI GLOBALI (bottoni + bagliore + titoli)
 =========================== */
 function GlobalGlowStyles() {
   return (
@@ -34,18 +34,58 @@ function GlobalGlowStyles() {
       // @ts-ignore
       dangerouslySetInnerHTML={{
         __html: `
-/* --- BAGLIORE AUREO ANIMATO --- */
-.social-btn, .btn-gold, .btn-outline {
-  position: relative; overflow: visible;
+/* Inknut Antiqua */
+@import url('https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@400;600;700;800&display=swap');
+
+/* --- BASE BUTTONS (sempre visibili) --- */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
+  padding:.75rem 1.25rem; border-radius:.75rem; line-height:1;
+  font-weight:700; letter-spacing:.02em; font-size:1rem;
+  transition:transform .2s ease, box-shadow .2s ease, opacity .2s ease, background-color .2s ease, border-color .2s ease;
+  font-family:"Inknut Antiqua", ui-serif, Georgia, "Times New Roman", serif;
 }
-.social-btn::after, .btn-gold::after, .btn-outline::after {
-  content: ""; position: absolute; inset: -6px; border-radius: 14px; pointer-events: none;
-  box-shadow: 0 0 0 rgba(212,175,55,0); opacity: 0; transition: opacity .25s ease;
+.btn:active{ transform:translateY(1px); }
+.btn:focus-visible{
+  outline:2px solid rgba(212,175,55,.6); outline-offset:2px;
+  box-shadow:0 0 0 4px rgba(212,175,55,.15);
 }
-.social-btn:hover::after,
-.btn-gold:hover::after,
-.btn-outline:hover::after {
-  opacity: 1; animation: glowPulse 1.8s ease-in-out infinite;
+.btn-sm{ padding:.55rem .9rem; font-size:.875rem; border-radius:.6rem; }
+.btn-lg{ padding:.9rem 1.35rem; font-size:1.05rem; }
+
+/* pieno dorato */
+.btn-gold{
+  background-image:linear-gradient(90deg,#fbbf24,#f59e0b,#fbbf24);
+  color:#000; border:1px solid rgba(212,175,55,.7);
+  box-shadow:0 8px 22px rgba(212,175,55,.25);
+}
+.btn-gold:hover{
+  filter:brightness(1.05);
+  box-shadow:0 10px 28px rgba(212,175,55,.35);
+}
+
+/* outline dorato (visibile anche senza hover) */
+.btn-outline{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(212,175,55,.65);
+  color:#f7e7b5;
+  box-shadow:0 4px 16px rgba(212,175,55,.18) inset, 0 4px 14px rgba(212,175,55,.12);
+}
+.btn-outline:hover{
+  background:rgba(212,175,55,.18);
+  color:#0a0a0a;
+}
+
+/* --- BAGLIORE AUREO ANIMATO (alone al passaggio) --- */
+.social-btn, .btn, .btn-gold, .btn-outline{
+  position:relative; overflow:visible;
+}
+.social-btn::after, .btn::after{
+  content:""; position:absolute; inset:-8px; border-radius:16px; pointer-events:none;
+  box-shadow:0 0 0 rgba(212,175,55,0); opacity:0; transition:opacity .25s ease;
+}
+.social-btn:hover::after, .btn:hover::after{
+  opacity:1; animation:glowPulse 1.8s ease-in-out infinite;
 }
 @keyframes glowPulse{
   0%{box-shadow:0 0 0 rgba(212,175,55,0),0 0 0 rgba(212,175,55,0)}
@@ -54,21 +94,17 @@ function GlobalGlowStyles() {
 }
 
 /* --- TITOLI DI SEZIONE: hover + accensione in viewport --- */
-.section-heading h2 {
-  position: relative;
-  transition: text-shadow .35s ease, color .35s ease;
+.section-heading h2{
+  position:relative; transition:text-shadow .35s ease, color .35s ease;
 }
-.section-heading h2:hover {
-  color: #d4af37;
-  text-shadow: 0 0 10px rgba(212,175,55,.35), 0 0 24px rgba(212,175,55,.18);
+.section-heading h2:hover{
+  color:#d4af37; text-shadow:0 0 10px rgba(212,175,55,.35), 0 0 24px rgba(212,175,55,.18);
 }
-.section-heading.inview h2 {
-  animation: titleGlow 900ms ease-out 1;
-}
-@keyframes titleGlow {
-  0%   { color: #ffffff; text-shadow: 0 0 0 rgba(212,175,55,0); }
-  40%  { color: #d4af37; text-shadow: 0 0 12px rgba(212,175,55,.45), 0 0 28px rgba(212,175,55,.22); }
-  100% { color: #ffffff; text-shadow: 0 0 0 rgba(212,175,55,0); }
+.section-heading.inview h2{ animation:titleGlow 900ms ease-out 1; }
+@keyframes titleGlow{
+  0%{ color:#fff; text-shadow:0 0 0 rgba(212,175,55,0); }
+  40%{ color:#d4af37; text-shadow:0 0 12px rgba(212,175,55,.45),0 0 28px rgba(212,175,55,.22); }
+  100%{ color:#fff; text-shadow:0 0 0 rgba(212,175,55,0); }
 }
       `,
       }}
@@ -159,83 +195,83 @@ export default function App() {
           {/* Barra social + CTA */}
           <div className="hidden md:flex items-center gap-4">
             <SocialBar />
-            <a href="#libri" className="btn-gold rounded-xl">Acquista i Libri</a>
+            <a href="#libri" className="btn btn-gold rounded-xl">Acquista i Libri</a>
           </div>
         </div>
       </header>
 
       {/* HERO */}
-     <section id="home" className="relative overflow-hidden">
-  <Aura />
+      <section id="home" className="relative overflow-hidden">
+        <Aura />
 
-  <div className="mx-auto max-w-7xl px-4 py-20 md:py-28 relative">
-    {/* Wrapper due colonne */}
-    <div className="flex flex-col md:flex-row items-center justify-between gap-12">
+        <div className="mx-auto max-w-7xl px-4 py-20 md:py-28 relative">
+          {/* Wrapper due colonne */}
+          <div className="flex flex-col md:flex-row items-center justify-between gap-12">
 
-      {/* Colonna sinistra: testo */}
-      <div className="max-w-3xl font-inknut text-center md:text-left">
-        <div className="flex flex-wrap gap-2 mb-6 justify-center md:justify-start">
-          <Badge>Divulgatore</Badge>
-          <Badge>Scrittore</Badge>
-          <Badge>Editore</Badge>
+            {/* Colonna sinistra: testo */}
+            <div className="max-w-3xl font-inknut text-center md:text-left">
+              <div className="flex flex-wrap gap-2 mb-6 justify-center md:justify-start">
+                <Badge>Divulgatore</Badge>
+                <Badge>Scrittore</Badge>
+                <Badge>Editore</Badge>
+              </div>
+
+              <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">
+                Risveglia ciò che Sei
+                <span className="block text-gold">Trasforma Conoscenza in Potere</span>
+              </h1>
+
+              <p className="mt-6 text-white/80 text-lg md:text-xl max-w-2xl mx-auto md:mx-0">
+                Progetto editoriale e multimediale che unisce Antiche Sapienze, ricerca
+                storica e pratica quotidiana
+              </p>
+
+              <div className="mt-8 flex flex-wrap gap-3 justify-center md:justify-start">
+                <a href="#libri" className="btn btn-gold btn-lg rounded-xl">Scopri i libri</a>
+                <a href="#contatti" className="btn btn-outline btn-lg rounded-xl">Contattami</a>
+              </div>
+            </div>
+            {/* Fine colonna sinistra */}
+
+            {/* Colonna destra: cover ultima uscita centrata */}
+            <div className="relative flex flex-col items-center justify-center text-center w-full md:w-auto mx-auto md:mx-0">
+              {/* Alone dorato dietro la cover */}
+              <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center">
+                <div className="absolute h-64 w-64 rounded-full bg-gradient-to-br from-amber-400/60 via-yellow-300/40 to-emerald-300/20 blur-3xl"></div>
+                <div className="absolute h-80 w-80 rounded-full bg-amber-200/10 blur-2xl ring-1 ring-amber-200/20"></div>
+              </div>
+
+              <img
+                src="/assets/anunnaki2-cover.webp"
+                alt="Codice Anunnaki — Gli Dei del Cielo e della Terra (Vol. I • Parte I)"
+                className="relative w-56 sm:w-64 rounded-xl shadow-2xl mx-auto hover:scale-105 transition-transform duration-500 drop-shadow-[0_0_35px_rgba(255,200,80,0.35)]"
+                loading="eager"
+              />
+
+              {/* Didascalia in due righe centrata */}
+              <div className="mt-4 flex flex-col items-center text-center font-inknut">
+                <p className="text-white/90 text-lg md:text-xl tracking-wide leading-snug max-w-sm">
+                  Il seguito tanto atteso:
+                </p>
+                <p className="text-white/90 text-lg md:text-xl tracking-wide leading-snug max-w-sm font-bold">
+                  Gli Dei del Cielo e della Terra
+                </p>
+                <a
+                  href={LINKS.anunnaki1}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 inline-block btn btn-gold rounded-xl"
+                >
+                  Acquista Ora
+                </a>
+              </div>
+            </div>
+            {/* Fine colonna destra */}
+
+          </div>
+          {/* Fine wrapper due colonne */}
         </div>
-
-        <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">
-          Risveglia ciò che Sei
-          <span className="block text-gold">Trasforma Conoscenza in Potere</span>
-        </h1>
-
-        <p className="mt-6 text-white/80 text-lg md:text-xl max-w-2xl mx-auto md:mx-0">
-          Progetto editoriale e multimediale che unisce Antiche Sapienze, ricerca
-          storica e pratica quotidiana
-        </p>
-
-        <div className="mt-8 flex flex-wrap gap-3 justify-center md:justify-start">
-          <a href="#libri" className="btn-gold rounded-xl">Scopri i libri</a>
-          <a href="#contatti" className="btn-outline rounded-xl">Contattami</a>
-        </div>
-      </div>
-      {/* Fine colonna sinistra */}
-
-      {/* Colonna destra: cover ultima uscita centrata */}
-      <div className="relative flex flex-col items-center justify-center text-center w-full md:w-auto mx-auto md:mx-0">
-        {/* Alone dorato dietro la cover */}
-        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center">
-          <div className="absolute h-64 w-64 rounded-full bg-gradient-to-br from-amber-400/60 via-yellow-300/40 to-emerald-300/20 blur-3xl"></div>
-          <div className="absolute h-80 w-80 rounded-full bg-amber-200/10 blur-2xl ring-1 ring-amber-200/20"></div>
-        </div>
-
-        <img
-          src="/assets/anunnaki2-cover.webp"
-          alt="Codice Anunnaki — Gli Dei del Cielo e della Terra (Vol. I • Parte I)"
-          className="relative w-56 sm:w-64 rounded-xl shadow-2xl mx-auto hover:scale-105 transition-transform duration-500 drop-shadow-[0_0_35px_rgba(255,200,80,0.35)]"
-          loading="eager"
-        />
-
-        {/* Didascalia in due righe centrata */}
-        <div className="mt-4 flex flex-col items-center text-center font-inknut">
-          <p className="text-white/90 text-lg md:text-xl tracking-wide leading-snug max-w-sm">
-            Il seguito tanto atteso:
-          </p>
-          <p className="text-white/90 text-lg md:text-xl tracking-wide leading-snug max-w-sm font-bold">
-            Gli Dei del Cielo e della Terra
-          </p>
-          <a
-            href={LINKS.anunnaki1}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-3 inline-block px-6 py-3 btn-gold rounded-xl"
-          >
-            Acquista Ora
-          </a>
-        </div>
-      </div>
-      {/* Fine colonna destra */}
-
-    </div>
-    {/* Fine wrapper due colonne */}
-  </div>
-</section>
+      </section>
 
       {/* MISSIONE */}
       <Section
@@ -275,7 +311,7 @@ export default function App() {
             href={LINKS.anunnaki1}
           />
           <Book
-             img="/cover-limitless.png"
+            img="/cover-limitless.png"
             title="Codice dell'Essere - Limitless"
             subtitle="La mente come strumento sacro. La volontà come arte della manifestazione."
             href={LINKS.limitless}
@@ -300,17 +336,11 @@ export default function App() {
       >
         <div className="grid md:grid-cols-3 gap-6">
           <Card title="Coaching Autore" body="Dall’idea al manoscritto." />
-          <Card
-            title="Editing & Impaginazione"
-            body="Revisione e impaginati per stampa e digitale."
-          />
+          <Card title="Editing & Impaginazione" body="Revisione e impaginati per stampa e digitale." />
           <Card title="Pubblicazione (KDP/Ingram)" body="ISBN, formati, prezzo, canali." />
           <Card title="Marketing & ADS" body="Funnel, creatività, Amazon Ads e social." />
           <Card title="Ghostwriting" body="Scrittura nel tuo stile, con fonti." />
-          <Card
-            title="Traduzioni"
-            body="IT ⇄ EN/ES/FR/DE con adattamento editoriale."
-          />
+          <Card title="Traduzioni" body="IT ⇄ EN/ES/FR/DE con adattamento editoriale." />
         </div>
       </Section>
 
@@ -335,7 +365,7 @@ export default function App() {
                   placeholder="La tua email"
                   className="flex-1 rounded-xl bg-black/40 border border-white/15 px-4 py-3 outline-none focus:ring-2 focus:ring-[#d4af37]/50"
                 />
-                <button className="btn-gold rounded-xl">Iscrivimi</button>
+                <button className="btn btn-gold rounded-xl">Iscrivimi</button>
               </div>
               <p className="text-xs text-white/60 mt-2">
                 Iscrivendoti accetti l’informativa privacy.
@@ -389,7 +419,7 @@ export default function App() {
                 />
               </div>
             </div>
-            <button className="mt-4 w-full btn-gold rounded-xl">Invia</button>
+            <button className="mt-4 w-full btn btn-gold rounded-xl">Invia</button>
           </form>
         </div>
       </section>
@@ -506,7 +536,7 @@ function Book({
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-4 inline-flex items-center btn-gold rounded-xl"
+            className="mt-4 inline-flex items-center btn btn-gold rounded-xl"
           >
             Acquista
           </a>
