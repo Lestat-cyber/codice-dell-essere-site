@@ -234,7 +234,7 @@ export default function App() {
       <section id="home" className="relative overflow-hidden">
         <Aura />
 
-        <div className="mx-auto max-w-7xl px-6 sm:px-8 md:px-10 py-20 md:py-28 relative">
+        <div className="mx-auto max-w-7xl px-6 sm:px-8 md:px-4 py-20 md:py-28 relative">
           {/* Wrapper due colonne */}
           <div className="flex flex-col md:flex-row items-center justify-between gap-12">
 
@@ -246,30 +246,32 @@ export default function App() {
                 <Badge>Editore</Badge>
               </div>
 
-              <h1
-  className="
-    font-extrabold
-    text-[32px] sm:text-[42px] md:text-[52px] lg:text-[56px]
-    leading-[1.15] tracking-tight text-center md:text-left
-    px-6 sm:px-0
-  "
->
-  {/* Riga unica, sempre intera su tutte le larghezze */}
+              <h1 className="font-extrabold tracking-tight leading-[1.15] text-center md:text-left max-w-[36ch] mx-auto md:mx-0">
+  {/* Riga 1: sempre su una riga, scala in base allo schermo */}
   <span
     className="
-      block
+      block px-3 sm:px-0
       bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400
-      bg-clip-text text-transparent
-      whitespace-nowrap
+      bg-clip-text text-transparent whitespace-nowrap
     "
+    style={{ fontSize: "clamp(28px, 7vw, 56px)" }}
   >
     Risveglia&nbsp;ciò&nbsp;che&nbsp;Sei
   </span>
 
-  {/* Due righe sotto */}
-  <span className="block text-gold mt-3 leading-[1.1]">
+  {/* Riga 2: Trasforma Conoscenza */}
+  <span
+    className="block text-gold mt-2 px-3 sm:px-0"
+    style={{ fontSize: "clamp(28px, 7vw, 56px)" }}
+  >
     Trasforma&nbsp;Conoscenza
-    <br />
+  </span>
+
+  {/* Riga 3: In Potere */}
+  <span
+    className="block text-white mt-1 px-3 sm:px-0"
+    style={{ fontSize: "clamp(28px, 7vw, 56px)" }}
+  >
     In&nbsp;Potere
   </span>
 </h1>
