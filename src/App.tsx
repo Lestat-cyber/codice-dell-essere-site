@@ -246,39 +246,35 @@ export default function App() {
                 <Badge>Editore</Badge>
               </div>
 
-             <h1
-  className="
-    font-extrabold tracking-tight
-    text-center md:text-left
-    leading-[1.18] md:leading-[1.2]
-    text-[30px] sm:text-[36px] md:text-[48px] lg:text-[56px]
-    mx-auto md:mx-0 px-5 sm:px-6
-    max-w-[28ch] md:max-w-none
-  "
->
-  {/* Riga 1 – sempre su una sola riga */}
-  <span
-    className="
-      block
-      bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400
-      bg-clip-text text-transparent
-      whitespace-nowrap
-      text-[30px] sm:text-[34px] md:text-[48px]
-    "
-  >
+             {/* H1 – versione MOBILE (mostrata < md) */}
+<h1 className="md:hidden font-extrabold tracking-tight leading-[1.2] text-center
+               text-[30px] sm:text-[34px] mx-auto px-5 max-w-[22ch]">
+  <span className="block bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400
+                   bg-clip-text text-transparent whitespace-nowrap">
     Risveglia&nbsp;ciò&nbsp;che&nbsp;Sei
   </span>
-
-  {/* Riga 2 */}
-  <span className="block text-white mt-2 whitespace-nowrap">
+  <span className="block text-white mt-1 whitespace-nowrap">
     Trasforma&nbsp;Conoscenza
   </span>
-
-  {/* Riga 3 */}
   <span className="block text-white mt-1">
     In&nbsp;Potere
   </span>
 </h1>
+
+{/* H1 – versione DESKTOP (mostrata ≥ md) */}
+<h1 className="hidden md:block font-extrabold tracking-tight md:leading-[1.15]
+               md:text-left text-[40px] lg:text-[56px] mx-auto md:mx-0
+               px-5 md:px-0 max-w-[30ch]">
+  <span className="block bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400
+                   bg-clip-text text-transparent whitespace-nowrap">
+    Risveglia&nbsp;ciò&nbsp;che&nbsp;Sei
+  </span>
+  <span className="block text-white mt-2 whitespace-nowrap">
+    Trasforma&nbsp;Conoscenza
+  </span>
+  <span className="block text-white mt-1">
+</h1>
+
               <p className="mt-6 text-white/80 text-lg md:text-xl max-w-2xl mx-auto md:mx-0">
                 Progetto editoriale e multimediale che unisce Antiche Sapienze, ricerca
                 storica e pratica quotidiana
