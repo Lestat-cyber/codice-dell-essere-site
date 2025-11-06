@@ -249,21 +249,24 @@ export default function App() {
              <h1
   className="font-extrabold tracking-tight text-center md:text-left
              leading-[1.18] md:leading-[1.15]
-             text-[30px] sm:text-[34px] md:text-[40px] lg:text-[56px]
-             mx-auto md:mx-0 px-5 md:px-0 max-w-[22ch] md:max-w-[30ch]"
+             text-[24px] sm:text-[28px] md:text-[40px] lg:text-[56px]
+             mx-auto md:mx-0 max-w-[26ch] md:max-w-[30ch]"
 >
-  {/* Variante MOBILE (mostra < md) */}
+  {/* MOBILE (< md) */}
   <span className="md:hidden">
+    {/* 1 riga: Risveglia ciò che Sei */}
     <span className="block bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400 bg-clip-text text-transparent whitespace-nowrap">
       Risveglia&nbsp;ciò&nbsp;che&nbsp;Sei
     </span>
-    <span className="block text-white mt-1 whitespace-nowrap">
+    {/* 2 riga: Trasforma Conoscenza */}
+    <span className="block text-white mt-2 whitespace-nowrap">
       Trasforma&nbsp;Conoscenza
     </span>
-    <span className="block text-white mt-1">In&nbsp;Potere</span>
+    {/* 3 riga: In Potere */}
+    <span className="block text-white mt-2">In&nbsp;Potere</span>
   </span>
 
-  {/* Variante DESKTOP (mostra ≥ md) */}
+  {/* DESKTOP (≥ md) */}
   <span className="hidden md:block">
     <span className="block bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400 bg-clip-text text-transparent whitespace-nowrap">
       Risveglia&nbsp;ciò&nbsp;che&nbsp;Sei
