@@ -246,31 +246,42 @@ export default function App() {
                 <Badge>Editore</Badge>
               </div>
 
-              <h1 className="font-extrabold tracking-tight leading-[1.15] text-center md:text-left max-w-[36ch] mx-auto md:mx-0">
-  {/* Riga 1: sempre su una riga, scala in base allo schermo */}
+              <h1
+  className="
+    relative z-10 font-extrabold tracking-tight break-normal
+    text-center md:text-left
+    leading-[1.22] md:leading-[1.18]
+    max-w-[46rem] md:max-w-[48rem]
+    mx-auto md:mx-0
+  "
+  style={{ textWrap: 'balance' as any }}
+>
+  {/* Riga 1 — giallo come i bottoni, su una sola riga senza tagli */}
   <span
     className="
-      block px-3 sm:px-0
+      block
       bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400
-      bg-clip-text text-transparent whitespace-nowrap
+      bg-clip-text text-transparent
+      whitespace-nowrap
+      px-3 sm:px-0
     "
-    style={{ fontSize: "clamp(28px, 7vw, 56px)" }}
+    style={{ fontSize: 'clamp(32px, 6.2vw, 56px)' }}
   >
     Risveglia&nbsp;ciò&nbsp;che&nbsp;Sei
   </span>
 
-  {/* Riga 2: Trasforma Conoscenza */}
+  {/* Riga 2 */}
   <span
-    className="block text-gold mt-2 px-3 sm:px-0"
-    style={{ fontSize: "clamp(28px, 7vw, 56px)" }}
+    className="block text-white mt-2 px-3 sm:px-0"
+    style={{ fontSize: 'clamp(30px, 6.5vw, 56px)' }}
   >
     Trasforma&nbsp;Conoscenza
   </span>
 
-  {/* Riga 3: In Potere */}
+  {/* Riga 3 */}
   <span
     className="block text-white mt-1 px-3 sm:px-0"
-    style={{ fontSize: "clamp(28px, 7vw, 56px)" }}
+    style={{ fontSize: 'clamp(30px, 6.5vw, 56px)' }}
   >
     In&nbsp;Potere
   </span>
