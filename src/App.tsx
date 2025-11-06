@@ -216,10 +216,30 @@ export default function App() {
                 <Badge>Editore</Badge>
               </div>
 
-              <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">
-                Risveglia ciò che Sei
-                <span className="block text-gold">Trasforma Conoscenza in Potere</span>
-              </h1>
+              <h1
+  className="
+    font-extrabold
+    text-[36px] md:text-[48px] lg:text-[56px]    /* font leggermente più piccolo */
+    leading-[1.18] md:leading-[1.2]              /* più spazio tra le righe */
+    tracking-tight
+  "
+>
+  {/* Prima riga: stesso giallo dei bottoni (gradiente) */}
+  <span
+    className="
+      block
+      bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400
+      bg-clip-text text-transparent
+    "
+  >
+    Risveglia ciò che Sei
+  </span>
+
+  {/* Seconda riga: impedisco il ritorno a capo tra 'Trasforma' e 'Conoscenza' */}
+  <span className="block text-gold">
+    {"Trasforma\u00A0Conoscenza in Potere"}
+  </span>
+</h1>
 
               <p className="mt-6 text-white/80 text-lg md:text-xl max-w-2xl mx-auto md:mx-0">
                 Progetto editoriale e multimediale che unisce Antiche Sapienze, ricerca
