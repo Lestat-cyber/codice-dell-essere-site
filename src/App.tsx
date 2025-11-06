@@ -249,26 +249,25 @@ export default function App() {
               <h1
   className="
     font-extrabold
-    text-[34px] sm:text-[42px] md:text-[50px] lg:text-[56px]
-    leading-[1.18] md:leading-[1.2]
-    tracking-tight text-center md:text-left
+    text-[32px] sm:text-[42px] md:text-[52px] lg:text-[56px]
+    leading-[1.15] tracking-tight text-center md:text-left
+    px-6 sm:px-0
   "
 >
-  {/* Prima parte: gradiente oro */}
+  {/* Riga unica, sempre intera su tutte le larghezze */}
   <span
     className="
       block
       bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400
       bg-clip-text text-transparent
+      whitespace-nowrap
     "
   >
-    Risveglia&nbsp;ciò
-    <br />
-    Che&nbsp;Sei
+    Risveglia&nbsp;ciò&nbsp;che&nbsp;Sei
   </span>
 
-  {/* Seconda parte: oro pieno, separata con margine armonico */}
-  <span className="block text-gold mt-3">
+  {/* Due righe sotto */}
+  <span className="block text-gold mt-3 leading-[1.1]">
     Trasforma&nbsp;Conoscenza
     <br />
     In&nbsp;Potere
