@@ -26,7 +26,7 @@ const SOCIALS = {
 };
 
 /* ===========================
-   STILI GLOBALI (bottoni + bagliore + titoli)
+   STILI GLOBALI (font + bottoni + bagliore + titoli)
 =========================== */
 function GlobalGlowStyles() {
   return (
@@ -34,8 +34,21 @@ function GlobalGlowStyles() {
       // @ts-ignore
       dangerouslySetInnerHTML={{
         __html: `
-/* Inknut Antiqua */
-@import url('https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@400;600;700;800&display=swap');
+/* --- FONT GLOBALE: come il brand in header --- */
+/* Inter è una sans moderna molto simile allo stack di default */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+
+:root{
+  --font-brand: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+                Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji",
+                "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+html, body, * {
+  font-family: var(--font-brand) !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
 /* --- BASE BUTTONS (sempre visibili) --- */
 .btn{
@@ -43,7 +56,6 @@ function GlobalGlowStyles() {
   padding:.75rem 1.25rem; border-radius:.75rem; line-height:1;
   font-weight:700; letter-spacing:.02em; font-size:1rem;
   transition:transform .2s ease, box-shadow .2s ease, opacity .2s ease, background-color .2s ease, border-color .2s ease;
-  font-family:"Inknut Antiqua", ui-serif, Georgia, "Times New Roman", serif;
 }
 .btn:active{ transform:translateY(1px); }
 .btn:focus-visible{
@@ -74,6 +86,24 @@ function GlobalGlowStyles() {
 .btn-outline:hover{
   background:rgba(212,175,55,.18);
   color:#0a0a0a;
+}
+
+/* --- INPUT TRASPARENTI COERENTI --- */
+input, textarea, select, label{
+  font-family: var(--font-brand) !important;
+}
+.input, input, textarea{
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.15);
+  color: #fff;
+}
+.input::placeholder, input::placeholder, textarea::placeholder{
+  color: rgba(255,255,255,.45);
+}
+input:focus, textarea:focus{
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(212,175,55,.25);
+  border-color: rgba(212,175,55,.55);
 }
 
 /* --- BAGLIORE AUREO ANIMATO (alone al passaggio) --- */
@@ -209,7 +239,7 @@ export default function App() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-12">
 
             {/* Colonna sinistra: testo */}
-            <div className="max-w-3xl font-inknut text-center md:text-left">
+            <div className="max-w-3xl text-center md:text-left">
               <div className="flex flex-wrap gap-2 mb-6 justify-center md:justify-start">
                 <Badge>Divulgatore</Badge>
                 <Badge>Scrittore</Badge>
@@ -217,29 +247,26 @@ export default function App() {
               </div>
 
               <h1
-  className="
-    font-extrabold
-    text-[36px] md:text-[48px] lg:text-[56px]    /* font leggermente più piccolo */
-    leading-[1.18] md:leading-[1.2]              /* più spazio tra le righe */
-    tracking-tight
-  "
->
-  {/* Prima riga: stesso giallo dei bottoni (gradiente) */}
-  <span
-    className="
-      block
-      bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400
-      bg-clip-text text-transparent
-    "
-  >
-    Risveglia ciò che Sei
-  </span>
-
-  {/* Seconda riga: impedisco il ritorno a capo tra 'Trasforma' e 'Conoscenza' */}
-  <span className="block text-gold">
-    {"Trasforma\u00A0Conoscenza in Potere"}
-  </span>
-</h1>
+                className="
+                  font-extrabold
+                  text-[36px] md:text-[48px] lg:text-[56px]
+                  leading-[1.18] md:leading-[1.2]
+                  tracking-tight
+                "
+              >
+                <span
+                  className="
+                    block
+                    bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400
+                    bg-clip-text text-transparent
+                  "
+                >
+                  Risveglia ciò che Sei
+                </span>
+                <span className="block text-gold">
+                  {"Trasforma\u00A0Conoscenza in Potere"}
+                </span>
+              </h1>
 
               <p className="mt-6 text-white/80 text-lg md:text-xl max-w-2xl mx-auto md:mx-0">
                 Progetto editoriale e multimediale che unisce Antiche Sapienze, ricerca
@@ -251,11 +278,9 @@ export default function App() {
                 <a href="#contatti" className="btn btn-outline btn-lg rounded-xl">Contattami</a>
               </div>
             </div>
-            {/* Fine colonna sinistra */}
 
-            {/* Colonna destra: cover ultima uscita centrata */}
+            {/* Colonna destra: cover ultima uscita */}
             <div className="relative flex flex-col items-center justify-center text-center w-full md:w-auto mx-auto md:mx-0">
-              {/* Alone dorato dietro la cover */}
               <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center">
                 <div className="absolute h-64 w-64 rounded-full bg-gradient-to-br from-amber-400/60 via-yellow-300/40 to-emerald-300/20 blur-3xl"></div>
                 <div className="absolute h-80 w-80 rounded-full bg-amber-200/10 blur-2xl ring-1 ring-amber-200/20"></div>
@@ -268,8 +293,7 @@ export default function App() {
                 loading="eager"
               />
 
-              {/* Didascalia in due righe centrata */}
-              <div className="mt-4 flex flex-col items-center text-center font-inknut">
+              <div className="mt-4 flex flex-col items-center text-center">
                 <p className="text-white/90 text-lg md:text-xl tracking-wide leading-snug max-w-sm">
                   Il seguito tanto atteso:
                 </p>
@@ -286,10 +310,7 @@ export default function App() {
                 </a>
               </div>
             </div>
-            {/* Fine colonna destra */}
-
           </div>
-          {/* Fine wrapper due colonne */}
         </div>
       </section>
 
@@ -300,18 +321,9 @@ export default function App() {
         subtitle="Una via moderna all’Ermetismo: studio, esperienza, applicazione."
       >
         <div className="grid sm:grid-cols-3 gap-6">
-          <Card
-            title="Divulgatore"
-            body="Video, conferenze e workshop. Profondo, chiaro, pratico."
-          />
-          <Card
-            title="Scrittore"
-            body="Collane: Codice Anunnaki, Limitless, Viaggi Astrali e altro."
-          />
-          <Card
-            title="Editore"
-            body="Editing, impaginazione, KDP/Ingram, strategia e promozione etica."
-          />
+          <Card title="Divulgatore" body="Video, conferenze e workshop. Profondo, chiaro, pratico." />
+          <Card title="Scrittore" body="Collane: Codice Anunnaki, Limitless, Viaggi Astrali e altro." />
+          <Card title="Editore" body="Editing, impaginazione, KDP/Ingram, strategia e promozione etica." />
         </div>
       </Section>
 
@@ -419,53 +431,49 @@ export default function App() {
               </p>
             </div>
           </div>
+
           <form
-  className="rounded-2xl border border-white/10 bg-black/20 backdrop-blur-sm p-6 shadow-[0_0_30px_rgba(212,175,55,0.1)]"
-  onSubmit={(e) => e.preventDefault()}
->
-  <div className="grid sm:grid-cols-2 gap-5">
-    {/* Nome */}
-    <div className="flex flex-col">
-      <label className="text-sm text-white/80 mb-1">Nome</label>
-      <input
-        type="text"
-        placeholder="Il tuo nome"
-        className="rounded-xl bg-white/5 border border-white/15 px-4 py-3 text-white/90 placeholder-white/40 outline-none focus:ring-2 focus:ring-[#d4af37]/60 transition"
-      />
-    </div>
+            className="rounded-2xl border border-white/10 bg-black/20 backdrop-blur-sm p-6 shadow-[0_0_30px_rgba(212,175,55,0.1)]"
+            onSubmit={(e) => e.preventDefault()}
+          >
+            <div className="grid sm:grid-cols-2 gap-5">
+              <div className="flex flex-col">
+                <label className="text-sm text-white/80 mb-1">Nome</label>
+                <input
+                  type="text"
+                  placeholder="Il tuo nome"
+                  className="rounded-xl bg-white/5 border border-white/15 px-4 py-3 text-white/90 placeholder-white/40 outline-none focus:ring-2 focus:ring-[#d4af37]/60 transition"
+                />
+              </div>
 
-    {/* Email */}
-    <div className="flex flex-col">
-      <label className="text-sm text-white/80 mb-1">Email</label>
-      <input
-        type="email"
-        required
-        placeholder="you@example.com"
-        className="rounded-xl bg-white/5 border border-white/15 px-4 py-3 text-white/90 placeholder-white/40 outline-none focus:ring-2 focus:ring-[#d4af37]/60 transition"
-      />
-    </div>
+              <div className="flex flex-col">
+                <label className="text-sm text-white/80 mb-1">Email</label>
+                <input
+                  type="email"
+                  required
+                  placeholder="you@example.com"
+                  className="rounded-xl bg-white/5 border border-white/15 px-4 py-3 text-white/90 placeholder-white/40 outline-none focus:ring-2 focus:ring-[#d4af37]/60 transition"
+                />
+              </div>
 
-    {/* Messaggio */}
-    <div className="sm:col-span-2 flex flex-col">
-      <label className="text-sm text-white/80 mb-1">Messaggio</label>
-      <textarea
-        rows={5}
-        placeholder="Raccontami del tuo progetto"
-        className="rounded-xl bg-white/5 border border-white/15 px-4 py-3 text-white/90 placeholder-white/40 outline-none focus:ring-2 focus:ring-[#d4af37]/60 transition resize-none"
-      />
-    </div>
-  </div>
+              <div className="sm:col-span-2 flex flex-col">
+                <label className="text-sm text-white/80 mb-1">Messaggio</label>
+                <textarea
+                  rows={5}
+                  placeholder="Raccontami del tuo progetto"
+                  className="rounded-xl bg-white/5 border border-white/15 px-4 py-3 text-white/90 placeholder-white/40 outline-none focus:ring-2 focus:ring-[#d4af37]/60 transition resize-none"
+                />
+              </div>
+            </div>
 
-  <button className="mt-6 w-full btn btn-gold rounded-xl">Invia</button>
-</form>
-
+            <button className="mt-6 w-full btn btn-gold rounded-xl">Invia</button>
+          </form>
         </div>
       </section>
 
       <footer className="border-t border-white/10">
         <div className="mx-auto max-w-7xl px-4 py-10 text-sm text-white/70">
           <div className="flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-6 justify-between">
-            {/* Mini social bar come sigillo */}
             <div className="mb-2 md:mb-0">
               <SocialBar size="sm" />
             </div>
@@ -518,7 +526,7 @@ function Section({
       ([entry]) => {
         if (entry.isIntersecting) {
           setInView(true);
-          setTimeout(() => setInView(false), 1000); // ri-triggerabile
+          setTimeout(() => setInView(false), 1000);
         }
       },
       { rootMargin: "-10% 0px -60% 0px", threshold: 0.2 }
@@ -589,8 +597,7 @@ function Book({
 }
 
 /* ===========================
-   VIDEO EMBED (YouTube 21:9, TikTok 9:16) 
-   Altezza uniforme: 540px -> niente vuoti
+   VIDEO EMBED
 =========================== */
 function VideoEmbed({ title, url }: { title: string; url: string }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -599,7 +606,6 @@ function VideoEmbed({ title, url }: { title: string; url: string }) {
     const u = (url || "").trim();
     if (!u) return { kind: "empty", embedUrl: "", tiktokId: "" };
 
-    // YouTube
     if (u.includes("youtube.com") || u.includes("youtu.be")) {
       let id = "";
       if (u.includes("youtu.be/")) id = u.split("youtu.be/")[1].split(/[?&]/)[0];
@@ -608,7 +614,6 @@ function VideoEmbed({ title, url }: { title: string; url: string }) {
       return { kind: "youtube", embedUrl: `https://www.youtube.com/embed/${id}`, tiktokId: "" };
     }
 
-    // TikTok
     if (u.includes("tiktok.com")) {
       const id = (u.split("/video/")[1] || "").split("?")[0];
       return { kind: "tiktok", embedUrl: u, tiktokId: id };
@@ -617,7 +622,6 @@ function VideoEmbed({ title, url }: { title: string; url: string }) {
     return { kind: "unknown", embedUrl: u, tiktokId: "" };
   }, [url]);
 
-  // Script TikTok
   useEffect(() => {
     if (kind !== "tiktok") return;
     const script = document.createElement("script");
@@ -628,18 +632,16 @@ function VideoEmbed({ title, url }: { title: string; url: string }) {
 
   return (
     <div className="rounded-2xl border border-white/10 overflow-hidden bg-white/5 transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(212,175,55,0.25)] flex flex-col items-center">
-      {/* Titolo */}
       <div className="w-full text-center py-3 bg-white/5 border-b border-white/10">
         <h3 className="text-lg font-semibold tracking-wide text-gold drop-shadow-[0_0_4px_rgba(212,175,55,0.4)]">
           {title}
         </h3>
       </div>
 
-      {/* Player */}
       <div
         className="w-full bg-black/40 flex items-center justify-center"
         style={{
-          height: "540px", // <-- altezza uniforme per evitare il vuoto
+          height: "540px",
           aspectRatio: kind === "youtube" ? "21/9" : kind === "tiktok" ? "9/16" : undefined,
         }}
       >
@@ -659,13 +661,7 @@ function VideoEmbed({ title, url }: { title: string; url: string }) {
               className="tiktok-embed"
               cite={embedUrl}
               data-video-id={tiktokId}
-              style={{
-                maxWidth: "360px",
-                minWidth: "280px",
-                width: "100%",
-                margin: 0,
-                height: "100%",
-              }}
+              style={{ maxWidth: "360px", minWidth: "280px", width: "100%", margin: 0, height: "100%" }}
             >
               <section></section>
             </blockquote>
