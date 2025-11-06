@@ -234,7 +234,7 @@ export default function App() {
       <section id="home" className="relative overflow-hidden">
         <Aura />
 
-        <div className="mx-auto max-w-7xl px-4 py-20 md:py-28 relative">
+        <div className="mx-auto max-w-7xl px-6 sm:px-8 md:px-10 py-20 md:py-28 relative">
           {/* Wrapper due colonne */}
           <div className="flex flex-col md:flex-row items-center justify-between gap-12">
 
