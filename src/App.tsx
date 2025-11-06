@@ -239,7 +239,7 @@ export default function App() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-12">
 
             {/* Colonna sinistra: testo */}
-            <div className="max-w-3xl text-center md:text-left">
+            <div className="w-full max-w-[720px] px-6 sm:px-8 font-brand text-center md:text-left">
               <div className="flex flex-wrap gap-2 mb-6 justify-center md:justify-start">
                 <Badge>Divulgatore</Badge>
                 <Badge>Scrittore</Badge>
