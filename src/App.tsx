@@ -139,7 +139,7 @@ export default function App() {
         <div className="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
           <a href="#home" className="flex items-center gap-3 group">
             <img
-              src="/logo-codice.png"
+              src="/logo-codice.webp"
               alt="Codice dell’Essere"
               className="h-10 w-10 rounded-lg object-contain"
             />
