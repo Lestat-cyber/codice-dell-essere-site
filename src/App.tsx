@@ -342,7 +342,7 @@ export default function App() {
 
       <p className="text-white/80 mt-4 text-base md:text-lg leading-relaxed">
         Creatore della filosofia che porta lo stesso nome, Umberto integra <strong>scienza</strong>, <strong>ermetismo</strong> e <strong>crescita personale</strong> 
-        in un linguaggio moderno, capace di rendere accessibili concetti millenari. Le sue opere non sono semplici libri, ma percorsi iniziatici: 
+         in un linguaggio moderno, capace di rendere accessibili concetti millenari. Le sue opere non sono semplici libri, ma percorsi iniziatici: 
         viaggi che uniscono mito e realtà, storia e spirito, razionalità e intuizione.
       </p>
 
