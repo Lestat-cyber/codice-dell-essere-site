@@ -274,7 +274,6 @@ export default function App() {
   </span>
   <span className="block text-white mt-1">
 </h1>
-
               <p className="mt-6 text-white/80 text-lg md:text-xl max-w-2xl mx-auto md:mx-0">
                 Progetto editoriale e multimediale che unisce Antiche Sapienze, ricerca
                 storica e pratica quotidiana
