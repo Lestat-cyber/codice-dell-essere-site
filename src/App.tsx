@@ -246,20 +246,24 @@ export default function App() {
                 <Badge>Editore</Badge>
               </div>
 
-              <h1
+             <h1
   className="
-    font-extrabold tracking-tight text-center md:text-left
+    font-extrabold tracking-tight
+    text-center md:text-left
     leading-[1.18] md:leading-[1.2]
-    text-[34px] sm:text-[40px] md:text-[48px] lg:text-[56px]
-    mx-auto md:mx-0 px-4 sm:px-6
-    max-w-[30ch] md:max-w-none
+    text-[30px] sm:text-[36px] md:text-[48px] lg:text-[56px]
+    mx-auto md:mx-0 px-5 sm:px-6
+    max-w-[28ch] md:max-w-none
   "
 >
-  {/* Riga 1 - sempre su una sola riga */}
+  {/* Riga 1 – sempre su una sola riga */}
   <span
     className="
-      block bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400
-      bg-clip-text text-transparent whitespace-nowrap
+      block
+      bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400
+      bg-clip-text text-transparent
+      whitespace-nowrap
+      text-[30px] sm:text-[34px] md:text-[48px]
     "
   >
     Risveglia&nbsp;ciò&nbsp;che&nbsp;Sei
