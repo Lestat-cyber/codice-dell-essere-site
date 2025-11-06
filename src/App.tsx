@@ -231,10 +231,10 @@ export default function App() {
       </header>
 
       {/* HERO */}
-      <section id="home" className="relative overflow-hidden">
+      <section id="home" className="relative overflow-visible md:overflow-hidden">
         <Aura />
 
-        <div className="mx-auto max-w-7xl px-6 sm:px-8 md:px-4 py-20 md:py-28 relative">
+        <div className="mx-auto max-w-7xl px-6 sm:px-8 py-20 md:py-28 relative">
           {/* Wrapper due colonne */}
           <div className="flex flex-col md:flex-row items-center justify-between gap-12">
 
@@ -248,45 +248,24 @@ export default function App() {
 
               <h1
   className="
-    relative z-10 font-extrabold tracking-tight break-normal
+    font-extrabold tracking-tight
+    text-[34px] sm:text-[40px] md:text-[48px] lg:text-[56px]
+    leading-[1.18] sm:leading-[1.2]
     text-center md:text-left
-    leading-[1.22] md:leading-[1.18]
-    max-w-[46rem] md:max-w-[48rem]
-    mx-auto md:mx-0
+    max-w-[28ch] md:max-w-none
   "
-  style={{ textWrap: 'balance' as any }}
 >
-  {/* Riga 1 — giallo come i bottoni, su una sola riga senza tagli */}
-  <span
-    className="
-      block
-      bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400
-      bg-clip-text text-transparent
-      whitespace-nowrap
-      px-3 sm:px-0
-    "
-    style={{ fontSize: 'clamp(32px, 6.2vw, 56px)' }}
-  >
-    Risveglia&nbsp;ciò&nbsp;che&nbsp;Sei
+  {/* 1) UNA SOLA RIGA (giallo) */}
+  <span className="block whitespace-nowrap bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400 bg-clip-text text-transparent">
+    Risveglia ciò che Sei
   </span>
 
-  {/* Riga 2 */}
-  <span
-    className="block text-white mt-2 px-3 sm:px-0"
-    style={{ fontSize: 'clamp(30px, 6.5vw, 56px)' }}
-  >
-    Trasforma&nbsp;Conoscenza
+  {/* 2) DUE RIGHE FORZATE */}
+  <span className="block text-white">
+    <span className="whitespace-nowrap">Trasforma Conoscenza</span>
   </span>
-
-  {/* Riga 3 */}
-  <span
-    className="block text-white mt-1 px-3 sm:px-0"
-    style={{ fontSize: 'clamp(30px, 6.5vw, 56px)' }}
-  >
-    In&nbsp;Potere
-  </span>
+  <span className="block text-white">In Potere</span>
 </h1>
-
               <p className="mt-6 text-white/80 text-lg md:text-xl max-w-2xl mx-auto md:mx-0">
                 Progetto editoriale e multimediale che unisce Antiche Sapienze, ricerca
                 storica e pratica quotidiana
