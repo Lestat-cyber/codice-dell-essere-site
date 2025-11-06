@@ -249,12 +249,12 @@ export default function App() {
               <h1
   className="
     font-extrabold
-    text-[36px] md:text-[48px] lg:text-[56px]
+    text-[34px] sm:text-[42px] md:text-[50px] lg:text-[56px]
     leading-[1.18] md:leading-[1.2]
-    tracking-tight
+    tracking-tight text-center md:text-left
   "
 >
-  {/* Prima riga: oro pieno */}
+  {/* Prima parte: gradiente oro */}
   <span
     className="
       block
@@ -262,14 +262,16 @@ export default function App() {
       bg-clip-text text-transparent
     "
   >
-    Risveglia ciò che Sei
+    Risveglia&nbsp;ciò
+    <br />
+    Che&nbsp;Sei
   </span>
 
-  {/* Seconda parte: due righe, stessa tonalità dorata */}
-  <span className="block text-gold">
+  {/* Seconda parte: oro pieno, separata con margine armonico */}
+  <span className="block text-gold mt-3">
     Trasforma&nbsp;Conoscenza
     <br />
-    in&nbsp;Potere
+    In&nbsp;Potere
   </span>
 </h1>
 
