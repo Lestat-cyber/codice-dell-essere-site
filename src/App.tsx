@@ -248,23 +248,32 @@ export default function App() {
 
               <h1
   className="
-    font-extrabold tracking-tight
+    font-extrabold tracking-tight text-center md:text-left
+    leading-[1.18] md:leading-[1.2]
     text-[34px] sm:text-[40px] md:text-[48px] lg:text-[56px]
-    leading-[1.18] sm:leading-[1.2]
-    text-center md:text-left
-    max-w-[28ch] md:max-w-none
+    mx-auto md:mx-0 px-4 sm:px-6
+    max-w-[30ch] md:max-w-none
   "
 >
-  {/* 1) UNA SOLA RIGA (giallo) */}
-  <span className="block whitespace-nowrap bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400 bg-clip-text text-transparent">
-    Risveglia ciò che Sei
+  {/* Riga 1 - sempre su una sola riga */}
+  <span
+    className="
+      block bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400
+      bg-clip-text text-transparent whitespace-nowrap
+    "
+  >
+    Risveglia&nbsp;ciò&nbsp;che&nbsp;Sei
   </span>
 
-  {/* 2) DUE RIGHE FORZATE */}
-  <span className="block text-white">
-    <span className="whitespace-nowrap">Trasforma Conoscenza</span>
+  {/* Riga 2 */}
+  <span className="block text-white mt-2 whitespace-nowrap">
+    Trasforma&nbsp;Conoscenza
   </span>
-  <span className="block text-white">In Potere</span>
+
+  {/* Riga 3 */}
+  <span className="block text-white mt-1">
+    In&nbsp;Potere
+  </span>
 </h1>
               <p className="mt-6 text-white/80 text-lg md:text-xl max-w-2xl mx-auto md:mx-0">
                 Progetto editoriale e multimediale che unisce Antiche Sapienze, ricerca
