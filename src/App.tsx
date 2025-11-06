@@ -264,7 +264,9 @@ export default function App() {
                   Risveglia ciò che Sei
                 </span>
                 <span className="block text-gold">
-                  {"Trasforma\u00A0Conoscenza in Potere"}
+                  Trasforma&nbsp;Conoscenza
+                 <br />
+                 in&nbsp;Potere
                 </span>
               </h1>
 
