@@ -231,52 +231,44 @@ export default function App() {
       </header>
 
       {/* HERO */}
-      <section id="home" className="relative overflow-visible md:overflow-hidden">
+      <section id="home" className="relative overflow-hidden">
         <Aura />
 
-        <div className="mx-auto max-w-7xl px-6 sm:px-8 py-20 md:py-28 relative">
+        <div className="mx-auto max-w-7xl px-4 py-20 md:py-28 relative">
           {/* Wrapper due colonne */}
           <div className="flex flex-col md:flex-row items-center justify-between gap-12">
 
             {/* Colonna sinistra: testo */}
-            <div className="w-full max-w-[720px] px-6 sm:px-8 font-brand text-center md:text-left">
+            <div className="max-w-3xl text-center md:text-left">
               <div className="flex flex-wrap gap-2 mb-6 justify-center md:justify-start">
                 <Badge>Divulgatore</Badge>
                 <Badge>Scrittore</Badge>
                 <Badge>Editore</Badge>
               </div>
 
-             <h1
-  className="font-extrabold tracking-tight text-center md:text-left
-             leading-[1.18] md:leading-[1.15]
-             text-[24px] sm:text-[28px] md:text-[40px] lg:text-[56px]
-             mx-auto md:mx-0 max-w-[26ch] md:max-w-[30ch]"
->
-  {/* MOBILE (< md) */}
-  <span className="md:hidden">
-    {/* 1 riga: Risveglia ciò che Sei */}
-    <span className="block bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400 bg-clip-text text-transparent whitespace-nowrap">
-      Risveglia&nbsp;ciò&nbsp;che&nbsp;Sei
-    </span>
-    {/* 2 riga: Trasforma Conoscenza */}
-    <span className="block text-white mt-2 whitespace-nowrap">
-      Trasforma&nbsp;Conoscenza
-    </span>
-    {/* 3 riga: In Potere */}
-    <span className="block text-white mt-2">In&nbsp;Potere</span>
-  </span>
+              <h1
+                className="
+                  font-extrabold
+                  text-[36px] md:text-[48px] lg:text-[56px]
+                  leading-[1.18] md:leading-[1.2]
+                  tracking-tight
+                "
+              >
+                <span
+                  className="
+                    block
+                    bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400
+                    bg-clip-text text-transparent
+                  "
+                >
+                  Risveglia ciò che Sei
+                <span className="block text-gold">
+  Trasforma&nbsp;Conoscenza
+  <br />
+  in&nbsp;Potere
+</span>
+              </h1>
 
-  {/* DESKTOP (≥ md) */}
-  <span className="hidden md:block">
-    <span className="block bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400 bg-clip-text text-transparent whitespace-nowrap">
-      Risveglia&nbsp;ciò&nbsp;che&nbsp;Sei
-    </span>
-    <span className="block text-white mt-2 whitespace-nowrap">
-      Trasforma&nbsp;Conoscenza
-    </span>
-    <span className="block text-white mt-1">In&nbsp;Potere</span>
-  </span>
-</h1>
               <p className="mt-6 text-white/80 text-lg md:text-xl max-w-2xl mx-auto md:mx-0">
                 Progetto editoriale e multimediale che unisce Antiche Sapienze, ricerca
                 storica e pratica quotidiana
