@@ -8,3 +8,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+__html: `
+/* Inknut Antiqua */
+@import url('https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@400;600;700;800&display=swap');
+
+html, body { overflow-x: hidden; scroll-behavior: smooth; }
