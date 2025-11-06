@@ -420,27 +420,45 @@ export default function App() {
             </div>
           </div>
           <form
-            className="rounded-2xl border border-white/10 bg-white/5 p-6"
-            onSubmit={(e) => e.preventDefault()}
-          >
-            <div className="grid sm:grid-cols-2 gap-4">
-              <Field label="Nome">
-                <input className="input rounded-xl" placeholder="Il tuo nome" />
-              </Field>
-              <Field label="Email">
-                <input type="email" required className="input rounded-xl" placeholder="you@example.com" />
-              </Field>
-              <div className="sm:col-span-2">
-                <label className="text-sm text-white/80">Messaggio</label>
-                <textarea
-                  rows={5}
-                  className="input h-auto rounded-xl"
-                  placeholder="Raccontami del tuo progetto"
-                />
-              </div>
-            </div>
-            <button className="mt-4 w-full btn btn-gold rounded-xl">Invia</button>
-          </form>
+  className="rounded-2xl border border-white/10 bg-black/20 backdrop-blur-sm p-6 shadow-[0_0_30px_rgba(212,175,55,0.1)]"
+  onSubmit={(e) => e.preventDefault()}
+>
+  <div className="grid sm:grid-cols-2 gap-5">
+    {/* Nome */}
+    <div className="flex flex-col">
+      <label className="text-sm text-white/80 mb-1">Nome</label>
+      <input
+        type="text"
+        placeholder="Il tuo nome"
+        className="rounded-xl bg-white/5 border border-white/15 px-4 py-3 text-white/90 placeholder-white/40 outline-none focus:ring-2 focus:ring-[#d4af37]/60 transition"
+      />
+    </div>
+
+    {/* Email */}
+    <div className="flex flex-col">
+      <label className="text-sm text-white/80 mb-1">Email</label>
+      <input
+        type="email"
+        required
+        placeholder="you@example.com"
+        className="rounded-xl bg-white/5 border border-white/15 px-4 py-3 text-white/90 placeholder-white/40 outline-none focus:ring-2 focus:ring-[#d4af37]/60 transition"
+      />
+    </div>
+
+    {/* Messaggio */}
+    <div className="sm:col-span-2 flex flex-col">
+      <label className="text-sm text-white/80 mb-1">Messaggio</label>
+      <textarea
+        rows={5}
+        placeholder="Raccontami del tuo progetto"
+        className="rounded-xl bg-white/5 border border-white/15 px-4 py-3 text-white/90 placeholder-white/40 outline-none focus:ring-2 focus:ring-[#d4af37]/60 transition resize-none"
+      />
+    </div>
+  </div>
+
+  <button className="mt-6 w-full btn btn-gold rounded-xl">Invia</button>
+</form>
+
         </div>
       </section>
 
