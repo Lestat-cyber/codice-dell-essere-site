@@ -247,27 +247,31 @@ export default function App() {
               </div>
 
               <h1
-                className="
-                  font-extrabold
-                  text-[36px] md:text-[48px] lg:text-[56px]
-                  leading-[1.18] md:leading-[1.2]
-                  tracking-tight
-                "
-              >
-                <span
-                  className="
-                    block
-                    bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400
-                    bg-clip-text text-transparent
-                  "
-                >
-                  Risveglia ciò che Sei
-                <span className="block text-gold">
-                 Trasforma&nbsp;Conoscenza
-                 <br />
-                 in&nbsp;Potere
-               </span>
-              </h1>
+  className="
+    font-extrabold
+    text-[36px] md:text-[48px] lg:text-[56px]
+    leading-[1.18] md:leading-[1.2]
+    tracking-tight
+  "
+>
+  {/* Prima riga: oro pieno */}
+  <span
+    className="
+      block
+      bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400
+      bg-clip-text text-transparent
+    "
+  >
+    Risveglia ciò che Sei
+  </span>
+
+  {/* Seconda parte: due righe, stessa tonalità dorata */}
+  <span className="block text-gold">
+    Trasforma&nbsp;Conoscenza
+    <br />
+    in&nbsp;Potere
+  </span>
+</h1>
 
               <p className="mt-6 text-white/80 text-lg md:text-xl max-w-2xl mx-auto md:mx-0">
                 Progetto editoriale e multimediale che unisce Antiche Sapienze, ricerca
