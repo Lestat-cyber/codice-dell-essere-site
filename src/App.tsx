@@ -316,6 +316,62 @@ export default function App() {
         </div>
       </section>
 
+       {/* BIOGRAFIA AUTORE */}
+<section id="autore" className="mx-auto max-w-6xl px-4 py-16 md:py-20 border-t border-white/10">
+  <div className="flex flex-col md:flex-row items-center gap-10">
+    
+    {/* Immagine autore */}
+    <div className="relative flex-shrink-0">
+      <div aria-hidden className="absolute -inset-4 rounded-full bg-gradient-to-tr from-amber-400/20 to-yellow-300/10 blur-2xl"></div>
+      <img
+        src="/assets/autore.webp"
+        alt="Umberto Portaro — Codice dell’Essere"
+        className="relative w-44 h-44 md:w-52 md:h-52 rounded-full object-cover border border-white/10 shadow-[0_0_25px_rgba(212,175,55,0.25)]"
+        loading="lazy"
+      />
+    </div>
+
+    {/* Testo biografia */}
+    <div className="text-center md:text-left max-w-2xl">
+      <h2 className="text-2xl md:text-3xl font-bold text-gold">Umberto Portaro</h2>
+      <p className="text-white/80 mt-4 text-base md:text-lg leading-relaxed">
+        Imprenditore digitale, narratore e ricercatore indipendente, unisce il pensiero strategico alla conoscenza profonda delle leggi universali. 
+        Dopo anni di ricerca interiore e di crescita professionale, attraversando il cammino che lo ha portato da semplice impiegato a guidare la propria realtà, 
+        trasforma la sua visione in un progetto di consapevolezza globale: <strong>Codice dell’Essere</strong>.
+      </p>
+
+      <p className="text-white/80 mt-4 text-base md:text-lg leading-relaxed">
+        Creatore della filosofia che porta lo stesso nome, Umberto integra <strong>scienza</strong>, <strong>ermetismo</strong> e <strong>crescita personale</strong> 
+        in un linguaggio moderno, capace di rendere accessibili concetti millenari. Le sue opere non sono semplici libri, ma percorsi iniziatici: 
+        viaggi che uniscono mito e realtà, storia e spirito, razionalità e intuizione.
+      </p>
+
+      <p className="text-white/80 mt-4 text-base md:text-lg leading-relaxed">
+        Cresciuto con la consapevolezza di percepire ciò che molti non vedono, ha esplorato fin da giovane le <strong>filosofie orientali</strong>, 
+        l’<strong>ermetismo</strong> e le teorie sugli <strong>antichi astronauti</strong>, trovando nell’unione tra conoscenza ed esperienza diretta 
+        la chiave dell’evoluzione umana. Con la collana <strong>Codice Anunnaki</strong> accompagna il lettore dalle origini della Creazione dell’Uomo 
+        alle verità celate delle civiltà scomparse, restituendo una visione coraggiosa e completa delle nostre radici.
+      </p>
+
+      <p className="text-white/80 mt-4 text-base md:text-lg leading-relaxed">
+        Ogni parola che scrive è un intreccio di simboli e rivelazioni, un invito a risvegliare la coscienza e a riconoscere il potere creativo dell’anima. 
+        Per lui la conoscenza non è mai fine a sé stessa: è la più grande forma di libertà, l’atto supremo con cui l’uomo può trascendere i propri limiti 
+        e ricordare ciò che è sempre stato.
+      </p>
+
+      <p className="text-white/90 mt-4 text-base md:text-lg leading-relaxed italic">
+        <strong className="text-gold">Codice dell’Essere</strong> non è una religione, ma un linguaggio universale: una chiamata per chi è pronto a oltrepassare 
+        il velo dell’oblio e riscoprire il proprio potenziale infinito.
+      </p>
+
+      <div className="mt-6">
+        <a href="#contatti" className="btn btn-outline btn-sm rounded-xl">Contattalo</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
       {/* MISSIONE */}
       <Section
         id="missione"
