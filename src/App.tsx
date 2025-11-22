@@ -8,6 +8,7 @@ const LINKS = {
   anunnaki0: "https://amzn.eu/d/akZ7CqJ", // Codice Anunnaki — La Creazione dell’Uomo (Vol. Ø)
   anunnaki1: "https://amzn.to/3LLoUnt",   // Codice Anunnaki — Gli Dei del Cielo e della Terra (Vol. I • Parte I)
   limitless: "https://amzn.eu/d/dtR64tc", // Limitless — Codice dell’Essere
+  pathOfDestiny: "https://amzn.to/48bdP6Z", // The Path of Destiny — Gabriella Saia (Autore ospite)
 };
 
 // Video reali
@@ -164,7 +165,7 @@ function SocialLink({
   );
 }
 
-function SocialBar({ size = "md" }: { size?: "sm" | "md" }) {
+function SocialBar({ size = "sm" }: { size?: "sm" | "md" }) {
   const icon = size === "sm" ? "w-5 h-5" : "w-6 h-6";
   const gap = size === "sm" ? "gap-2" : "gap-3";
   return (
@@ -316,61 +317,60 @@ export default function App() {
         </div>
       </section>
 
-       {/* BIOGRAFIA AUTORE */}
-<section id="autore" className="mx-auto max-w-6xl px-4 py-16 md:py-20 border-t border-white/10">
-  <div className="flex flex-col md:flex-row items-center gap-10">
-    
-    {/* Immagine autore */}
-    <div className="relative flex-shrink-0">
-      <div aria-hidden className="absolute -inset-4 rounded-full bg-gradient-to-tr from-amber-400/20 to-yellow-300/10 blur-2xl"></div>
-      <img
-        src="/assets/autore.webp"
-        alt="Umberto Portaro — Codice dell’Essere"
-        className="relative w-44 h-44 md:w-52 md:h-52 rounded-full object-cover border border-white/10 shadow-[0_0_25px_rgba(212,175,55,0.25)]"
-        loading="lazy"
-      />
-    </div>
+      {/* BIOGRAFIA AUTORE */}
+      <section id="autore" className="mx-auto max-w-6xl px-4 py-16 md:py-20 border-t border-white/10">
+        <div className="flex flex-col md:flex-row items-center gap-10">
+          
+          {/* Immagine autore */}
+          <div className="relative flex-shrink-0">
+            <div aria-hidden className="absolute -inset-4 rounded-full bg-gradient-to-tr from-amber-400/20 to-yellow-300/10 blur-2xl"></div>
+            <img
+              src="/assets/autore.webp"
+              alt="Umberto Portaro — Codice dell’Essere"
+              className="relative w-44 h-44 md:w-52 md:h-52 rounded-full object-cover border border-white/10 shadow-[0_0_25px_rgba(212,175,55,0.25)]"
+              loading="lazy"
+            />
+          </div>
 
-    {/* Testo biografia */}
-    <div className="text-center md:text-left max-w-2xl">
-      <h2 className="text-2xl md:text-3xl font-bold text-gold">Umberto Portaro</h2>
-      <p className="text-white/80 mt-4 text-base md:text-lg leading-relaxed">
-        Imprenditore digitale, narratore e ricercatore indipendente, unisce il pensiero strategico alla conoscenza profonda delle leggi universali. 
-        Dopo anni di ricerca interiore e di crescita professionale, attraversando il cammino che lo ha portato da semplice impiegato a guidare la propria realtà, 
-        trasforma la sua visione in un progetto di consapevolezza globale: <strong>Codice dell’Essere</strong>.
-      </p>
+          {/* Testo biografia */}
+          <div className="text-center md:text-left max-w-2xl">
+            <h2 className="text-2xl md:text-3xl font-bold text-gold">Umberto Portaro</h2>
+            <p className="text-white/80 mt-4 text-base md:text-lg leading-relaxed">
+              Imprenditore digitale, narratore e ricercatore indipendente, unisce il pensiero strategico alla conoscenza profonda delle leggi universali. 
+              Dopo anni di ricerca interiore e di crescita professionale, attraversando il cammino che lo ha portato da semplice impiegato a guidare la propria realtà, 
+              trasforma la sua visione in un progetto di consapevolezza globale: <strong>Codice dell’Essere</strong>.
+            </p>
 
-      <p className="text-white/80 mt-4 text-base md:text-lg leading-relaxed">
-        Creatore della filosofia che porta lo stesso nome, Umberto integra <strong>scienza</strong>, <strong>ermetismo</strong> e <strong>crescita personale </strong> 
-         in un linguaggio moderno, capace di rendere accessibili concetti millenari. Le sue opere non sono semplici libri, ma percorsi iniziatici: 
-        viaggi che uniscono mito e realtà, storia e spirito, razionalità e intuizione.
-      </p>
+            <p className="text-white/80 mt-4 text-base md:text-lg leading-relaxed">
+              Creatore della filosofia che porta lo stesso nome, Umberto integra <strong>scienza</strong>, <strong>ermetismo</strong> e <strong>crescita personale </strong> 
+              in un linguaggio moderno, capace di rendere accessibili concetti millenari. Le sue opere non sono semplici libri, ma percorsi iniziatici: 
+              viaggi che uniscono mito e realtà, storia e spirito, razionalità e intuizione.
+            </p>
 
-      <p className="text-white/80 mt-4 text-base md:text-lg leading-relaxed">
-        Cresciuto con la consapevolezza di percepire ciò che molti non vedono, ha esplorato fin da giovane le <strong>filosofie orientali</strong>, 
-        l’<strong>ermetismo</strong> e le teorie sugli <strong>antichi astronauti</strong>, trovando nell’unione tra conoscenza ed esperienza diretta 
-        la chiave dell’evoluzione umana. Con la collana <strong>Codice Anunnaki</strong> accompagna il lettore dalle origini della Creazione dell’Uomo 
-        alle verità celate delle civiltà scomparse, restituendo una visione coraggiosa e completa delle nostre radici.
-      </p>
+            <p className="text-white/80 mt-4 text-base md:text-lg leading-relaxed">
+              Cresciuto con la consapevolezza di percepire ciò che molti non vedono, ha esplorato fin da giovane le <strong>filosofie orientali</strong>, 
+              l’<strong>ermetismo</strong> e le teorie sugli <strong>antichi astronauti</strong>, trovando nell’unione tra conoscenza ed esperienza diretta 
+              la chiave dell’evoluzione umana. Con la collana <strong>Codice Anunnaki</strong> accompagna il lettore dalle origini della Creazione dell’Uomo 
+              alle verità celate delle civiltà scomparse, restituendo una visione coraggiosa e completa delle nostre radici.
+            </p>
 
-      <p className="text-white/80 mt-4 text-base md:text-lg leading-relaxed">
-        Ogni parola che scrive è un intreccio di simboli e rivelazioni, un invito a risvegliare la coscienza e a riconoscere il potere creativo dell’anima. 
-        Per lui la conoscenza non è mai fine a sé stessa: è la più grande forma di libertà, l’atto supremo con cui l’uomo può trascendere i propri limiti 
-        e ricordare ciò che è sempre stato.
-      </p>
+            <p className="text-white/80 mt-4 text-base md:text-lg leading-relaxed">
+              Ogni parola che scrive è un intreccio di simboli e rivelazioni, un invito a risvegliare la coscienza e a riconoscere il potere creativo dell’anima. 
+              Per lui la conoscenza non è mai fine a sé stessa: è la più grande forma di libertà, l’atto supremo con cui l’uomo può trascendere i propri limiti 
+              e ricordare ciò che è sempre stato.
+            </p>
 
-      <p className="text-white/90 mt-4 text-base md:text-lg leading-relaxed italic">
-        <strong className="text-gold">Codice dell’Essere</strong> non è una religione, ma un linguaggio universale: una chiamata per chi è pronto a oltrepassare 
-        il velo dell’oblio e riscoprire il proprio potenziale infinito.
-      </p>
+            <p className="text-white/90 mt-4 text-base md:text-lg leading-relaxed italic">
+              <strong className="text-gold">Codice dell’Essere</strong> non è una religione, ma un linguaggio universale: una chiamata per chi è pronto a oltrepassare 
+              il velo dell’oblio e riscoprire il proprio potenziale infinito.
+            </p>
 
-      <div className="mt-6">
-        <a href="#contatti" className="btn btn-outline btn-sm rounded-xl">Contattalo</a>
-      </div>
-    </div>
-  </div>
-</section>
-
+            <div className="mt-6">
+              <a href="#contatti" className="btn btn-outline btn-sm rounded-xl">Contattalo</a>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* MISSIONE */}
       <Section
@@ -387,7 +387,16 @@ export default function App() {
 
       {/* LIBRI */}
       <Section id="libri" title="Libri" subtitle="Serie e titoli disponibili ora e in arrivo.">
-        <div className="grid md:grid-cols-3 gap-6">
+        {/* Bloccone 1 – I Libri di Codice dell’Essere */}
+        <div className="mb-8">
+          <h3 className="text-xl md:text-2xl font-semibold">I Libri di Codice dell’Essere</h3>
+          <p className="text-white/80 text-sm md:text-base mt-2 max-w-3xl">
+            Le opere scritte direttamente da Umberto Portaro: percorsi iniziatici che uniscono mito, ricerca storica,
+            ermetismo e pratica quotidiana. Ogni libro è un tassello del Codice.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-6 mb-12">
           <Book
             img="/cover-anunnaki-alt.png"
             title="Codice Anunnaki: La Creazione dell’Uomo (Vol. Ø)"
@@ -406,6 +415,33 @@ export default function App() {
             subtitle="La mente come strumento sacro. La volontà come arte della manifestazione."
             href={LINKS.limitless}
           />
+        </div>
+
+        {/* Bloccone 2 – Altre Voci del Codice */}
+        <div className="mb-4">
+          <h3 className="text-xl md:text-2xl font-semibold">Altre Voci del Codice</h3>
+          <p className="text-white/80 text-sm md:text-base mt-2 max-w-3xl">
+            Opere editoriali di altri autori che ho scelto di accompagnare perché risuonano con la visione del Codice dell’Essere:
+            memoria, ferite, destino, rinascita. Non sono semplici titoli in catalogo, ma voci che hanno trasformato il loro inferno in parola.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-6">
+          <Book
+            img="/cover-the-path-of-destiny.png"
+            title="The Path of Destiny"
+            subtitle="La storia vera di una figlia che ricompone il destino del padre tra Sicilia e Inghilterra, tra silenzi, segreti e ferite mai guarite."
+            href={LINKS.pathOfDestiny}
+            badge="Autore ospite"
+          />
+          <Book
+            img="/placeholder-altre-voci.png"
+            title="Nuove opere in arrivo"
+            subtitle="Altre voci del Codice stanno per aggiungersi a questo spazio: storie vere, testimonianze, romanzi e saggi che parlano la stessa lingua del risveglio."
+            href=""
+            badge="Prossimamente"
+          />
+          {/* Terza card lasciata per futura espansione o puoi rimuoverla */}
         </div>
       </Section>
 
@@ -510,16 +546,16 @@ export default function App() {
                   type="email"
                   required
                   placeholder="you@example.com"
-                  className="rounded-xl bg-white/5 border border-white/15 px-4 py-3 text-white/90 placeholder-white/40 outline-none focus:ring-2 focus:ring-[#d4af37]/60 transition"
+                  className="rounded-xl bg:white/5 border border-white/15 px-4 py-3 text:white/90 placeholder-white/40 outline-none focus:ring-2 focus:ring-[#d4af37]/60 transition"
                 />
               </div>
 
               <div className="sm:col-span-2 flex flex-col">
-                <label className="text-sm text-white/80 mb-1">Messaggio</label>
+                <label className="text-sm text:white/80 mb-1">Messaggio</label>
                 <textarea
                   rows={5}
                   placeholder="Raccontami del tuo progetto"
-                  className="rounded-xl bg-white/5 border border-white/15 px-4 py-3 text-white/90 placeholder-white/40 outline-none focus:ring-2 focus:ring-[#d4af37]/60 transition resize-none"
+                  className="rounded-xl bg-white/5 border border-white/15 px-4 py-3 text:white/90 placeholder-white/40 outline-none focus:ring-2 focus:ring-[#d4af37]/60 transition resize-none"
                 />
               </div>
             </div>
@@ -621,21 +657,29 @@ function Book({
   title,
   subtitle,
   href,
+  badge,
 }: {
   img: string;
   title: string;
   subtitle: string;
   href: string;
+  badge?: string;
 }) {
+  const isAvailable = Boolean(href);
   return (
     <article className="rounded-2xl border border-white/10 bg-white/5 overflow-hidden transition-transform duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(212,175,55,0.2)]">
-      <div className="w-full bg-black/40 flex items-center justify-center">
+      <div className="relative w-full bg-black/40 flex items-center justify-center">
+        {badge && (
+          <span className="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full bg-amber-500/80 text-black text-[10px] font-semibold tracking-wide uppercase">
+            {badge}
+          </span>
+        )}
         <img src={img} alt={title} className="w-full h-auto object-contain rounded-lg" />
       </div>
       <div className="p-6">
         <h3 className="font-semibold text-lg">{title}</h3>
         <p className="text-white/80 text-sm mt-2">{subtitle}</p>
-        {href ? (
+        {isAvailable ? (
           <a
             href={href}
             target="_blank"
@@ -755,4 +799,5 @@ function Aura() {
     </div>
   );
 }
+
 
