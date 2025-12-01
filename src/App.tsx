@@ -8,7 +8,7 @@ const LINKS = {
   anunnaki0: "https://amzn.eu/d/akZ7CqJ", // Codice Anunnaki — La Creazione dell’Uomo (Vol. Ø)
   anunnaki1: "https://amzn.to/3LLoUnt",   // Codice Anunnaki — Gli Dei del Cielo e della Terra (Vol. I • Parte I)
   limitless: "https://amzn.eu/d/dtR64tc", // Limitless — Codice dell’Essere
-  pathOfDestiny: "https://amzn.to/48bdP6Z", // The Path of Destiny — Gabriella Saia (Autore ospite)
+  pathOfDestiny: "https://amzn.to/444ZyYi", // The Path of Destiny — Gabriella Saia (Autore ospite)
 };
 
 // Video reali
@@ -429,7 +429,7 @@ export default function App() {
         <div className="grid md:grid-cols-3 gap-6">
           <Book
             img="/cover-the-path-of-destiny.png"
-            title="The Path of Destiny"
+            title="I Sentieri del Destino"
             subtitle="La storia vera di una figlia che ricompone il destino del padre tra Sicilia e Inghilterra, tra silenzi, segreti e ferite mai guarite."
             href={LINKS.pathOfDestiny}
             badge="Autore ospite"
