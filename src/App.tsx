@@ -419,7 +419,7 @@ export default function App() {
             badge="Nuova uscita"
           />
           <Book
-            img="/cover-limitless.png"
+            img="/cover-limitless2.png"
             title="Codice dell'Essere - Limitless"
             subtitle="La mente come strumento sacro. La volontà come arte della manifestazione."
             href={LINKS.limitless}
