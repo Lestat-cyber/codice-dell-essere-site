@@ -444,7 +444,7 @@ export default function App() {
             badge="Autore ospite"
           />
           <Book
-            img="/cover-kybalion.png"
+            img="/placeholder-altre-voci.png"
             title="Nuove opere in arrivo"
             subtitle="Altre voci del Codice stanno per aggiungersi a questo spazio: storie vere, testimonianze, romanzi e saggi che parlano la stessa lingua del risveglio."
             href=""
