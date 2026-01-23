@@ -420,7 +420,7 @@ export default function App() {
           />
           <Book
             img="/cover-limitless2.png"
-            title="Codice dell'Essere - Limitless"
+            title="Limitless - Codice dell'Essere"
             subtitle="La mente come strumento sacro. La volontà come arte della manifestazione."
             href={LINKS.limitless}
           />
