@@ -7,6 +7,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 const LINKS = {
   anunnaki0: "https://amzn.eu/d/akZ7CqJ", // Codice Anunnaki — La Creazione dell’Uomo (Vol. Ø)
   anunnaki1: "https://amzn.to/3LLoUnt",   // Codice Anunnaki — Gli Dei del Cielo e della Terra (Vol. I • Parte I)
+  kybalion: "https://amzn.to/4qNMY8Q", // Il Nuovo Kybalion — Codice dell'Essere
   limitless: "https://amzn.eu/d/dtR64tc", // Limitless — Codice dell’Essere
   pathOfDestiny: "https://amzn.to/444ZyYi", // The Path of Destiny — Gabriella Saia (Autore ospite)
 };
@@ -290,27 +291,28 @@ export default function App() {
               </div>
 
               <img
-                src="/assets/anunnaki2-cover.webp"
-                alt="Codice Anunnaki — Gli Dei del Cielo e della Terra (Vol. I • Parte I)"
-                className="relative w-56 sm:w-64 rounded-xl shadow-2xl mx-auto hover:scale-105 transition-transform duration-500 drop-shadow-[0_0_35px_rgba(255,200,80,0.35)]"
+                src="/cover-kybalion.png"
+                alt="Il Nuovo Kybalion — Codice dell’Essere"
+                className="relative w-56 sm:w-64 rounded-xl shadow-2xl mx-auto hover:scale-105 transition-transform duration-500 drop-shadow-[0_0_35px_rgba(212,175,55,0.45)]"
                 loading="eager"
+
               />
 
-              <div className="mt-4 flex flex-col items-center text-center">
-                <p className="text-white/90 text-lg md:text-xl tracking-wide leading-snug max-w-sm">
-                  Il seguito tanto atteso:
-                </p>
-                <p className="text-white/90 text-lg md:text-xl tracking-wide leading-snug max-w-sm font-bold">
-                  Gli Dei del Cielo e della Terra
-                </p>
-                <a
-                  href={LINKS.anunnaki1}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-3 inline-block btn btn-gold rounded-xl"
-                >
-                  Acquista Ora
-                </a>
+             <p className="text-white/90 text-lg md:text-xl tracking-wide leading-snug max-w-sm">
+  La riscrittura dell’Ermetismo
+</p>
+<p className="text-white/90 text-lg md:text-xl tracking-wide leading-snug max-w-sm font-bold">
+  Il Nuovo Kybalion
+</p>
+
+<a
+  href={LINKS.kybalion}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="mt-3 inline-block btn btn-gold rounded-xl"
+>
+  Acquista Ora
+</a>
               </div>
             </div>
           </div>
@@ -396,7 +398,7 @@ export default function App() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6 mb-12">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           <Book
             img="/cover-anunnaki-alt.png"
             title="Codice Anunnaki: La Creazione dell’Uomo (Vol. Ø)"
@@ -408,6 +410,13 @@ export default function App() {
             title="Codice Anunnaki: Gli Dèi del Cielo e della Terra (Vol. I • Parte I)"
             subtitle="Le forze che plasmarono il mondo stanno tornando a risvegliare la memoria del cielo."
             href={LINKS.anunnaki1}
+          />
+          <Book
+            img="/cover-kybalion.png"
+            title="Il Nuovo Kybalion — Codice dell’Essere"
+            subtitle="Il campo, l’intenzione, la legge, la mente, l’Essere. Le leggi antiche riattivate dentro l’uomo moderno."
+            href={LINKS.kybalion}
+            badge="Nuova uscita"
           />
           <Book
             img="/cover-limitless.png"
