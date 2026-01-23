@@ -7,7 +7,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 const LINKS = {
   anunnaki0: "https://amzn.eu/d/akZ7CqJ", // Codice Anunnaki — La Creazione dell’Uomo (Vol. Ø)
   anunnaki1: "https://amzn.to/3LLoUnt",   // Codice Anunnaki — Gli Dei del Cielo e della Terra (Vol. I • Parte I)
-  kybalion: "https://amzn.to/4qNMY8Q", // Il Nuovo Kybalion — Codice dell'Essere
+  kybalion: "https://amzn.to/4qNMY8Q",    // Il Nuovo Kybalion — Codice dell'Essere
   limitless: "https://amzn.eu/d/dtR64tc", // Limitless — Codice dell’Essere
   pathOfDestiny: "https://amzn.to/444ZyYi", // The Path of Destiny — Gabriella Saia (Autore ospite)
 };
@@ -267,8 +267,8 @@ export default function App() {
                 </span>
                 <span className="block text-gold">
                   Trasforma&nbsp;Conoscenza
-                 <br />
-                 in&nbsp;Potere
+                  <br />
+                  in&nbsp;Potere
                 </span>
               </h1>
 
@@ -295,26 +295,27 @@ export default function App() {
                 alt="Il Nuovo Kybalion — Codice dell’Essere"
                 className="relative w-56 sm:w-64 rounded-xl shadow-2xl mx-auto hover:scale-105 transition-transform duration-500 drop-shadow-[0_0_35px_rgba(212,175,55,0.45)]"
                 loading="eager"
-
               />
 
-             <p className="text-white/90 text-lg md:text-xl tracking-wide leading-snug max-w-sm">
-  La riscrittura dell’Ermetismo
-</p>
-<p className="text-white/90 text-lg md:text-xl tracking-wide leading-snug max-w-sm font-bold">
-  Il Nuovo Kybalion
-</p>
+              <div className="mt-4 flex flex-col items-center text-center">
+                <p className="text-white/90 text-lg md:text-xl tracking-wide leading-snug max-w-sm">
+                  La riscrittura dell’Ermetismo
+                </p>
+                <p className="text-white/90 text-lg md:text-xl tracking-wide leading-snug max-w-sm font-bold">
+                  Il Nuovo Kybalion
+                </p>
 
-<a
-  href={LINKS.kybalion}
-  target="_blank"
-  rel="noopener noreferrer"
-  className="mt-3 inline-block btn btn-gold rounded-xl"
->
-  Acquista Ora
-</a>
+                <a
+                  href={LINKS.kybalion}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 inline-block btn btn-gold rounded-xl"
+                >
+                  Acquista Ora
+                </a>
               </div>
             </div>
+
           </div>
         </div>
       </section>
@@ -322,7 +323,6 @@ export default function App() {
       {/* BIOGRAFIA AUTORE */}
       <section id="autore" className="mx-auto max-w-6xl px-4 py-16 md:py-20 border-t border-white/10">
         <div className="flex flex-col md:flex-row items-center gap-10">
-          
           {/* Immagine autore */}
           <div className="relative flex-shrink-0">
             <div aria-hidden className="absolute -inset-4 rounded-full bg-gradient-to-tr from-amber-400/20 to-yellow-300/10 blur-2xl"></div>
@@ -338,32 +338,32 @@ export default function App() {
           <div className="text-center md:text-left max-w-2xl">
             <h2 className="text-2xl md:text-3xl font-bold text-gold">Umberto Portaro</h2>
             <p className="text-white/80 mt-4 text-base md:text-lg leading-relaxed">
-              Imprenditore digitale, narratore e ricercatore indipendente, unisce il pensiero strategico alla conoscenza profonda delle leggi universali. 
-              Dopo anni di ricerca interiore e di crescita professionale, attraversando il cammino che lo ha portato da semplice impiegato a guidare la propria realtà, 
+              Imprenditore digitale, narratore e ricercatore indipendente, unisce il pensiero strategico alla conoscenza profonda delle leggi universali.
+              Dopo anni di ricerca interiore e di crescita professionale, attraversando il cammino che lo ha portato da semplice impiegato a guidare la propria realtà,
               trasforma la sua visione in un progetto di consapevolezza globale: <strong>Codice dell’Essere</strong>.
             </p>
 
             <p className="text-white/80 mt-4 text-base md:text-lg leading-relaxed">
-              Creatore della filosofia che porta lo stesso nome, Umberto integra <strong>scienza</strong>, <strong>ermetismo</strong> e <strong>crescita personale </strong> 
-              in un linguaggio moderno, capace di rendere accessibili concetti millenari. Le sue opere non sono semplici libri, ma percorsi iniziatici: 
+              Creatore della filosofia che porta lo stesso nome, Umberto integra <strong>scienza</strong>, <strong>ermetismo</strong> e <strong>crescita personale </strong>
+              in un linguaggio moderno, capace di rendere accessibili concetti millenari. Le sue opere non sono semplici libri, ma percorsi iniziatici:
               viaggi che uniscono mito e realtà, storia e spirito, razionalità e intuizione.
             </p>
 
             <p className="text-white/80 mt-4 text-base md:text-lg leading-relaxed">
-              Cresciuto con la consapevolezza di percepire ciò che molti non vedono, ha esplorato fin da giovane le <strong>filosofie orientali</strong>, 
-              l’<strong>ermetismo</strong> e le teorie sugli <strong>antichi astronauti</strong>, trovando nell’unione tra conoscenza ed esperienza diretta 
-              la chiave dell’evoluzione umana. Con la collana <strong>Codice Anunnaki</strong> accompagna il lettore dalle origini della Creazione dell’Uomo 
+              Cresciuto con la consapevolezza di percepire ciò che molti non vedono, ha esplorato fin da giovane le <strong>filosofie orientali</strong>,
+              l’<strong>ermetismo</strong> e le teorie sugli <strong>antichi astronauti</strong>, trovando nell’unione tra conoscenza ed esperienza diretta
+              la chiave dell’evoluzione umana. Con la collana <strong>Codice Anunnaki</strong> accompagna il lettore dalle origini della Creazione dell’Uomo
               alle verità celate delle civiltà scomparse, restituendo una visione coraggiosa e completa delle nostre radici.
             </p>
 
             <p className="text-white/80 mt-4 text-base md:text-lg leading-relaxed">
-              Ogni parola che scrive è un intreccio di simboli e rivelazioni, un invito a risvegliare la coscienza e a riconoscere il potere creativo dell’anima. 
-              Per lui la conoscenza non è mai fine a sé stessa: è la più grande forma di libertà, l’atto supremo con cui l’uomo può trascendere i propri limiti 
+              Ogni parola che scrive è un intreccio di simboli e rivelazioni, un invito a risvegliare la coscienza e a riconoscoscere il potere creativo dell’anima.
+              Per lui la conoscenza non è mai fine a sé stessa: è la più grande forma di libertà, l’atto supremo con cui l’uomo può trascendere i propri limiti
               e ricordare ciò che è sempre stato.
             </p>
 
             <p className="text-white/90 mt-4 text-base md:text-lg leading-relaxed italic">
-              <strong className="text-gold">Codice dell’Essere</strong> non è una religione, ma un linguaggio universale: una chiamata per chi è pronto a oltrepassare 
+              <strong className="text-gold">Codice dell’Essere</strong> non è una religione, ma un linguaggio universale: una chiamata per chi è pronto a oltrepassare
               il velo dell’oblio e riscoprire il proprio potenziale infinito.
             </p>
 
@@ -444,13 +444,12 @@ export default function App() {
             badge="Autore ospite"
           />
           <Book
-            img="/placeholder-altre-voci.png"
+            img="/cover-kybalion.png"
             title="Nuove opere in arrivo"
             subtitle="Altre voci del Codice stanno per aggiungersi a questo spazio: storie vere, testimonianze, romanzi e saggi che parlano la stessa lingua del risveglio."
             href=""
             badge="Prossimamente"
           />
-          {/* Terza card lasciata per futura espansione o puoi rimuoverla */}
         </div>
       </Section>
 
@@ -555,16 +554,16 @@ export default function App() {
                   type="email"
                   required
                   placeholder="you@example.com"
-                  className="rounded-xl bg:white/5 border border-white/15 px-4 py-3 text:white/90 placeholder-white/40 outline-none focus:ring-2 focus:ring-[#d4af37]/60 transition"
+                  className="rounded-xl bg-white/5 border border-white/15 px-4 py-3 text-white/90 placeholder-white/40 outline-none focus:ring-2 focus:ring-[#d4af37]/60 transition"
                 />
               </div>
 
               <div className="sm:col-span-2 flex flex-col">
-                <label className="text-sm text:white/80 mb-1">Messaggio</label>
+                <label className="text-sm text-white/80 mb-1">Messaggio</label>
                 <textarea
                   rows={5}
                   placeholder="Raccontami del tuo progetto"
-                  className="rounded-xl bg-white/5 border border-white/15 px-4 py-3 text:white/90 placeholder-white/40 outline-none focus:ring-2 focus:ring-[#d4af37]/60 transition resize-none"
+                  className="rounded-xl bg-white/5 border border-white/15 px-4 py-3 text-white/90 placeholder-white/40 outline-none focus:ring-2 focus:ring-[#d4af37]/60 transition resize-none"
                 />
               </div>
             </div>
@@ -661,6 +660,7 @@ function Card({ title, body }: { title: string; body: string }) {
     </div>
   );
 }
+
 function Book({
   img,
   title,
@@ -675,19 +675,32 @@ function Book({
   badge?: string;
 }) {
   const isAvailable = Boolean(href);
+
   return (
     <article className="rounded-2xl border border-white/10 bg-white/5 overflow-hidden transition-transform duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(212,175,55,0.2)]">
-      <div className="relative w-full bg-black/40 flex items-center justify-center">
+      {/* AREA COPERTINA */}
+      <div className="relative w-full bg-black/40 flex items-center justify-center aspect-[3/4]">
         {badge && (
           <span className="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full bg-amber-500/80 text-black text-[10px] font-semibold tracking-wide uppercase">
             {badge}
           </span>
         )}
-        <img src={img} alt={title} className="w-full h-auto object-contain rounded-lg" />
+
+        {img && (
+          <img
+            src={img}
+            alt={title}
+            className="max-h-full max-w-full object-contain rounded-lg"
+            loading="lazy"
+          />
+        )}
       </div>
+
+      {/* TESTO */}
       <div className="p-6">
         <h3 className="font-semibold text-lg">{title}</h3>
         <p className="text-white/80 text-sm mt-2">{subtitle}</p>
+
         {isAvailable ? (
           <a
             href={href}
