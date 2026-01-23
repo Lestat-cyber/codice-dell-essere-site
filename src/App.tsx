@@ -413,7 +413,7 @@ export default function App() {
           />
           <Book
             img="/cover-kybalion.png"
-            title="Il Nuovo Kybalion — Codice dell’Essere"
+            title="Il Nuovo Kybalion - Codice dell’Essere"
             subtitle="Il campo, l’intenzione, la legge, la mente, l’Essere. Le leggi antiche riattivate dentro l’uomo moderno."
             href={LINKS.kybalion}
             badge="Nuova uscita"
