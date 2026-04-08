@@ -10,7 +10,7 @@ const LINKS = {
   kybalion: "https://amzn.to/4qNMY8Q",    // Il Nuovo Kybalion — Codice dell'Essere
   limitless: "https://amzn.eu/d/dtR64tc", // Limitless — Codice dell'Essere
   pathOfDestiny: "https://amzn.to/444ZyYi", // The Path of Destiny — Gabriella Saia (Autore ospite)
-  amore: "https://www.amazon.to/4midohy", // L'amore che ti riporta a Te
+  amore: "https://www.amazon.it/dp/B0GWH1LNXG", // L'amore che ti riporta a Te
 };
 
 // Video reali
