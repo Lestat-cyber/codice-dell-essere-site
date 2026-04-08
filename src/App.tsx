@@ -5,11 +5,12 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 =========================== */
 // Amazon
 const LINKS = {
-  anunnaki0: "https://amzn.eu/d/akZ7CqJ", // Codice Anunnaki — La Creazione dell’Uomo (Vol. Ø)
+  anunnaki0: "https://amzn.eu/d/akZ7CqJ", // Codice Anunnaki — La Creazione dell'Uomo (Vol. Ø)
   anunnaki1: "https://amzn.to/3LLoUnt",   // Codice Anunnaki — Gli Dei del Cielo e della Terra (Vol. I • Parte I)
   kybalion: "https://amzn.to/4qNMY8Q",    // Il Nuovo Kybalion — Codice dell'Essere
-  limitless: "https://amzn.eu/d/dtR64tc", // Limitless — Codice dell’Essere
+  limitless: "https://amzn.eu/d/dtR64tc", // Limitless — Codice dell'Essere
   pathOfDestiny: "https://amzn.to/444ZyYi", // The Path of Destiny — Gabriella Saia (Autore ospite)
+  amore: "https://www.amazon.it/dp/B0GWH1LNXG", // L'amore che ti riporta a Te
 };
 
 // Video reali
@@ -37,7 +38,6 @@ function GlobalGlowStyles() {
       dangerouslySetInnerHTML={{
         __html: `
 /* --- FONT GLOBALE: come il brand in header --- */
-/* Inter è una sans moderna molto simile allo stack di default */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
 
 :root{
@@ -200,19 +200,19 @@ function SocialBar({ size = "sm" }: { size?: "sm" | "md" }) {
 =========================== */
 export default function App() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0a1230] via-[#091026] to-[#000814] text-white">
+    <div className="min-h-screen bg-gradient-to-br from-[#051a10] via-[#041510] to-[#020d08] text-white">
       <GlobalGlowStyles />
 
-      <header className="sticky top-0 z-40 backdrop-blur bg-[#0a1230]/70 border-b border-white/10">
+      <header className="sticky top-0 z-40 backdrop-blur bg-[#051a10]/70 border-b border-white/10">
         <div className="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
           <a href="#home" className="flex items-center gap-3 group">
             <img
               src="/logo-codice.webp"
-              alt="Codice dell’Essere"
+              alt="Codice dell'Essere"
               className="h-10 w-10 rounded-lg object-contain"
             />
             <span className="font-semibold tracking-wide text-lg md:text-xl group-hover:opacity-90 transition-opacity">
-              Codice dell’Essere
+              Codice dell'Essere
             </span>
           </a>
 
@@ -283,36 +283,72 @@ export default function App() {
               </div>
             </div>
 
-            {/* Colonna destra: cover ultima uscita */}
+            {/* Colonna destra: le due ultime uscite affiancate */}
             <div className="relative flex flex-col items-center justify-center text-center w-full md:w-auto mx-auto md:mx-0">
               <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center">
                 <div className="absolute h-64 w-64 rounded-full bg-gradient-to-br from-amber-400/60 via-yellow-300/40 to-emerald-300/20 blur-3xl"></div>
                 <div className="absolute h-80 w-80 rounded-full bg-amber-200/10 blur-2xl ring-1 ring-amber-200/20"></div>
               </div>
 
-              <img
-                src="/cover-kybalion.png"
-                alt="Il Nuovo Kybalion — Codice dell’Essere"
-                className="relative w-56 sm:w-64 rounded-xl shadow-2xl mx-auto hover:scale-105 transition-transform duration-500 drop-shadow-[0_0_35px_rgba(212,175,55,0.45)]"
-                loading="eager"
-              />
+              <div className="flex flex-row gap-6 items-end justify-center">
 
-              <div className="mt-4 flex flex-col items-center text-center">
-                <p className="text-white/90 text-lg md:text-xl tracking-wide leading-snug max-w-sm">
-                  La riscrittura dell’Ermetismo
-                </p>
-                <p className="text-white/90 text-lg md:text-xl tracking-wide leading-snug max-w-sm font-bold">
-                  Il Nuovo Kybalion
-                </p>
+                {/* Kybalion */}
+                <div className="flex flex-col items-center text-center">
+                  <img
+                    src="/cover-kybalion.png"
+                    alt="Il Nuovo Kybalion — Codice dell'Essere"
+                    className="relative w-40 sm:w-48 rounded-xl shadow-2xl mx-auto hover:scale-105 transition-transform duration-500 drop-shadow-[0_0_28px_rgba(212,175,55,0.4)]"
+                    loading="eager"
+                  />
+                  <div className="mt-3 flex flex-col items-center text-center">
+                    <p className="text-white/90 text-sm md:text-base tracking-wide leading-snug max-w-[10rem]">
+                      La riscrittura dell'Ermetismo
+                    </p>
+                    <p className="text-white/90 text-sm md:text-base tracking-wide leading-snug max-w-[10rem] font-bold">
+                      Il Nuovo Kybalion
+                    </p>
+                    <a
+                      href={LINKS.kybalion}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-3 inline-block btn btn-gold btn-sm rounded-xl"
+                    >
+                      Acquista Ora
+                    </a>
+                  </div>
+                </div>
 
-                <a
-                  href={LINKS.kybalion}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-3 inline-block btn btn-gold rounded-xl"
-                >
-                  Acquista Ora
-                </a>
+                {/* L'amore che ti riporta a Te */}
+                <div className="flex flex-col items-center text-center">
+                  <div className="relative">
+                    <span className="absolute -top-2.5 -right-2.5 z-10 px-2 py-0.5 rounded-full bg-amber-500/80 text-black text-[9px] font-semibold tracking-wide uppercase">
+                      Nuova uscita
+                    </span>
+                    <img
+                      src="/cover-amore.png"
+                      alt="L'amore che ti riporta a Te — Codice dell'Essere"
+                      className="relative w-40 sm:w-48 rounded-xl shadow-2xl mx-auto hover:scale-105 transition-transform duration-500 drop-shadow-[0_0_28px_rgba(212,175,55,0.4)]"
+                      loading="eager"
+                    />
+                  </div>
+                  <div className="mt-3 flex flex-col items-center text-center">
+                    <p className="text-white/90 text-sm md:text-base tracking-wide leading-snug max-w-[10rem]">
+                      Quando l'amore smette di cercarti fuori
+                    </p>
+                    <p className="text-white/90 text-sm md:text-base tracking-wide leading-snug max-w-[10rem] font-bold">
+                      L'amore che ti riporta a Te
+                    </p>
+                    <a
+                      href={LINKS.amore}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-3 inline-block btn btn-gold btn-sm rounded-xl"
+                    >
+                      Acquista Ora
+                    </a>
+                  </div>
+                </div>
+
               </div>
             </div>
 
@@ -328,7 +364,7 @@ export default function App() {
             <div aria-hidden className="absolute -inset-4 rounded-full bg-gradient-to-tr from-amber-400/20 to-yellow-300/10 blur-2xl"></div>
             <img
               src="/assets/autore.webp"
-              alt="Umberto Portaro — Codice dell’Essere"
+              alt="Umberto Portaro — Codice dell'Essere"
               className="relative w-44 h-44 md:w-52 md:h-52 rounded-full object-cover border border-white/10 shadow-[0_0_25px_rgba(212,175,55,0.25)]"
               loading="lazy"
             />
@@ -340,7 +376,7 @@ export default function App() {
             <p className="text-white/80 mt-4 text-base md:text-lg leading-relaxed">
               Imprenditore digitale, narratore e ricercatore indipendente, unisce il pensiero strategico alla conoscenza profonda delle leggi universali.
               Dopo anni di ricerca interiore e di crescita professionale, attraversando il cammino che lo ha portato da semplice impiegato a guidare la propria realtà,
-              trasforma la sua visione in un progetto di consapevolezza globale: <strong>Codice dell’Essere</strong>.
+              trasforma la sua visione in un progetto di consapevolezza globale: <strong>Codice dell'Essere</strong>.
             </p>
 
             <p className="text-white/80 mt-4 text-base md:text-lg leading-relaxed">
@@ -351,20 +387,20 @@ export default function App() {
 
             <p className="text-white/80 mt-4 text-base md:text-lg leading-relaxed">
               Cresciuto con la consapevolezza di percepire ciò che molti non vedono, ha esplorato fin da giovane le <strong>filosofie orientali</strong>,
-              l’<strong>ermetismo</strong> e le teorie sugli <strong>antichi astronauti</strong>, trovando nell’unione tra conoscenza ed esperienza diretta
-              la chiave dell’evoluzione umana. Con la collana <strong>Codice Anunnaki</strong> accompagna il lettore dalle origini della Creazione dell’Uomo
+              l'<strong>ermetismo</strong> e le teorie sugli <strong>antichi astronauti</strong>, trovando nell'unione tra conoscenza ed esperienza diretta
+              la chiave dell'evoluzione umana. Con la collana <strong>Codice Anunnaki</strong> accompagna il lettore dalle origini della Creazione dell'Uomo
               alle verità celate delle civiltà scomparse, restituendo una visione coraggiosa e completa delle nostre radici.
             </p>
 
             <p className="text-white/80 mt-4 text-base md:text-lg leading-relaxed">
-              Ogni parola che scrive è un intreccio di simboli e rivelazioni, un invito a risvegliare la coscienza e a riconoscoscere il potere creativo dell’anima.
-              Per lui la conoscenza non è mai fine a sé stessa: è la più grande forma di libertà, l’atto supremo con cui l’uomo può trascendere i propri limiti
+              Ogni parola che scrive è un intreccio di simboli e rivelazioni, un invito a risvegliare la coscienza e a riconoscoscere il potere creativo dell'anima.
+              Per lui la conoscenza non è mai fine a sé stessa: è la più grande forma di libertà, l'atto supremo con cui l'uomo può trascendere i propri limiti
               e ricordare ciò che è sempre stato.
             </p>
 
             <p className="text-white/90 mt-4 text-base md:text-lg leading-relaxed italic">
-              <strong className="text-gold">Codice dell’Essere</strong> non è una religione, ma un linguaggio universale: una chiamata per chi è pronto a oltrepassare
-              il velo dell’oblio e riscoprire il proprio potenziale infinito.
+              <strong className="text-gold">Codice dell'Essere</strong> non è una religione, ma un linguaggio universale: una chiamata per chi è pronto a oltrepassare
+              il velo dell'oblio e riscoprire il proprio potenziale infinito.
             </p>
 
             <div className="mt-6">
@@ -378,7 +414,7 @@ export default function App() {
       <Section
         id="missione"
         title="Missione"
-        subtitle="Una via moderna all’Ermetismo: studio, esperienza, applicazione."
+        subtitle="Una via moderna all'Ermetismo: studio, esperienza, applicazione."
       >
         <div className="grid sm:grid-cols-3 gap-6">
           <Card title="Divulgatore" body="Video, conferenze e workshop. Profondo, chiaro, pratico." />
@@ -389,19 +425,19 @@ export default function App() {
 
       {/* LIBRI */}
       <Section id="libri" title="Libri" subtitle="Serie e titoli disponibili ora e in arrivo.">
-        {/* Bloccone 1 – I Libri di Codice dell’Essere */}
+        {/* Bloccone 1 – I Libri di Codice dell'Essere */}
         <div className="mb-8">
-          <h3 className="text-xl md:text-2xl font-semibold">I Libri di Codice dell’Essere</h3>
+          <h3 className="text-xl md:text-2xl font-semibold">I Libri di Codice dell'Essere</h3>
           <p className="text-white/80 text-sm md:text-base mt-2 max-w-3xl">
             Le opere scritte direttamente da Umberto Portaro: percorsi iniziatici che uniscono mito, ricerca storica,
             ermetismo e pratica quotidiana. Ogni libro è un tassello del Codice.
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 mb-12">
           <Book
             img="/cover-anunnaki-alt.png"
-            title="Codice Anunnaki: La Creazione dell’Uomo (Vol. Ø)"
+            title="Codice Anunnaki: La Creazione dell'Uomo (Vol. Ø)"
             subtitle="L'origine dimenticata dell'essere umano e il segreto della sua scintilla divina."
             href={LINKS.anunnaki0}
           />
@@ -413,8 +449,8 @@ export default function App() {
           />
           <Book
             img="/cover-kybalion.png"
-            title="Il Nuovo Kybalion - Codice dell’Essere"
-            subtitle="Il campo, l’intenzione, la legge, la mente, l’Essere. Le leggi antiche riattivate dentro l’uomo moderno."
+            title="Il Nuovo Kybalion - Codice dell'Essere"
+            subtitle="Il campo, l'intenzione, la legge, la mente, l'Essere. Le leggi antiche riattivate dentro l'uomo moderno."
             href={LINKS.kybalion}
             badge="Nuova uscita"
           />
@@ -424,13 +460,20 @@ export default function App() {
             subtitle="La mente come strumento sacro. La volontà come arte della manifestazione."
             href={LINKS.limitless}
           />
+          <Book
+            img="/cover-amore.png"
+            title="L'amore che ti riporta a Te"
+            subtitle="Ogni relazione è uno specchio. Ogni ferita, una mappa. Un viaggio verso il sé attraverso il prisma dell'amore."
+            href={LINKS.amore}
+            badge="Nuova uscita"
+          />
         </div>
 
         {/* Bloccone 2 – Altre Voci del Codice */}
         <div className="mb-4">
           <h3 className="text-xl md:text-2xl font-semibold">Altre Voci del Codice</h3>
           <p className="text-white/80 text-sm md:text-base mt-2 max-w-3xl">
-            Opere editoriali di altri autori che ho scelto di accompagnare perché risuonano con la visione del Codice dell’Essere:
+            Opere editoriali di altri autori che ho scelto di accompagnare perché risuonano con la visione del Codice dell'Essere:
             memoria, ferite, destino, rinascita. Non sono semplici titoli in catalogo, ma voci che hanno trasformato il loro inferno in parola.
           </p>
         </div>
@@ -469,7 +512,7 @@ export default function App() {
         subtitle="Supporto completo per autori e progetti affini."
       >
         <div className="grid md:grid-cols-3 gap-6">
-          <Card title="Coaching Autore" body="Dall’idea al manoscritto." />
+          <Card title="Coaching Autore" body="Dall'idea al manoscritto." />
           <Card title="Editing & Impaginazione" body="Revisione e impaginati per stampa e digitale." />
           <Card title="Pubblicazione (KDP/Ingram)" body="ISBN, formati, prezzo, canali." />
           <Card title="Marketing & ADS" body="Funnel, creatività, Amazon Ads e social." />
@@ -502,7 +545,7 @@ export default function App() {
                 <button className="btn btn-gold rounded-xl">Iscrivimi</button>
               </div>
               <p className="text-xs text-white/60 mt-2">
-                Iscrivendoti accetti l’informativa privacy.
+                Iscrivendoti accetti l'informativa privacy.
               </p>
             </form>
           </div>
@@ -580,7 +623,7 @@ export default function App() {
               <SocialBar size="sm" />
             </div>
 
-            <p>© {new Date().getFullYear()} Codice dell’Essere • Tutti i diritti riservati</p>
+            <p>© {new Date().getFullYear()} Codice dell'Essere • Tutti i diritti riservati</p>
 
             <div className="flex items-center gap-6">
               <a href="#" className="hover:text-gold">Privacy</a>
@@ -816,10 +859,8 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 function Aura() {
   return (
     <div className="absolute inset-0 opacity-30" aria-hidden>
-      <div className="absolute -top-40 -left-40 h-96 w-96 rounded-full bg-[#0e1b44] blur-3xl" />
+      <div className="absolute -top-40 -left-40 h-96 w-96 rounded-full bg-[#0a3320] blur-3xl" />
       <div className="absolute -bottom-40 -right-40 h-[28rem] w-[28rem] rounded-full bg-[#d4af37] blur-3xl" />
     </div>
   );
 }
-
-
