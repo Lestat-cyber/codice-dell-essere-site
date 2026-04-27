@@ -305,7 +305,7 @@ export default function App() {
                       La riscrittura dell'Ermetismo
                     </p>
                     <p className="text-white/90 text-sm md:text-base tracking-wide leading-snug max-w-[10rem] font-bold">
-                      Il Nuovo Kybalion
+                      Il Kybalion
                     </p>
                     <a
                       href={LINKS.kybalion}
