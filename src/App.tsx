@@ -7,7 +7,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 const LINKS = {
   anunnaki0: "https://amzn.eu/d/akZ7CqJ", // Codice Anunnaki — La Creazione dell'Uomo (Vol. Ø)
   anunnaki1: "https://amzn.to/3LLoUnt",   // Codice Anunnaki — Gli Dei del Cielo e della Terra (Vol. I • Parte I)
-  kybalion: "https://amzn.to/4qNMY8Q",    // Il Nuovo Kybalion — Codice dell'Essere
+  kybalion: "https://amzn.to/4cWiXhM",    // Il Nuovo Kybalion — Codice dell'Essere
   limitless: "https://amzn.eu/d/dtR64tc", // Limitless — Codice dell'Essere
   pathOfDestiny: "https://amzn.to/444ZyYi", // The Path of Destiny — Gabriella Saia (Autore ospite)
   amore: "https://www.amazon.it/dp/B0GWH1LNXG", // L'amore che ti riporta a Te
