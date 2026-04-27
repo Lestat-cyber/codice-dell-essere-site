@@ -7,7 +7,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 const LINKS = {
   anunnaki0: "https://amzn.eu/d/akZ7CqJ", // Codice Anunnaki — La Creazione dell'Uomo (Vol. Ø)
   anunnaki1: "https://amzn.to/3LLoUnt",   // Codice Anunnaki — Gli Dei del Cielo e della Terra (Vol. I • Parte I)
-  kybalion: "https://amzn.to/4cWiXhM",    // Il Nuovo Kybalion — Codice dell'Essere
+  kybalion: "https://amzn.to/4cWiXhM",    // Il Kybalion — Codice dell'Essere
   limitless: "https://amzn.eu/d/dtR64tc", // Limitless — Codice dell'Essere
   pathOfDestiny: "https://amzn.to/444ZyYi", // The Path of Destiny — Gabriella Saia (Autore ospite)
   amore: "https://www.amazon.it/dp/B0GWH1LNXG", // L'amore che ti riporta a Te
@@ -296,7 +296,7 @@ export default function App() {
                 <div className="flex flex-col items-center text-center">
                   <img
                     src="/cover-kybalion.png"
-                    alt="Il Nuovo Kybalion — Codice dell'Essere"
+                    alt="Il Kybalion — Codice dell'Essere"
                     className="relative w-40 sm:w-48 rounded-xl shadow-2xl mx-auto hover:scale-105 transition-transform duration-500 drop-shadow-[0_0_28px_rgba(212,175,55,0.4)]"
                     loading="eager"
                   />
@@ -449,7 +449,7 @@ export default function App() {
           />
           <Book
             img="/cover-kybalion.png"
-            title="Il Nuovo Kybalion - Codice dell'Essere"
+            title="Il Kybalion - Codice dell'Essere"
             subtitle="Il campo, l'intenzione, la legge, la mente, l'Essere. Le leggi antiche riattivate dentro l'uomo moderno."
             href={LINKS.kybalion}
             badge="Nuova uscita"
