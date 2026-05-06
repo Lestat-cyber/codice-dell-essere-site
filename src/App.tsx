@@ -278,9 +278,24 @@ export default function App() {
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3 justify-center md:justify-start">
-                <a href="#libri" className="btn btn-gold btn-lg rounded-xl">Scopri i libri</a>
-                <a href="#contatti" className="btn btn-outline btn-lg rounded-xl">Contattami</a>
-              </div>
+  <a href="#libri" className="btn btn-gold btn-lg rounded-xl">Scopri i libri</a>
+  <a 
+    href="https://codicedellessere.substack.com" 
+    target="_blank" 
+    rel="noopener noreferrer"
+    className="btn btn-lg rounded-xl"
+    style={{
+      background: 'linear-gradient(90deg, #047857, #10b981, #047857)',
+      color: '#0a0a0a',
+      border: '1px solid rgba(16, 185, 129, 0.7)',
+      boxShadow: '0 8px 22px rgba(16, 185, 129, 0.25)',
+      fontWeight: 700,
+    }}
+  >
+    📜 Protocollo Limitless · Gratis
+  </a>
+  <a href="#contatti" className="btn btn-outline btn-lg rounded-xl">Contattami</a>
+</div>
             </div>
 
             {/* Colonna destra: le due ultime uscite affiancate */}
