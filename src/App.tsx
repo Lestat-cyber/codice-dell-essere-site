@@ -150,8 +150,17 @@ function Corridor3D() {
     const scene = new THREE.Scene();
     scene.fog = new THREE.FogExp2(0x000000, 0.05);
 
-    const camera = new THREE.PerspectiveCamera(58, width / height, 0.1, 100);
-    camera.position.set(0, 0.4, 4);
+    // su schermi stretti (mobile verticale) allarghiamo il FOV verticale
+    // così il campo visivo orizzontale resta abbastanza ampio da vedere i quadri laterali
+    const MIN_HFOV = THREE.MathUtils.degToRad(72);
+    function fovForAspect(aspect: number) {
+      if (aspect >= 1) return 58;
+      const vFov = 2 * Math.atan(Math.tan(MIN_HFOV / 2) / aspect);
+      return THREE.MathUtils.radToDeg(vFov);
+    }
+
+    const camera = new THREE.PerspectiveCamera(fovForAspect(width / height), width / height, 0.1, 100);
+    camera.position.set(0, 0.4, 9);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -352,7 +361,7 @@ function Corridor3D() {
     });
 
     // --- scroll → camera z ---
-    const totalDepth = 82;
+    const totalDepth = 88;
     let targetZ = camera.position.z;
     const getScrollFrac = () => {
       const max = document.documentElement.scrollHeight - window.innerHeight;
@@ -360,8 +369,8 @@ function Corridor3D() {
     };
     const onScroll = () => {
       const frac = getScrollFrac();
-      targetZ = 4 - frac * totalDepth;
-      const revealed = Math.min(1, frac / 0.07);
+      targetZ = 9 - frac * totalDepth;
+      const revealed = Math.min(1, frac / 0.05);
       renderer.domElement.style.opacity = String(0.14 + revealed * 0.86);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -374,14 +383,21 @@ function Corridor3D() {
       mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
     };
     window.addEventListener("mousemove", onMove);
+    const onTouch = (e: TouchEvent) => {
+      const t = e.touches[0];
+      if (!t) return;
+      mouseX = (t.clientX / window.innerWidth - 0.5) * 2;
+      mouseY = (t.clientY / window.innerHeight - 0.5) * 2;
+    };
+    window.addEventListener("touchmove", onTouch, { passive: true });
 
     let frameId = 0;
     const clock = new THREE.Clock();
     const animate = () => {
       const delta = clock.getDelta();
       camera.position.z += (targetZ - camera.position.z) * 0.06;
-      camera.rotation.y += (mouseX * 0.06 - camera.rotation.y) * 0.04;
-      camera.rotation.x += (-mouseY * 0.035 - camera.rotation.x) * 0.04;
+      camera.rotation.y += (mouseX * 2.7 - camera.rotation.y) * 0.045;
+      camera.rotation.x += (-mouseY * 0.3 - camera.rotation.x) * 0.045;
 
       waypoints.forEach((g) => {
         g.rotation.y += delta * 0.18;
@@ -404,7 +420,9 @@ function Corridor3D() {
     animate();
 
     const onResize = () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
+      const aspect = window.innerWidth / window.innerHeight;
+      camera.aspect = aspect;
+      camera.fov = fovForAspect(aspect);
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
     };
@@ -414,6 +432,7 @@ function Corridor3D() {
       cancelAnimationFrame(frameId);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("touchmove", onTouch);
       window.removeEventListener("resize", onResize);
       rinascimentoVideo.pause();
       renderer.dispose();
@@ -594,7 +613,7 @@ function EntryGate({ onEnter }: { onEnter: () => void }) {
         <p className="eyebrow">Codice dell'Essere</p>
         <h2 className="font-epic text-2xl md:text-3xl text-[var(--gold-bright)]">Varca la Soglia</h2>
         <p className="text-[var(--ivory)]/70 text-sm max-w-[18rem]">
-          Apri il Codice per entrare nel corridoio — ed ascoltare "{ENTRY_TRACK.title}".
+          Apri il Codice per entrare nel corridoio ed ascoltare "{ENTRY_TRACK.title}".
         </p>
         <button onClick={handle} className="btn btn-gold btn-lg rounded-lg">Apri il Codice</button>
       </div>
@@ -692,7 +711,7 @@ export default function App() {
             </span>
           </h1>
           <p className="mt-5 text-[var(--ivory)]/85 text-lg max-w-xl">
-            Antiche Sapienze, ricerca storica, pratica quotidiana — e ora anche musica. Scorri per attraversare il Codice.
+            Antiche Sapienze, ricerca storica, pratica quotidiana, e ora anche musica. Scorri per attraversare il Codice.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <a href="#libri" className="btn btn-gold btn-lg rounded-lg">Scopri i libri</a>
