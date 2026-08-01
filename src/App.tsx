@@ -385,47 +385,43 @@ function Corridor3D() {
     };
     window.addEventListener("mousemove", onMove);
 
-    // Mobile: tieni premuto e trascina per guardarti intorno; rilasciando torna al centro
-    let touchActive = false;
-    let touchStartX = 0;
-    let touchStartY = 0;
-    let touchX = 0;
-    let touchY = 0;
-    const onTouchStart = (e: TouchEvent) => {
-      const t = e.touches[0];
-      if (!t) return;
-      touchActive = true;
-      touchStartX = t.clientX;
-      touchStartY = t.clientY;
+    // Mobile: nessuna interazione da tenere premuta — la fotocamera resta dritta
+    // e guarda automaticamente, per pochi istanti, verso il quadro che si sta attraversando
+    const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+    const PICTURES: { side: -1 | 1; z: number }[] = [
+      { side: -1, z: -3 },
+      { side: 1, z: -13 },
+      { side: -1, z: -23 },
+      { side: 1, z: -33 },
+      { side: -1, z: -43 },
+      { side: 1, z: -53 },
+      { side: -1, z: -63 },
+      { side: 1, z: -73 },
+    ];
+    const autoYaw = (camZ: number) => {
+      let nearest = PICTURES[0];
+      let nearestDist = Infinity;
+      for (const p of PICTURES) {
+        const d = Math.abs(camZ - p.z);
+        if (d < nearestDist) {
+          nearestDist = d;
+          nearest = p;
+        }
+      }
+      const RANGE = 5.5;
+      const influence = Math.max(0, 1 - nearestDist / RANGE);
+      return nearest.side * influence * 0.45;
     };
-    const onTouchMove = (e: TouchEvent) => {
-      if (!touchActive) return;
-      const t = e.touches[0];
-      if (!t) return;
-      const dx = (t.clientX - touchStartX) / (window.innerWidth * 0.55);
-      const dy = (t.clientY - touchStartY) / (window.innerHeight * 0.55);
-      touchX = Math.max(-1, Math.min(1, dx));
-      touchY = Math.max(-1, Math.min(1, dy));
-    };
-    const onTouchEnd = () => {
-      touchActive = false;
-      touchX = 0;
-      touchY = 0;
-    };
-    window.addEventListener("touchstart", onTouchStart, { passive: true });
-    window.addEventListener("touchmove", onTouchMove, { passive: true });
-    window.addEventListener("touchend", onTouchEnd, { passive: true });
-    window.addEventListener("touchcancel", onTouchEnd, { passive: true });
 
     let frameId = 0;
     const clock = new THREE.Clock();
     const animate = () => {
       const delta = clock.getDelta();
       camera.position.z += (targetZ - camera.position.z) * 0.06;
-      const yawInput = touchActive ? touchX : mouseX;
-      const pitchInput = touchActive ? touchY : mouseY;
-      camera.rotation.y += (yawInput * 2.7 - camera.rotation.y) * 0.06;
-      camera.rotation.x += (-pitchInput * 0.3 - camera.rotation.x) * 0.06;
+      const targetYaw = isTouchDevice ? autoYaw(camera.position.z) : mouseX * 2.7;
+      const targetPitch = isTouchDevice ? 0 : -mouseY * 0.3;
+      camera.rotation.y += (targetYaw - camera.rotation.y) * 0.05;
+      camera.rotation.x += (targetPitch - camera.rotation.x) * 0.05;
 
       waypoints.forEach((g) => {
         g.rotation.y += delta * 0.18;
@@ -460,10 +456,6 @@ function Corridor3D() {
       cancelAnimationFrame(frameId);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("mousemove", onMove);
-      window.removeEventListener("touchstart", onTouchStart);
-      window.removeEventListener("touchmove", onTouchMove);
-      window.removeEventListener("touchend", onTouchEnd);
-      window.removeEventListener("touchcancel", onTouchEnd);
       window.removeEventListener("resize", onResize);
       rinascimentoVideo.pause();
       renderer.dispose();
