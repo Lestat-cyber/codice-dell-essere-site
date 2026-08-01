@@ -212,51 +212,7 @@ function Corridor3D() {
     });
 
     // --- quadri sulle pareti: la storia che avanza, dai Sumeri a oggi ---
-    function makeFrescoTexture(title: string, subtitle: string): THREE.CanvasTexture {
-      const c = document.createElement("canvas");
-      c.width = 640;
-      c.height = 900;
-      const ctx = c.getContext("2d")!;
-      ctx.fillStyle = "#0a0908";
-      ctx.fillRect(0, 0, c.width, c.height);
-      ctx.strokeStyle = "#c9a24a";
-      ctx.lineWidth = 6;
-      ctx.strokeRect(24, 24, c.width - 48, c.height - 48);
-      ctx.strokeStyle = "rgba(201,162,74,0.5)";
-      ctx.lineWidth = 2;
-      ctx.strokeRect(40, 40, c.width - 80, c.height - 80);
-
-      // simbolo — cerchio con cerchio piccolo, coerente col resto del sito
-      ctx.strokeStyle = "#c9a24a";
-      ctx.lineWidth = 4;
-      ctx.beginPath();
-      ctx.arc(c.width / 2, 320, 110, 0, Math.PI * 2);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.arc(c.width / 2, 380, 58, 0, Math.PI * 2);
-      ctx.stroke();
-
-      ctx.fillStyle = "#f2d998";
-      ctx.textAlign = "center";
-      ctx.font = "700 64px Georgia, serif";
-      ctx.fillText(title.toUpperCase(), c.width / 2, 620);
-      ctx.fillStyle = "rgba(233,226,207,0.75)";
-      ctx.font = "italic 30px Georgia, serif";
-      ctx.fillText(subtitle, c.width / 2, 680);
-
-      const tex = new THREE.CanvasTexture(c);
-      return tex;
-    }
-
-    function makeFresco(title: string, subtitle: string, side: -1 | 1, z: number) {
-      const tex = makeFrescoTexture(title, subtitle);
-      const mesh = new THREE.Mesh(new THREE.PlaneGeometry(2.3, 3.2), new THREE.MeshBasicMaterial({ map: tex }));
-      mesh.rotation.y = side < 0 ? Math.PI / 2 : -Math.PI / 2;
-      mesh.position.set(side * 4.3, 1.5, z);
-      scene.add(mesh);
-    }
-
-    // quadro fotografico incorniciato — usato per i quadri con immagine reale
+    // quadro fotografico incorniciato — usato per ogni tappa con immagine reale
     function makePictureFresco(imgPath: string, side: -1 | 1, z: number) {
       const tex = new THREE.TextureLoader().load(imgPath);
       const group = new THREE.Group();
@@ -271,12 +227,6 @@ function Corridor3D() {
       return group;
     }
 
-    const ERAS: { title: string; subtitle: string; side: -1 | 1; z: number }[] = [
-      { title: "Era Moderna", subtitle: "Scienza e coscienza", side: -1, z: -63 },
-      { title: "Oggi", subtitle: "Codice dell'Essere", side: 1, z: -73 },
-    ];
-    ERAS.forEach((e) => makeFresco(e.title, e.subtitle, e.side, e.z));
-
     // --- Sumeri, Egizi, Greci: le tue immagini al posto dei quadri generici ---
     makePictureFresco("/quadri/sumeri.jpg", -1, -3);
     makePictureFresco("/quadri/egizi.jpg", 1, -13);
@@ -287,6 +237,12 @@ function Corridor3D() {
 
     // --- Alchimia: il tuo ritratto al posto del quadro generico ---
     makePictureFresco("/hero-risveglio.png", -1, -43);
+
+    // --- Era Moderna: la figura con la chitarra ---
+    makePictureFresco("/musica-hero-chitarra.png", -1, -63);
+
+    // --- Oggi: il simbolo del doppio cerchio ---
+    makePictureFresco("/quadri/oggi.jpg", 1, -73);
 
     // --- Rinascimento: il quadro che si muove, un video al posto della tela ---
     const rinascimentoVideo = document.createElement("video");
