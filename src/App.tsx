@@ -376,28 +376,56 @@ function Corridor3D() {
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
 
+    // Desktop: il mouse guarda in giro (orizzontale invertito)
     let mouseX = 0;
     let mouseY = 0;
     const onMove = (e: MouseEvent) => {
-      mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+      mouseX = -((e.clientX / window.innerWidth - 0.5) * 2);
       mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
     };
     window.addEventListener("mousemove", onMove);
-    const onTouch = (e: TouchEvent) => {
+
+    // Mobile: tieni premuto e trascina per guardarti intorno; rilasciando torna al centro
+    let touchActive = false;
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchX = 0;
+    let touchY = 0;
+    const onTouchStart = (e: TouchEvent) => {
       const t = e.touches[0];
       if (!t) return;
-      mouseX = (t.clientX / window.innerWidth - 0.5) * 2;
-      mouseY = (t.clientY / window.innerHeight - 0.5) * 2;
+      touchActive = true;
+      touchStartX = t.clientX;
+      touchStartY = t.clientY;
     };
-    window.addEventListener("touchmove", onTouch, { passive: true });
+    const onTouchMove = (e: TouchEvent) => {
+      if (!touchActive) return;
+      const t = e.touches[0];
+      if (!t) return;
+      const dx = (t.clientX - touchStartX) / (window.innerWidth * 0.55);
+      const dy = (t.clientY - touchStartY) / (window.innerHeight * 0.55);
+      touchX = Math.max(-1, Math.min(1, dx));
+      touchY = Math.max(-1, Math.min(1, dy));
+    };
+    const onTouchEnd = () => {
+      touchActive = false;
+      touchX = 0;
+      touchY = 0;
+    };
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: true });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
+    window.addEventListener("touchcancel", onTouchEnd, { passive: true });
 
     let frameId = 0;
     const clock = new THREE.Clock();
     const animate = () => {
       const delta = clock.getDelta();
       camera.position.z += (targetZ - camera.position.z) * 0.06;
-      camera.rotation.y += (mouseX * 2.7 - camera.rotation.y) * 0.045;
-      camera.rotation.x += (-mouseY * 0.3 - camera.rotation.x) * 0.045;
+      const yawInput = touchActive ? touchX : mouseX;
+      const pitchInput = touchActive ? touchY : mouseY;
+      camera.rotation.y += (yawInput * 2.7 - camera.rotation.y) * 0.06;
+      camera.rotation.x += (-pitchInput * 0.3 - camera.rotation.x) * 0.06;
 
       waypoints.forEach((g) => {
         g.rotation.y += delta * 0.18;
@@ -432,7 +460,10 @@ function Corridor3D() {
       cancelAnimationFrame(frameId);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("mousemove", onMove);
-      window.removeEventListener("touchmove", onTouch);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
+      window.removeEventListener("touchcancel", onTouchEnd);
       window.removeEventListener("resize", onResize);
       rinascimentoVideo.pause();
       renderer.dispose();
