@@ -256,33 +256,37 @@ function Corridor3D() {
       scene.add(mesh);
     }
 
+    // quadro fotografico incorniciato — usato per i quadri con immagine reale
+    function makePictureFresco(imgPath: string, side: -1 | 1, z: number) {
+      const tex = new THREE.TextureLoader().load(imgPath);
+      const group = new THREE.Group();
+      const frame = new THREE.Mesh(new THREE.PlaneGeometry(2.4, 3.3), new THREE.MeshBasicMaterial({ color: gold }));
+      frame.position.z = -0.02;
+      group.add(frame);
+      const picture = new THREE.Mesh(new THREE.PlaneGeometry(2.2, 3.05), new THREE.MeshBasicMaterial({ map: tex }));
+      group.add(picture);
+      group.rotation.y = side < 0 ? Math.PI / 2 : -Math.PI / 2;
+      group.position.set(side * 4.3, 1.5, z);
+      scene.add(group);
+      return group;
+    }
+
     const ERAS: { title: string; subtitle: string; side: -1 | 1; z: number }[] = [
-      { title: "Sumeri", subtitle: "Le prime tavolette, i primi dèi", side: -1, z: -3 },
-      { title: "Egizi", subtitle: "I misteri di Iside e Osiride", side: 1, z: -13 },
-      { title: "Greci", subtitle: "Il logos e i filosofi", side: -1, z: -23 },
-      { title: "Ermetismo", subtitle: "Ermete Trismegisto, Alessandria", side: 1, z: -33 },
       { title: "Era Moderna", subtitle: "Scienza e coscienza", side: -1, z: -63 },
       { title: "Oggi", subtitle: "Codice dell'Essere", side: 1, z: -73 },
     ];
     ERAS.forEach((e) => makeFresco(e.title, e.subtitle, e.side, e.z));
 
+    // --- Sumeri, Egizi, Greci: le tue immagini al posto dei quadri generici ---
+    makePictureFresco("/quadri/sumeri.jpg", -1, -3);
+    makePictureFresco("/quadri/egizi.jpg", 1, -13);
+    makePictureFresco("/quadri/greci.jpg", -1, -23);
+
+    // --- Ermetismo: la copertina del Kybalion ---
+    makePictureFresco("/quadri/ermetismo.jpg", 1, -33);
+
     // --- Alchimia: il tuo ritratto al posto del quadro generico ---
-    const alchimiaTex = new THREE.TextureLoader().load("/hero-risveglio.png");
-    const alchimiaGroup = new THREE.Group();
-    const alchimiaFrame = new THREE.Mesh(
-      new THREE.PlaneGeometry(2.4, 3.3),
-      new THREE.MeshBasicMaterial({ color: gold })
-    );
-    alchimiaFrame.position.z = -0.02;
-    alchimiaGroup.add(alchimiaFrame);
-    const alchimiaPicture = new THREE.Mesh(
-      new THREE.PlaneGeometry(2.2, 3.05),
-      new THREE.MeshBasicMaterial({ map: alchimiaTex })
-    );
-    alchimiaGroup.add(alchimiaPicture);
-    alchimiaGroup.rotation.y = Math.PI / 2;
-    alchimiaGroup.position.set(-4.3, 1.5, -43);
-    scene.add(alchimiaGroup);
+    makePictureFresco("/hero-risveglio.png", -1, -43);
 
     // --- Rinascimento: il quadro che si muove, un video al posto della tela ---
     const rinascimentoVideo = document.createElement("video");
