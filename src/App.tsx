@@ -1,196 +1,638 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import * as THREE from "three";
 
 /* ===========================
-   LINKS
+   DATI — sostituisci con i tuoi reali
 =========================== */
-// Amazon
 const LINKS = {
-  anunnaki0: "https://amzn.eu/d/akZ7CqJ", // Codice Anunnaki — La Creazione dell'Uomo (Vol. Ø)
-  anunnaki1: "https://amzn.to/3LLoUnt",   // Codice Anunnaki — Gli Dei del Cielo e della Terra (Vol. I • Parte I)
-  kybalion: "https://amzn.to/4cWiXhM",    // Il Kybalion — Codice dell'Essere
-  limitless: "https://amzn.eu/d/dtR64tc", // Limitless — Codice dell'Essere
-  pathOfDestiny: "https://amzn.to/444ZyYi", // The Path of Destiny — Gabriella Saia (Autore ospite)
-  amore: "https://www.amazon.it/dp/B0GWH1LNXG", // L'amore che ti riporta a Te
+  anunnaki0: "https://amzn.eu/d/akZ7CqJ",
+  anunnaki1: "https://amzn.to/3LLoUnt",
+  kybalion: "https://amzn.to/4cWiXhM",
+  limitless: "https://amzn.eu/d/dtR64tc",
+  pathOfDestiny: "https://amzn.to/444ZyYi",
+  amore: "https://www.amazon.it/dp/B0GWH1LNXG",
 };
-
-// Video reali
 const VIDEOS = {
-  mentalismo: "https://youtu.be/4sRxrqUhaaQ?si=7-KKSdo82qLwaOBN",
-  corrispondenza: "https://youtu.be/vnsz0sSfCF8?si=_gy5C9Gqh2heAKT3",
   tiktokAnunnaki:
     "https://www.tiktok.com/@codicedellessere/video/7560749700723297558?is_from_webapp=1&sender_device=pc&web_id=7506816116242318870",
 };
-
-// Social
 const SOCIALS = {
   instagram: "https://www.instagram.com/codicedellessere",
   tiktok: "https://www.tiktok.com/@codicedellessere",
   youtube: "https://www.youtube.com/@codicedellessere",
 };
+const IMAGES = {
+  heroPortrait: "/hero-risveglio.png",
+  authorPortrait: "/autore-ritratto.png",
+  musicaBanner: "/musica-hero-chitarra.png",
+};
+// 🎵 I tuoi brani — "Return Within" si ascolta sul sito, gli altri due rimandano a Spotify (TODO: link reali)
+const TRACKS = [
+  {
+    title: "Return Within",
+    subtitle: "Il ritorno a te stesso, in musica.",
+    cover: "/music/cover-return-within.png",
+    audio: "/audio/return-within.mp3", // TODO: carica il file reale
+    spotify: "",
+  },
+  {
+    title: "Ritorno al Centro (Return Within Italian Version)",
+    subtitle: "La versione italiana di Return Within.",
+    cover: "/music/cover-ritorno-al-centro.jpg", // TODO
+    audio: "",
+    spotify: "#", // TODO: link reale del brano su Spotify
+  },
+  {
+    title: "Il Tempo Presenta il Conto",
+    subtitle: "",
+    cover: "/music/cover-il-tempo-presenta-il-conto.jpg", // TODO
+    audio: "",
+    spotify: "#", // TODO: link reale del brano su Spotify
+  },
+];
+const ENTRY_TRACK = TRACKS[0];
 
 /* ===========================
-   STILI GLOBALI (font + bottoni + bagliore + titoli)
+   STILI GLOBALI
 =========================== */
-function GlobalGlowStyles() {
+function GlobalStyles() {
   return (
     <style
       // @ts-ignore
       dangerouslySetInnerHTML={{
         __html: `
-/* --- FONT GLOBALE: come il brand in header --- */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap');
 
 :root{
-  --font-brand: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
-                Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji",
-                "Segoe UI Emoji", "Segoe UI Symbol";
+  --void:#020202; --gold:#c9a24a; --gold-bright:#f2d998; --ivory:#e9e2cf;
+  --font-epic:"Cinzel Decorative", serif; --font-display:"Cinzel", serif; --font-body:"Inter", sans-serif;
+}
+html, body{ background:var(--void); }
+body{ font-family:var(--font-body); color:var(--ivory); -webkit-font-smoothing:antialiased; }
+h1,.font-epic{ font-family:var(--font-epic); }
+h2,h3,.font-display{ font-family:var(--font-display); }
+::selection{ background:rgba(201,162,74,.35); color:#fff; }
+
+.eyebrow{ font-weight:700; letter-spacing:.24em; text-transform:uppercase; font-size:.72rem; color:var(--gold-bright); opacity:.85; }
+.hairline{ height:1px; background:linear-gradient(90deg, transparent, rgba(201,162,74,.5), transparent); }
+
+.glass{
+  background:linear-gradient(160deg, rgba(10,9,7,.72), rgba(4,4,4,.55));
+  backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+  border:1px solid rgba(201,162,74,.22);
+  box-shadow:0 30px 70px rgba(0,0,0,.55);
 }
 
-html, body, * {
-  font-family: var(--font-brand) !important;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* --- BASE BUTTONS (sempre visibili) --- */
-.btn{
-  display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
-  padding:.75rem 1.25rem; border-radius:.75rem; line-height:1;
-  font-weight:700; letter-spacing:.02em; font-size:1rem;
-  transition:transform .2s ease, box-shadow .2s ease, opacity .2s ease, background-color .2s ease, border-color .2s ease;
-}
+.btn{ display:inline-flex; align-items:center; justify-content:center; gap:.5rem; padding:.75rem 1.3rem; border-radius:.6rem; font-weight:700; letter-spacing:.03em; transition:transform .2s, box-shadow .2s, filter .2s; }
 .btn:active{ transform:translateY(1px); }
-.btn:focus-visible{
-  outline:2px solid rgba(212,175,55,.6); outline-offset:2px;
-  box-shadow:0 0 0 4px rgba(212,175,55,.15);
-}
-.btn-sm{ padding:.55rem .9rem; font-size:.875rem; border-radius:.6rem; }
-.btn-lg{ padding:.9rem 1.35rem; font-size:1.05rem; }
+.btn-sm{ padding:.55rem .9rem; font-size:.85rem; border-radius:.5rem; }
+.btn-lg{ padding:.95rem 1.4rem; font-size:1.05rem; }
+.btn-gold{ background-image:linear-gradient(90deg,#f2d998,#c9a24a,#f2d998); color:#160f02; border:1px solid rgba(201,162,74,.8); box-shadow:0 8px 24px rgba(201,162,74,.2); }
+.btn-gold:hover{ filter:brightness(1.08); box-shadow:0 12px 32px rgba(201,162,74,.32); }
+.btn-outline{ background:rgba(255,255,255,.03); border:1px solid rgba(201,162,74,.55); color:var(--gold-bright); }
+.btn-outline:hover{ background:rgba(201,162,74,.14); }
 
-/* pieno dorato */
-.btn-gold{
-  background-image:linear-gradient(90deg,#fbbf24,#f59e0b,#fbbf24);
-  color:#000; border:1px solid rgba(212,175,55,.7);
-  box-shadow:0 8px 22px rgba(212,175,55,.25);
-}
-.btn-gold:hover{
-  filter:brightness(1.05);
-  box-shadow:0 10px 28px rgba(212,175,55,.35);
-}
+input, textarea{ background:rgba(255,255,255,.05); border:1px solid rgba(201,162,74,.2); color:#fff; border-radius:.6rem; }
+input::placeholder, textarea::placeholder{ color:rgba(233,226,207,.4); }
+input:focus, textarea:focus{ outline:none; box-shadow:0 0 0 3px rgba(201,162,74,.22); border-color:rgba(201,162,74,.6); }
 
-/* outline dorato (visibile anche senza hover) */
-.btn-outline{
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(212,175,55,.65);
-  color:#f7e7b5;
-  box-shadow:0 4px 16px rgba(212,175,55,.18) inset, 0 4px 14px rgba(212,175,55,.12);
-}
-.btn-outline:hover{
-  background:rgba(212,175,55,.18);
-  color:#0a0a0a;
-}
-
-/* --- INPUT TRASPARENTI COERENTI --- */
-input, textarea, select, label{
-  font-family: var(--font-brand) !important;
-}
-.input, input, textarea{
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.15);
-  color: #fff;
-}
-.input::placeholder, input::placeholder, textarea::placeholder{
-  color: rgba(255,255,255,.45);
-}
-input:focus, textarea:focus{
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(212,175,55,.25);
-  border-color: rgba(212,175,55,.55);
-}
-
-/* --- BAGLIORE AUREO ANIMATO (alone al passaggio) --- */
-.social-btn, .btn, .btn-gold, .btn-outline{
-  position:relative; overflow:visible;
-}
-.social-btn::after, .btn::after{
-  content:""; position:absolute; inset:-8px; border-radius:16px; pointer-events:none;
-  box-shadow:0 0 0 rgba(212,175,55,0); opacity:0; transition:opacity .25s ease;
-}
-.social-btn:hover::after, .btn:hover::after{
-  opacity:1; animation:glowPulse 1.8s ease-in-out infinite;
-}
-@keyframes glowPulse{
-  0%{box-shadow:0 0 0 rgba(212,175,55,0),0 0 0 rgba(212,175,55,0)}
-  50%{box-shadow:0 0 24px rgba(212,175,55,.35),0 0 48px rgba(212,175,55,.18)}
-  100%{box-shadow:0 0 0 rgba(212,175,55,0),0 0 0 rgba(212,175,55,0)}
-}
-
-/* --- TITOLI DI SEZIONE: hover + accensione in viewport --- */
-.section-heading h2{
-  position:relative; transition:text-shadow .35s ease, color .35s ease;
-}
-.section-heading h2:hover{
-  color:#d4af37; text-shadow:0 0 10px rgba(212,175,55,.35), 0 0 24px rgba(212,175,55,.18);
-}
-.section-heading.inview h2{ animation:titleGlow 900ms ease-out 1; }
+.chapter-heading.inview h2{ animation:titleGlow 1000ms ease-out 1; }
 @keyframes titleGlow{
-  0%{ color:#fff; text-shadow:0 0 0 rgba(212,175,55,0); }
-  40%{ color:#d4af37; text-shadow:0 0 12px rgba(212,175,55,.45),0 0 28px rgba(212,175,55,.22); }
-  100%{ color:#fff; text-shadow:0 0 0 rgba(212,175,55,0); }
+  0%{ color:#fff; text-shadow:0 0 0 rgba(201,162,74,0); }
+  40%{ color:var(--gold-bright); text-shadow:0 0 14px rgba(201,162,74,.5); }
+  100%{ color:#fff; text-shadow:0 0 0 rgba(201,162,74,0); }
 }
-      `,
+.reveal{ opacity:0; transform:translateY(28px); transition:opacity .8s ease, transform .8s ease; }
+.reveal.in{ opacity:1; transform:translateY(0); }
+
+.gate{ position:fixed; inset:0; z-index:100; background:#020202; display:flex; align-items:center; justify-content:center; transition:opacity 1.1s ease; }
+.gate.closing{ opacity:0; pointer-events:none; }
+.gate-ring{ width:88px; height:88px; border-radius:9999px; border:1.5px solid var(--gold); box-shadow:0 0 30px rgba(201,162,74,.25) inset, 0 0 24px rgba(201,162,74,.2); display:flex; align-items:center; justify-content:center; }
+.gate-ring::before{ content:""; width:50px; height:50px; border-radius:9999px; border:1px solid rgba(201,162,74,.5); }
+
+.wave{ display:flex; align-items:flex-end; gap:3px; height:34px; }
+.wave i{ width:3px; border-radius:2px; background:linear-gradient(180deg,var(--gold-bright),var(--gold)); display:block; transition:height .18s ease; }
+
+.carousel-track{ display:flex; gap:1.1rem; overflow-x:auto; scroll-snap-type:x mandatory; padding:.25rem .25rem 1rem; scrollbar-width:none; -ms-overflow-style:none; }
+.carousel-track::-webkit-scrollbar{ display:none; }
+.carousel-card{ scroll-snap-align:start; flex:0 0 auto; }
+.carousel-arrow{
+  position:absolute; top:50%; transform:translateY(-50%); z-index:10;
+  width:2.4rem; height:2.4rem; border-radius:9999px;
+  background:rgba(4,4,4,.75); border:1px solid rgba(201,162,74,.45); color:var(--gold-bright);
+  display:flex; align-items:center; justify-content:center; font-size:1.1rem;
+  transition:background .2s ease, border-color .2s ease, transform .2s ease;
+}
+.carousel-arrow:hover{ background:rgba(201,162,74,.22); border-color:rgba(201,162,74,.8); transform:translateY(-50%) scale(1.06); }
+.carousel-arrow.prev{ left:-.6rem; }
+.carousel-arrow.next{ right:-.6rem; }
+@media (max-width:768px){ .carousel-arrow.prev{ left:-.3rem; } .carousel-arrow.next{ right:-.3rem; } }
+`,
       }}
     />
   );
 }
 
 /* ===========================
-   SOCIAL COMPONENTS
+   CORRIDOIO 3D PERSISTENTE
+   Camera guidata dallo scroll; oggetti-tappa lungo il percorso.
 =========================== */
-function SocialLink({
-  href, title, children,
-}: { href: string; title: string; children: React.ReactNode }) {
+function Corridor3D() {
+  const mountRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const mount = mountRef.current;
+    if (!mount) return;
+
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x000000, 0.05);
+
+    const camera = new THREE.PerspectiveCamera(58, width / height, 0.1, 100);
+    camera.position.set(0, 0.4, 4);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(width, height);
+    mount.appendChild(renderer.domElement);
+
+    const gold = new THREE.Color("#c9a24a");
+    const goldBright = new THREE.Color("#f2d998");
+
+    const CORRIDOR_LEN = 160;
+    const CORRIDOR_END = -80;
+
+    // --- pavimento (nero lucido) ---
+    const floor = new THREE.Mesh(
+      new THREE.PlaneGeometry(9, CORRIDOR_LEN),
+      new THREE.MeshStandardMaterial({ color: "#040403", metalness: 0.75, roughness: 0.18 })
+    );
+    floor.rotation.x = -Math.PI / 2;
+    floor.position.set(0, -1.4, -60);
+    scene.add(floor);
+
+    // --- pareti a pannelli con giunti dorati (texture procedurale, come nel riferimento) ---
+    function makePanelTexture(): THREE.CanvasTexture {
+      const c = document.createElement("canvas");
+      c.width = 256;
+      c.height = 128;
+      const ctx = c.getContext("2d")!;
+      ctx.fillStyle = "#0a0908";
+      ctx.fillRect(0, 0, c.width, c.height);
+      ctx.strokeStyle = "rgba(201,162,74,0.55)";
+      ctx.lineWidth = 2;
+      for (let x = 0; x <= c.width; x += 42) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, c.height);
+        ctx.stroke();
+      }
+      const tex = new THREE.CanvasTexture(c);
+      tex.wrapS = THREE.RepeatWrapping;
+      tex.wrapT = THREE.ClampToEdgeWrapping;
+      tex.repeat.set(CORRIDOR_LEN / 3.4, 1);
+      return tex;
+    }
+    const wallMat = new THREE.MeshStandardMaterial({ map: makePanelTexture(), metalness: 0.5, roughness: 0.55 });
+
+    [-4.4, 4.4].forEach((x) => {
+      const wall = new THREE.Mesh(new THREE.PlaneGeometry(CORRIDOR_LEN, 6), wallMat);
+      wall.rotation.y = x < 0 ? Math.PI / 2 : -Math.PI / 2;
+      wall.position.set(x, 1.2, -60);
+      scene.add(wall);
+
+      const baseGlow = new THREE.Mesh(
+        new THREE.BoxGeometry(0.04, 0.03, CORRIDOR_LEN),
+        new THREE.MeshBasicMaterial({ color: gold })
+      );
+      baseGlow.position.set(x - (x < 0 ? -0.02 : 0.02), -1.37, -60);
+      scene.add(baseGlow);
+    });
+
+    // --- quadri sulle pareti: la storia che avanza, dai Sumeri a oggi ---
+    function makeFrescoTexture(title: string, subtitle: string): THREE.CanvasTexture {
+      const c = document.createElement("canvas");
+      c.width = 640;
+      c.height = 900;
+      const ctx = c.getContext("2d")!;
+      ctx.fillStyle = "#0a0908";
+      ctx.fillRect(0, 0, c.width, c.height);
+      ctx.strokeStyle = "#c9a24a";
+      ctx.lineWidth = 6;
+      ctx.strokeRect(24, 24, c.width - 48, c.height - 48);
+      ctx.strokeStyle = "rgba(201,162,74,0.5)";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(40, 40, c.width - 80, c.height - 80);
+
+      // simbolo — cerchio con cerchio piccolo, coerente col resto del sito
+      ctx.strokeStyle = "#c9a24a";
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.arc(c.width / 2, 320, 110, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(c.width / 2, 380, 58, 0, Math.PI * 2);
+      ctx.stroke();
+
+      ctx.fillStyle = "#f2d998";
+      ctx.textAlign = "center";
+      ctx.font = "700 64px Georgia, serif";
+      ctx.fillText(title.toUpperCase(), c.width / 2, 620);
+      ctx.fillStyle = "rgba(233,226,207,0.75)";
+      ctx.font = "italic 30px Georgia, serif";
+      ctx.fillText(subtitle, c.width / 2, 680);
+
+      const tex = new THREE.CanvasTexture(c);
+      return tex;
+    }
+
+    function makeFresco(title: string, subtitle: string, side: -1 | 1, z: number) {
+      const tex = makeFrescoTexture(title, subtitle);
+      const mesh = new THREE.Mesh(new THREE.PlaneGeometry(2.3, 3.2), new THREE.MeshBasicMaterial({ map: tex }));
+      mesh.rotation.y = side < 0 ? Math.PI / 2 : -Math.PI / 2;
+      mesh.position.set(side * 4.3, 1.5, z);
+      scene.add(mesh);
+    }
+
+    const ERAS: { title: string; subtitle: string; side: -1 | 1; z: number }[] = [
+      { title: "Sumeri", subtitle: "Le prime tavolette, i primi dèi", side: -1, z: -3 },
+      { title: "Egizi", subtitle: "I misteri di Iside e Osiride", side: 1, z: -13 },
+      { title: "Greci", subtitle: "Il logos e i filosofi", side: -1, z: -23 },
+      { title: "Ermetismo", subtitle: "Ermete Trismegisto, Alessandria", side: 1, z: -33 },
+      { title: "Era Moderna", subtitle: "Scienza e coscienza", side: -1, z: -63 },
+      { title: "Oggi", subtitle: "Codice dell'Essere", side: 1, z: -73 },
+    ];
+    ERAS.forEach((e) => makeFresco(e.title, e.subtitle, e.side, e.z));
+
+    // --- Alchimia: il tuo ritratto al posto del quadro generico ---
+    const alchimiaTex = new THREE.TextureLoader().load("/hero-risveglio.png");
+    const alchimiaGroup = new THREE.Group();
+    const alchimiaFrame = new THREE.Mesh(
+      new THREE.PlaneGeometry(2.4, 3.3),
+      new THREE.MeshBasicMaterial({ color: gold })
+    );
+    alchimiaFrame.position.z = -0.02;
+    alchimiaGroup.add(alchimiaFrame);
+    const alchimiaPicture = new THREE.Mesh(
+      new THREE.PlaneGeometry(2.2, 3.05),
+      new THREE.MeshBasicMaterial({ map: alchimiaTex })
+    );
+    alchimiaGroup.add(alchimiaPicture);
+    alchimiaGroup.rotation.y = Math.PI / 2;
+    alchimiaGroup.position.set(-4.3, 1.5, -43);
+    scene.add(alchimiaGroup);
+
+    // --- Rinascimento: il quadro che si muove, un video al posto della tela ---
+    const rinascimentoVideo = document.createElement("video");
+    rinascimentoVideo.src = "/videos/rinascimento-vivo.mp4";
+    rinascimentoVideo.loop = true;
+    rinascimentoVideo.muted = true;
+    rinascimentoVideo.playsInline = true;
+    rinascimentoVideo.autoplay = true;
+    rinascimentoVideo.play().catch(() => {});
+    const rinascimentoTex = new THREE.VideoTexture(rinascimentoVideo);
+
+    const rinascimentoGroup = new THREE.Group();
+    const rinascimentoFrame = new THREE.Mesh(
+      new THREE.PlaneGeometry(2.4, 3.3),
+      new THREE.MeshBasicMaterial({ color: gold })
+    );
+    rinascimentoFrame.position.z = -0.02;
+    rinascimentoGroup.add(rinascimentoFrame);
+    const rinascimentoScreen = new THREE.Mesh(
+      new THREE.PlaneGeometry(2.2, 3.05),
+      new THREE.MeshBasicMaterial({ map: rinascimentoTex })
+    );
+    rinascimentoGroup.add(rinascimentoScreen);
+    rinascimentoGroup.rotation.y = -Math.PI / 2;
+    rinascimentoGroup.position.set(4.3, 1.5, -53);
+    scene.add(rinascimentoGroup);
+
+    // --- filo dorato serpeggiante lungo il pavimento (come nel riferimento) ---
+    const curvePts = [
+      new THREE.Vector3(0, -1.38, 2),
+      new THREE.Vector3(1.3, -1.38, -8),
+      new THREE.Vector3(-1.1, -1.38, -18),
+      new THREE.Vector3(1.4, -1.38, -30),
+      new THREE.Vector3(-1.3, -1.38, -42),
+      new THREE.Vector3(0.8, -1.38, -54),
+      new THREE.Vector3(-0.3, -1.38, -64),
+      new THREE.Vector3(0, -1.38, -74),
+      new THREE.Vector3(0, -1.38, CORRIDOR_END),
+    ];
+    const curve = new THREE.CatmullRomCurve3(curvePts);
+    const thread = new THREE.Mesh(
+      new THREE.TubeGeometry(curve, 220, 0.028, 8, false),
+      new THREE.MeshBasicMaterial({ color: goldBright })
+    );
+    thread.material.fog = false;
+    scene.add(thread);
+    const threadGlow = new THREE.Mesh(
+      new THREE.TubeGeometry(curve, 220, 0.09, 8, false),
+      new THREE.MeshBasicMaterial({ color: gold, transparent: true, opacity: 0.25, blending: THREE.AdditiveBlending, depthWrite: false })
+    );
+    threadGlow.material.fog = false;
+    scene.add(threadGlow);
+
+    // --- fessura di luce in fondo al corridoio ---
+    const endGlow = new THREE.Mesh(
+      new THREE.PlaneGeometry(0.5, 5.5),
+      new THREE.MeshBasicMaterial({ color: goldBright })
+    );
+    endGlow.material.fog = false;
+    endGlow.position.set(0, 1.2, CORRIDOR_END + 1);
+    scene.add(endGlow);
+    const endLight = new THREE.PointLight(0xf2d998, 3.2, 30);
+    endLight.position.set(0, 1, CORRIDOR_END + 4);
+    scene.add(endLight);
+
+    for (let i = 0; i < 8; i++) {
+      const z = 1 - i * 11;
+      const light = new THREE.PointLight(0xf2d998, 1.1, 10);
+      light.position.set(0, 1.8, z);
+      scene.add(light);
+    }
+
+    scene.add(new THREE.AmbientLight(0xffffff, 0.1));
+
+    // --- gruppi tappa ---
+    const waypoints: THREE.Group[] = [];
+
+    // Il tuo simbolo: doppio cerchio, come il logo — l'unica forma usata per ogni tappa
+    function makeMoonRings(scale = 1): THREE.Group {
+      const g = new THREE.Group();
+      const lineMat = new THREE.MeshBasicMaterial({ color: gold, transparent: true, opacity: 0.85 });
+      const outer = new THREE.Mesh(new THREE.TorusGeometry(1.1 * scale, 0.014 * scale, 8, 100), lineMat);
+      g.add(outer);
+      const inner = new THREE.Mesh(new THREE.TorusGeometry(0.58 * scale, 0.012 * scale, 8, 80), lineMat);
+      inner.position.y = -0.28 * scale;
+      g.add(inner);
+      g.userData.spin = 0.08;
+      return g;
+    }
+
+    const specs: { z: number; scale: number }[] = [
+      { z: -2, scale: 1 },
+      { z: -14, scale: 0.65 },
+      { z: -26, scale: 1.1 },
+      { z: -38, scale: 1.35 },
+      { z: -50, scale: 0.8 },
+      { z: -62, scale: 0.95 },
+      { z: -76, scale: 1.5 },
+    ];
+    specs.forEach(({ z, scale }) => {
+      const g = makeMoonRings(scale);
+      g.position.set(0, 0.5, z);
+      scene.add(g);
+      waypoints.push(g);
+    });
+
+    // --- scroll → camera z ---
+    const totalDepth = 82;
+    let targetZ = camera.position.z;
+    const getScrollFrac = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      return max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+    };
+    const onScroll = () => {
+      targetZ = 4 - getScrollFrac() * totalDepth;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+
+    let mouseX = 0;
+    let mouseY = 0;
+    const onMove = (e: MouseEvent) => {
+      mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+      mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+    };
+    window.addEventListener("mousemove", onMove);
+
+    let frameId = 0;
+    const clock = new THREE.Clock();
+    const animate = () => {
+      const delta = clock.getDelta();
+      camera.position.z += (targetZ - camera.position.z) * 0.06;
+      camera.rotation.y += (mouseX * 0.06 - camera.rotation.y) * 0.04;
+      camera.rotation.x += (-mouseY * 0.035 - camera.rotation.x) * 0.04;
+
+      waypoints.forEach((g) => {
+        g.rotation.y += delta * 0.18;
+        g.children.forEach((child: any) => {
+          if (child.userData?.spin) child.rotation.z += delta * child.userData.spin;
+          if (child.userData?.baseY !== undefined) {
+            child.userData.phase += delta;
+            child.position.y = child.userData.baseY + Math.sin(child.userData.phase) * 0.08;
+          }
+        });
+      });
+
+      if (rinascimentoVideo.readyState >= rinascimentoVideo.HAVE_CURRENT_DATA) {
+        rinascimentoTex.needsUpdate = true;
+      }
+
+      renderer.render(scene, camera);
+      frameId = requestAnimationFrame(animate);
+    };
+    animate();
+
+    const onResize = () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    };
+    window.addEventListener("resize", onResize);
+
+    return () => {
+      cancelAnimationFrame(frameId);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("resize", onResize);
+      rinascimentoVideo.pause();
+      renderer.dispose();
+      if (mount.contains(renderer.domElement)) mount.removeChild(renderer.domElement);
+    };
+  }, []);
+
+  return <div ref={mountRef} className="fixed inset-0 z-0" aria-hidden />;
+}
+
+/* ===========================
+   TILT 3D — inclinazione al passaggio del mouse
+=========================== */
+function Tilt({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [style, setStyle] = useState<React.CSSProperties>({});
+
+  const onMove = (e: React.MouseEvent) => {
+    const el = ref.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width - 0.5;
+    const py = (e.clientY - r.top) / r.height - 0.5;
+    setStyle({
+      transform: `perspective(800px) rotateX(${(-py * 10).toFixed(2)}deg) rotateY(${(px * 12).toFixed(2)}deg) translateZ(6px)`,
+    });
+  };
+  const onLeave = () => setStyle({ transform: "perspective(800px) rotateX(0) rotateY(0)" });
+
   return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      title={title}
-      className="social-btn inline-flex items-center justify-center w-10 h-10 rounded-xl
-                 border border-white/10 bg-white/5 text-white/80
-                 hover:text-gold hover:border-gold/60
-                 transition"
+    <div
+      ref={ref}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+      style={{ transition: "transform .25s ease", transformStyle: "preserve-3d", ...style }}
+      className={className}
     >
       {children}
-    </a>
+    </div>
   );
 }
 
+/* ===========================
+   CAROSELLO — scorrimento orizzontale con frecce
+=========================== */
+function Carousel({ children }: { children: React.ReactNode }) {
+  const trackRef = useRef<HTMLDivElement | null>(null);
+
+  const scrollByCard = (dir: 1 | -1) => {
+    const el = trackRef.current;
+    if (!el) return;
+    const card = el.querySelector<HTMLElement>(".carousel-card");
+    const amount = card ? card.getBoundingClientRect().width + 18 : 300;
+    el.scrollBy({ left: dir * amount, behavior: "smooth" });
+  };
+
+  return (
+    <div className="relative">
+      <button onClick={() => scrollByCard(-1)} className="carousel-arrow prev" aria-label="Precedente">‹</button>
+      <div ref={trackRef} className="carousel-track">{children}</div>
+      <button onClick={() => scrollByCard(1)} className="carousel-arrow next" aria-label="Successivo">›</button>
+    </div>
+  );
+}
+
+/* ===========================
+   REVEAL — fade-in all'ingresso in viewport
+=========================== */
+function Reveal({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    if (!ref.current) return;
+    const obs = new IntersectionObserver(([e]) => e.isIntersecting && setInView(true), { threshold: 0.15 });
+    obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, []);
+  return (
+    <div ref={ref} className={`reveal ${inView ? "in" : ""} ${className}`}>
+      {children}
+    </div>
+  );
+}
+
+/* ===========================
+   SOCIAL
+=========================== */
 function SocialBar({ size = "sm" }: { size?: "sm" | "md" }) {
   const icon = size === "sm" ? "w-5 h-5" : "w-6 h-6";
-  const gap = size === "sm" ? "gap-2" : "gap-3";
+  const Link = ({ href, title, children }: any) => (
+    <a href={href} target="_blank" rel="noopener noreferrer" title={title} className="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-[var(--gold)]/25 bg-white/5 text-[var(--ivory)]/80 hover:text-[var(--gold-bright)] hover:border-[var(--gold)]/70 transition">
+      {children}
+    </a>
+  );
   return (
-    <div className={`inline-flex ${gap}`}>
-      {/* Instagram */}
-      <SocialLink href={SOCIALS.instagram} title="Instagram">
-        <svg viewBox="0 0 24 24" className={icon} fill="none" stroke="currentColor" strokeWidth="1.5">
-          <rect x="3" y="3" width="18" height="18" rx="5" />
-          <circle cx="12" cy="12" r="3.6" />
-          <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none" />
-        </svg>
-      </SocialLink>
-      {/* TikTok */}
-      <SocialLink href={SOCIALS.tiktok} title="TikTok">
-        <svg viewBox="0 0 24 24" className={icon} fill="currentColor">
-          <path d="M14 3h3a4.5 4.5 0 0 0 4 4v3a7.5 7.5 0 0 1-4-1.2v7.2A6 6 0 1 1 11 10v3a3 3 0 1 0 3 3V3z"/>
-        </svg>
-      </SocialLink>
-      {/* YouTube */}
-      <SocialLink href={SOCIALS.youtube} title="YouTube">
-        <svg viewBox="0 0 24 24" className={icon} fill="currentColor">
-          <path d="M23 12s0-3.5-.45-5.1a3 3 0 0 0-2.1-2.1C18.8 4.3 12 4.3 12 4.3s-6.8 0-8.45.5a3 3 0 0 0-2.1 2.1C1 8.5 1 12 1 12s0 3.5.45 5.1a3 3 0 0 0 2.1 2.1c1.65.5 8.45.5 8.45.5s6.8 0 8.45-.5a3 3 0 0 0 2.1-2.1C23 15.5 23 12 23 12zM10 15.5v-7l6 3.5-6 3.5z"/>
-        </svg>
-      </SocialLink>
+    <div className="inline-flex gap-2">
+      <Link href={SOCIALS.instagram} title="Instagram">
+        <svg viewBox="0 0 24 24" className={icon} fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="3.6" /><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none" /></svg>
+      </Link>
+      <Link href={SOCIALS.tiktok} title="TikTok">
+        <svg viewBox="0 0 24 24" className={icon} fill="currentColor"><path d="M14 3h3a4.5 4.5 0 0 0 4 4v3a7.5 7.5 0 0 1-4-1.2v7.2A6 6 0 1 1 11 10v3a3 3 0 1 0 3 3V3z" /></svg>
+      </Link>
+      <Link href={SOCIALS.youtube} title="YouTube">
+        <svg viewBox="0 0 24 24" className={icon} fill="currentColor"><path d="M23 12s0-3.5-.45-5.1a3 3 0 0 0-2.1-2.1C18.8 4.3 12 4.3 12 4.3s-6.8 0-8.45.5a3 3 0 0 0-2.1 2.1C1 8.5 1 12 1 12s0 3.5.45 5.1a3 3 0 0 0 2.1 2.1c1.65.5 8.45.5 8.45.5s6.8 0 8.45-.5a3 3 0 0 0 2.1-2.1C23 15.5 23 12 23 12zM10 15.5v-7l6 3.5-6 3.5z" /></svg>
+      </Link>
+    </div>
+  );
+}
+
+/* ===========================
+   SIMBOLO 3D IN MINIATURA — per il gate d'ingresso
+=========================== */
+function RingSymbol3D() {
+  const mountRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const mount = mountRef.current;
+    if (!mount) return;
+
+    const size = mount.clientWidth;
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 20);
+    camera.position.z = 4;
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(size, size);
+    mount.appendChild(renderer.domElement);
+
+    const gold = new THREE.Color("#c9a24a");
+    const group = new THREE.Group();
+    const lineMat = new THREE.MeshBasicMaterial({ color: gold, transparent: true, opacity: 0.9 });
+    const outer = new THREE.Mesh(new THREE.TorusGeometry(1.05, 0.03, 12, 100), lineMat);
+    group.add(outer);
+    const inner = new THREE.Mesh(new THREE.TorusGeometry(0.55, 0.025, 10, 80), lineMat);
+    inner.position.y = -0.26;
+    group.add(inner);
+    scene.add(group);
+    scene.add(new THREE.PointLight(0xf2d998, 1.5, 10).translateZ(3));
+
+    let frameId = 0;
+    const clock = new THREE.Clock();
+    const animate = () => {
+      const delta = clock.getDelta();
+      group.rotation.y += delta * 0.5;
+      group.rotation.x = Math.sin(clock.elapsedTime * 0.4) * 0.15;
+      renderer.render(scene, camera);
+      frameId = requestAnimationFrame(animate);
+    };
+    animate();
+
+    return () => {
+      cancelAnimationFrame(frameId);
+      renderer.dispose();
+      if (mount.contains(renderer.domElement)) mount.removeChild(renderer.domElement);
+    };
+  }, []);
+
+  return <div ref={mountRef} className="w-full h-full" aria-hidden />;
+}
+
+/* ===========================
+   GATE D'INGRESSO
+=========================== */
+function EntryGate({ onEnter }: { onEnter: () => void }) {
+  const [closing, setClosing] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const handle = () => {
+    setClosing(true);
+    onEnter();
+    setTimeout(() => setHidden(true), 1200);
+  };
+  if (hidden) return null;
+  return (
+    <div className={`gate ${closing ? "closing" : ""}`}>
+      <div className="flex flex-col items-center gap-6 text-center px-6">
+        <div className="w-28 h-28"><RingSymbol3D /></div>
+        <p className="eyebrow">Codice dell'Essere</p>
+        <h2 className="font-epic text-2xl md:text-3xl text-[var(--gold-bright)]">Varca la Soglia</h2>
+        <p className="text-[var(--ivory)]/70 text-sm max-w-[18rem]">
+          Apri il Codice per entrare nel corridoio — ed ascoltare "{ENTRY_TRACK.title}".
+        </p>
+        <button onClick={handle} className="btn btn-gold btn-lg rounded-lg">Apri il Codice</button>
+      </div>
     </div>
   );
 }
@@ -199,453 +641,203 @@ function SocialBar({ size = "sm" }: { size?: "sm" | "md" }) {
    APP
 =========================== */
 export default function App() {
+  const audioRefs = useRef<(HTMLAudioElement | null)[]>([]);
+  const [playingIndex, setPlayingIndex] = useState<number | null>(null);
+  const [bars, setBars] = useState<number[]>(Array.from({ length: 26 }, () => 6));
+  const frameRef = useRef<number>(0);
+
+  useEffect(() => {
+    if (playingIndex === null) {
+      cancelAnimationFrame(frameRef.current);
+      setBars(Array.from({ length: 26 }, () => 6));
+      return;
+    }
+    const tick = () => {
+      setBars((p) => p.map(() => 6 + Math.random() * 26));
+      frameRef.current = requestAnimationFrame(tick);
+    };
+    tick();
+    return () => cancelAnimationFrame(frameRef.current);
+  }, [playingIndex]);
+
+  const toggle = (i: number) => {
+    const target = audioRefs.current[i];
+    if (!target) return;
+    if (playingIndex === i) {
+      target.pause();
+      setPlayingIndex(null);
+      return;
+    }
+    if (playingIndex !== null) audioRefs.current[playingIndex]?.pause();
+    target.volume = 0.55;
+    target.play().then(() => setPlayingIndex(i)).catch(() => {});
+  };
+
+  const handleEnter = () => toggle(0);
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#051a10] via-[#041510] to-[#020d08] text-white">
-      <GlobalGlowStyles />
+    <div className="relative min-h-screen text-[var(--ivory)]">
+      <GlobalStyles />
+      <Corridor3D />
+      {TRACKS.map((t, i) => (
+        <audio
+          key={t.title}
+          ref={(el) => (audioRefs.current[i] = el)}
+          src={t.audio}
+          onEnded={() => setPlayingIndex((p) => (p === i ? null : p))}
+        />
+      ))}
+      <EntryGate onEnter={handleEnter} />
 
-      <header className="sticky top-0 z-40 backdrop-blur bg-[#051a10]/70 border-b border-white/10">
+      {/* HEADER */}
+      <header className="fixed top-0 inset-x-0 z-30 backdrop-blur bg-black/30 border-b border-[var(--gold)]/10">
         <div className="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
-          <a href="#home" className="flex items-center gap-3 group">
-            <img
-              src="/logo-codice.webp"
-              alt="Codice dell'Essere"
-              className="h-10 w-10 rounded-lg object-contain"
-            />
-            <span className="font-semibold tracking-wide text-lg md:text-xl group-hover:opacity-90 transition-opacity">
-              Codice dell'Essere
-            </span>
+          <a href="#home" className="flex items-center gap-3">
+            <img src="/logo-codice.webp" alt="Codice dell'Essere" className="h-9 w-9 rounded-lg object-contain" />
+            <span className="font-display font-semibold tracking-wide text-base md:text-lg">Codice dell'Essere</span>
           </a>
-
           <nav className="hidden md:flex items-center gap-6 text-sm">
-            <Nav href="#missione">Missione</Nav>
-            <Nav href="#libri">Libri</Nav>
-            <Nav href="#video">Video</Nav>
-            <Nav href="#servizi">Servizi</Nav>
-            <Nav href="#contatti">Contatti</Nav>
+            <a href="#missione" className="hover:text-[var(--gold-bright)]">Missione</a>
+            <a href="#libri" className="hover:text-[var(--gold-bright)]">Libri</a>
+            <a href="#musica" className="hover:text-[var(--gold-bright)]">Musica</a>
+            <a href="#video" className="hover:text-[var(--gold-bright)]">Video</a>
+            <a href="#servizi" className="hover:text-[var(--gold-bright)]">Servizi</a>
+            <a href="#contatti" className="hover:text-[var(--gold-bright)]">Contatti</a>
           </nav>
-
-          {/* Barra social + CTA */}
-          <div className="hidden md:flex items-center gap-4">
-            <SocialBar />
-            <a href="#libri" className="btn btn-gold rounded-xl">Acquista i Libri</a>
+          <div className="hidden md:flex items-center gap-3">
+            <button onClick={() => toggle(0)} className="btn btn-outline btn-sm rounded-lg" title={ENTRY_TRACK.title}>
+              {playingIndex === 0 ? "❚❚ In ascolto" : "▶ Return Within"}
+            </button>
+            <a href="#libri" className="btn btn-gold btn-sm rounded-lg">Libri</a>
           </div>
         </div>
       </header>
 
-      {/* HERO */}
-      <section id="home" className="relative overflow-hidden">
-        <Aura />
-
-        <div className="mx-auto max-w-7xl px-4 py-20 md:py-28 relative">
-          {/* Wrapper due colonne */}
-          <div className="flex flex-col md:flex-row items-center justify-between gap-12">
-
-            {/* Colonna sinistra: testo */}
-            <div className="max-w-3xl text-center md:text-left">
-              <div className="flex flex-wrap gap-2 mb-6 justify-center md:justify-start">
-                <Badge>Divulgatore</Badge>
-                <Badge>Scrittore</Badge>
-                <Badge>Editore</Badge>
-              </div>
-
-              <h1
-                className="
-                  font-extrabold
-                  text-[36px] md:text-[48px] lg:text-[56px]
-                  leading-[1.18] md:leading-[1.2]
-                  tracking-tight
-                "
-              >
-                <span
-                  className="
-                    block
-                    bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400
-                    bg-clip-text text-transparent
-                  "
-                >
-                  Risveglia ciò che Sei
-                </span>
-                <span className="block text-gold">
-                  Trasforma&nbsp;Conoscenza
-                  <br />
-                  in&nbsp;Potere
-                </span>
-              </h1>
-
-              <p className="mt-6 text-white/80 text-lg md:text-xl max-w-2xl mx-auto md:mx-0">
-                Progetto editoriale e multimediale che unisce Antiche Sapienze, ricerca
-                storica e pratica quotidiana
-              </p>
-
-              <div className="mt-8 flex flex-wrap gap-3 justify-center md:justify-start">
-  <a href="#libri" className="btn btn-gold btn-lg rounded-xl">Scopri i libri</a>
-  <a 
-    href="https://codicedellessere.substack.com" 
-    target="_blank" 
-    rel="noopener noreferrer"
-    className="btn btn-lg rounded-xl"
-    style={{
-      background: 'linear-gradient(90deg, #047857, #10b981, #047857)',
-      color: '#0a0a0a',
-      border: '1px solid rgba(16, 185, 129, 0.7)',
-      boxShadow: '0 8px 22px rgba(16, 185, 129, 0.25)',
-      fontWeight: 700,
-    }}
-  >
-    📜 Protocollo Limitless · Gratis
-  </a>
-  <a href="#contatti" className="btn btn-outline btn-lg rounded-xl">Contattami</a>
-</div>
-            </div>
-
-            {/* Colonna destra: le due ultime uscite affiancate */}
-            <div className="relative flex flex-col items-center justify-center text-center w-full md:w-auto mx-auto md:mx-0">
-              <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center">
-                <div className="absolute h-64 w-64 rounded-full bg-gradient-to-br from-amber-400/60 via-yellow-300/40 to-emerald-300/20 blur-3xl"></div>
-                <div className="absolute h-80 w-80 rounded-full bg-amber-200/10 blur-2xl ring-1 ring-amber-200/20"></div>
-              </div>
-
-              <div className="flex flex-row gap-6 items-end justify-center">
-
-                {/* Kybalion */}
-                <div className="flex flex-col items-center text-center">
-                  <img
-                    src="/cover-kybalion.png"
-                    alt="Il Kybalion — Codice dell'Essere"
-                    className="relative w-40 sm:w-48 rounded-xl shadow-2xl mx-auto hover:scale-105 transition-transform duration-500 drop-shadow-[0_0_28px_rgba(212,175,55,0.4)]"
-                    loading="eager"
-                  />
-                  <div className="mt-3 flex flex-col items-center text-center">
-                    <p className="text-white/90 text-sm md:text-base tracking-wide leading-snug max-w-[10rem]">
-                      La riscrittura dell'Ermetismo
-                    </p>
-                    <p className="text-white/90 text-sm md:text-base tracking-wide leading-snug max-w-[10rem] font-bold">
-                      Il Kybalion
-                    </p>
-                    <a
-                      href={LINKS.kybalion}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-3 inline-block btn btn-gold btn-sm rounded-xl"
-                    >
-                      Acquista Ora
-                    </a>
-                  </div>
-                </div>
-
-                {/* L'amore che ti riporta a Te */}
-                <div className="flex flex-col items-center text-center">
-                  <div className="relative">
-                    <span className="absolute -top-2.5 -right-2.5 z-10 px-2 py-0.5 rounded-full bg-amber-500/80 text-black text-[9px] font-semibold tracking-wide uppercase">
-                      Nuova uscita
-                    </span>
-                    <img
-                      src="/cover-amore.png"
-                      alt="L'amore che ti riporta a Te — Codice dell'Essere"
-                      className="relative w-40 sm:w-48 rounded-xl shadow-2xl mx-auto hover:scale-105 transition-transform duration-500 drop-shadow-[0_0_28px_rgba(212,175,55,0.4)]"
-                      loading="eager"
-                    />
-                  </div>
-                  <div className="mt-3 flex flex-col items-center text-center">
-                    <p className="text-white/90 text-sm md:text-base tracking-wide leading-snug max-w-[10rem]">
-                      Quando l'amore smette di cercarti fuori
-                    </p>
-                    <p className="text-white/90 text-sm md:text-base tracking-wide leading-snug max-w-[10rem] font-bold">
-                      L'amore che ti riporta a Te
-                    </p>
-                    <a
-                      href={LINKS.amore}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-3 inline-block btn btn-gold btn-sm rounded-xl"
-                    >
-                      Acquista Ora
-                    </a>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
+      {/* HERO — ingresso del corridoio */}
+      <section id="home" className="relative z-10 min-h-screen flex items-end">
+        <div className="mx-auto max-w-7xl px-4 pb-20 w-full">
+          <div className="flex flex-wrap gap-2 mb-5">
+            {["Divulgatore", "Scrittore", "Editore", "Musicista"].map((b) => (
+              <span key={b} className="px-3 py-1 rounded-full bg-white/5 border border-[var(--gold)]/30 text-[var(--gold-bright)] text-xs tracking-wide">{b}</span>
+            ))}
           </div>
-        </div>
-      </section>
-
-      {/* BIOGRAFIA AUTORE */}
-      <section id="autore" className="mx-auto max-w-6xl px-4 py-16 md:py-20 border-t border-white/10">
-        <div className="flex flex-col md:flex-row items-center gap-10">
-          {/* Immagine autore */}
-          <div className="relative flex-shrink-0">
-            <div aria-hidden className="absolute -inset-4 rounded-full bg-gradient-to-tr from-amber-400/20 to-yellow-300/10 blur-2xl"></div>
-            <img
-              src="/assets/autore.webp"
-              alt="Umberto Portaro — Codice dell'Essere"
-              className="relative w-44 h-44 md:w-52 md:h-52 rounded-full object-cover border border-white/10 shadow-[0_0_25px_rgba(212,175,55,0.25)]"
-              loading="lazy"
-            />
+          <h1 className="font-epic font-bold text-[40px] md:text-[64px] lg:text-[76px] leading-[1.05] tracking-wide max-w-4xl">
+            <span className="block bg-gradient-to-r from-[var(--gold-bright)] via-[var(--gold)] to-[var(--gold-bright)] bg-clip-text text-transparent">
+              Risveglia Ciò che Sei
+            </span>
+          </h1>
+          <p className="mt-5 text-[var(--ivory)]/85 text-lg max-w-xl">
+            Antiche Sapienze, ricerca storica, pratica quotidiana — e ora anche musica. Scorri per attraversare il Codice.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <a href="#libri" className="btn btn-gold btn-lg rounded-lg">Scopri i libri</a>
+            <a href="#musica" className="btn btn-outline btn-lg rounded-lg">Ascolta la musica</a>
           </div>
-
-          {/* Testo biografia */}
-          <div className="text-center md:text-left max-w-2xl">
-            <h2 className="text-2xl md:text-3xl font-bold text-gold">Umberto Portaro</h2>
-            <p className="text-white/80 mt-4 text-base md:text-lg leading-relaxed">
-              Imprenditore digitale, narratore e ricercatore indipendente, unisce il pensiero strategico alla conoscenza profonda delle leggi universali.
-              Dopo anni di ricerca interiore e di crescita professionale, attraversando il cammino che lo ha portato da semplice impiegato a guidare la propria realtà,
-              trasforma la sua visione in un progetto di consapevolezza globale: <strong>Codice dell'Essere</strong>.
-            </p>
-
-            <p className="text-white/80 mt-4 text-base md:text-lg leading-relaxed">
-              Creatore della filosofia che porta lo stesso nome, Umberto integra <strong>scienza</strong>, <strong>ermetismo</strong> e <strong>crescita personale </strong>
-              in un linguaggio moderno, capace di rendere accessibili concetti millenari. Le sue opere non sono semplici libri, ma percorsi iniziatici:
-              viaggi che uniscono mito e realtà, storia e spirito, razionalità e intuizione.
-            </p>
-
-            <p className="text-white/80 mt-4 text-base md:text-lg leading-relaxed">
-              Cresciuto con la consapevolezza di percepire ciò che molti non vedono, ha esplorato fin da giovane le <strong>filosofie orientali</strong>,
-              l'<strong>ermetismo</strong> e le teorie sugli <strong>antichi astronauti</strong>, trovando nell'unione tra conoscenza ed esperienza diretta
-              la chiave dell'evoluzione umana. Con la collana <strong>Codice Anunnaki</strong> accompagna il lettore dalle origini della Creazione dell'Uomo
-              alle verità celate delle civiltà scomparse, restituendo una visione coraggiosa e completa delle nostre radici.
-            </p>
-
-            <p className="text-white/80 mt-4 text-base md:text-lg leading-relaxed">
-              Ogni parola che scrive è un intreccio di simboli e rivelazioni, un invito a risvegliare la coscienza e a riconoscoscere il potere creativo dell'anima.
-              Per lui la conoscenza non è mai fine a sé stessa: è la più grande forma di libertà, l'atto supremo con cui l'uomo può trascendere i propri limiti
-              e ricordare ciò che è sempre stato.
-            </p>
-
-            <p className="text-white/90 mt-4 text-base md:text-lg leading-relaxed italic">
-              <strong className="text-gold">Codice dell'Essere</strong> non è una religione, ma un linguaggio universale: una chiamata per chi è pronto a oltrepassare
-              il velo dell'oblio e riscoprire il proprio potenziale infinito.
-            </p>
-
-            <div className="mt-6">
-              <a href="#contatti" className="btn btn-outline btn-sm rounded-xl">Contattalo</a>
-            </div>
-          </div>
+          <p className="eyebrow mt-14 animate-pulse">↓ scorri per entrare</p>
         </div>
       </section>
 
       {/* MISSIONE */}
-      <Section
-        id="missione"
-        title="Missione"
-        subtitle="Una via moderna all'Ermetismo: studio, esperienza, applicazione."
-      >
-        <div className="grid sm:grid-cols-3 gap-6">
-          <Card title="Divulgatore" body="Video, conferenze e workshop. Profondo, chiaro, pratico." />
-          <Card title="Scrittore" body="Collane: Codice Anunnaki, Limitless, Viaggi Astrali e altro." />
-          <Card title="Editore" body="Editing, impaginazione, KDP/Ingram, strategia e promozione etica." />
-        </div>
-      </Section>
+      <ChapterAltar id="missione" number="I" title="Missione" align="right">
+        <img src={IMAGES.authorPortrait} alt="Umberto Portaro" className="w-40 md:w-48 rounded-xl object-cover aspect-[4/5] border border-[var(--gold)]/25 float-left mr-5 mb-3 shadow-[0_0_40px_rgba(201,162,74,0.15)]" />
+        <h2 className="font-display text-2xl md:text-3xl font-bold text-[var(--gold-bright)] mb-3">Umberto Portaro</h2>
+        <p className="text-[var(--ivory)]/80 leading-relaxed">
+          Imprenditore digitale, narratore e ricercatore indipendente, unisce il pensiero strategico alla conoscenza
+          profonda delle leggi universali. Creatore della filosofia <strong>Codice dell'Essere</strong>, integra
+          scienza, ermetismo e crescita personale in un linguaggio moderno. Da poco, quella stessa ricerca è
+          diventata anche <strong>musica</strong>: un modo diverso di dire le stesse verità.
+        </p>
+      </ChapterAltar>
 
       {/* LIBRI */}
-      <Section id="libri" title="Libri" subtitle="Serie e titoli disponibili ora e in arrivo.">
-        {/* Bloccone 1 – I Libri di Codice dell'Essere */}
-        <div className="mb-8">
-          <h3 className="text-xl md:text-2xl font-semibold">I Libri di Codice dell'Essere</h3>
-          <p className="text-white/80 text-sm md:text-base mt-2 max-w-3xl">
-            Le opere scritte direttamente da Umberto Portaro: percorsi iniziatici che uniscono mito, ricerca storica,
-            ermetismo e pratica quotidiana. Ogni libro è un tassello del Codice.
-          </p>
-        </div>
+      <ChapterAltar id="libri" number="II" title="Libri" subtitle="Le opere del Codice dell'Essere — scorri per sfogliare." align="left" wide>
+        <Carousel>
+          <div className="carousel-card w-40 sm:w-48"><BookTile img="/cover-anunnaki.png" title="Codice Anunnaki — Vol. Ø" href={LINKS.anunnaki0} /></div>
+          <div className="carousel-card w-40 sm:w-48"><BookTile img="/cover-anunnaki-1.png" title="Codice Anunnaki — Vol. I — Gli Dei del Cielo e della Terra" href={LINKS.anunnaki1} /></div>
+          <div className="carousel-card w-40 sm:w-48"><BookTile img="/cover-kybalion.png" title="Il Kybalion" href={LINKS.kybalion} /></div>
+          <div className="carousel-card w-40 sm:w-48"><BookTile img="/cover-limitless.png" title="Limitless" href={LINKS.limitless} /></div>
+          <div className="carousel-card w-40 sm:w-48"><BookTile img="/cover-amore.png" title="L'amore che ti riporta a Te" href={LINKS.amore} badge="Nuova uscita" /></div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 mb-12">
-          <Book
-            img="/cover-anunnaki-alt.png"
-            title="Codice Anunnaki: La Creazione dell'Uomo (Vol. Ø)"
-            subtitle="L'origine dimenticata dell'essere umano e il segreto della sua scintilla divina."
-            href={LINKS.anunnaki0}
-          />
-          <Book
-            img="/cover-anunnaki-vol1p1.png"
-            title="Codice Anunnaki: Gli Dèi del Cielo e della Terra (Vol. I • Parte I)"
-            subtitle="Le forze che plasmarono il mondo stanno tornando a risvegliare la memoria del cielo."
-            href={LINKS.anunnaki1}
-          />
-          <Book
-            img="/cover-kybalion.png"
-            title="Il Kybalion - Codice dell'Essere"
-            subtitle="Il campo, l'intenzione, la legge, la mente, l'Essere. Le leggi antiche riattivate dentro l'uomo moderno."
-            href={LINKS.kybalion}
-            badge="Nuova uscita"
-          />
-          <Book
-            img="/cover-limitless2.png"
-            title="Limitless - Codice dell'Essere"
-            subtitle="La mente come strumento sacro. La volontà come arte della manifestazione."
-            href={LINKS.limitless}
-          />
-          <Book
-            img="/cover-amore.png"
-            title="L'amore che ti riporta a Te"
-            subtitle="Ogni relazione è uno specchio. Ogni ferita, una mappa. Un viaggio verso il sé attraverso il prisma dell'amore."
-            href={LINKS.amore}
-            badge="Nuova uscita"
-          />
-        </div>
+          <div className="carousel-card w-28 sm:w-32">
+            <div className="h-full min-h-[14rem] rounded-xl border border-[var(--gold)]/25 bg-white/5 flex flex-col items-center justify-center text-center px-2 py-4 gap-2">
+              <span className="text-2xl text-[var(--gold-bright)]">→</span>
+              <p className="eyebrow leading-snug">Altre Voci<br/>del Codice</p>
+            </div>
+          </div>
+          <div className="carousel-card w-40 sm:w-48"><BookTile img="/cover-the-path-of-destiny.png" title="I Sentieri del Destino" href={LINKS.pathOfDestiny} badge="Autore ospite" /></div>
+        </Carousel>
+      </ChapterAltar>
 
-        {/* Bloccone 2 – Altre Voci del Codice */}
-        <div className="mb-4">
-          <h3 className="text-xl md:text-2xl font-semibold">Altre Voci del Codice</h3>
-          <p className="text-white/80 text-sm md:text-base mt-2 max-w-3xl">
-            Opere editoriali di altri autori che ho scelto di accompagnare perché risuonano con la visione del Codice dell'Essere:
-            memoria, ferite, destino, rinascita. Non sono semplici titoli in catalogo, ma voci che hanno trasformato il loro inferno in parola.
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-6">
-          <Book
-            img="/cover-the-path-of-destiny.png"
-            title="I Sentieri del Destino"
-            subtitle="La storia vera di una figlia che ricompone il destino del padre tra Sicilia e Inghilterra, tra silenzi, segreti e ferite mai guarite."
-            href={LINKS.pathOfDestiny}
-            badge="Autore ospite"
-          />
-          <Book
-            img="/placeholder-altre-voci.png"
-            title="Nuove opere in arrivo"
-            subtitle="Altre voci del Codice stanno per aggiungersi a questo spazio: storie vere, testimonianze, romanzi e saggi che parlano la stessa lingua del risveglio."
-            href=""
-            badge="Prossimamente"
-          />
-        </div>
-      </Section>
+      {/* MUSICA */}
+      <ChapterAltar id="musica" number="III" title="Musica" subtitle="Le stesse verità, in un'altra lingua: il suono — scorri tra i brani." align="right" wide>
+        <Carousel>
+          {TRACKS.map((t, i) => (
+            <div key={t.title} className="carousel-card w-72 sm:w-80">
+              <TrackCard
+                track={t}
+                isPlaying={playingIndex === i}
+                onToggle={() => toggle(i)}
+                bars={bars}
+                opening={i === 0}
+              />
+            </div>
+          ))}
+        </Carousel>
+      </ChapterAltar>
 
       {/* VIDEO */}
-      <Section id="video" title="Video" subtitle="Estratti da YouTube e TikTok.">
-        <div className="grid md:grid-cols-3 gap-6">
-          <VideoEmbed title="Legge del Mentalismo" url={VIDEOS.mentalismo} />
-          <VideoEmbed title="Legge della Corrispondenza" url={VIDEOS.corrispondenza} />
-          <VideoEmbed title="Reel TikTok — Codice Anunnaki" url={VIDEOS.tiktokAnunnaki} />
+      <ChapterAltar id="video" number="IV" title="Video" subtitle="Il reel del momento." align="left">
+        <div className="max-w-xs mx-auto md:mx-0">
+          <VideoEmbed title="Reel — Codice Anunnaki" url={VIDEOS.tiktokAnunnaki} />
         </div>
-      </Section>
+      </ChapterAltar>
 
       {/* SERVIZI */}
-      <Section
-        id="servizi"
-        title="Servizi Editoriali"
-        subtitle="Supporto completo per autori e progetti affini."
-      >
-        <div className="grid md:grid-cols-3 gap-6">
-          <Card title="Coaching Autore" body="Dall'idea al manoscritto." />
-          <Card title="Editing & Impaginazione" body="Revisione e impaginati per stampa e digitale." />
-          <Card title="Pubblicazione (KDP/Ingram)" body="ISBN, formati, prezzo, canali." />
-          <Card title="Marketing & ADS" body="Funnel, creatività, Amazon Ads e social." />
-          <Card title="Ghostwriting" body="Scrittura nel tuo stile, con fonti." />
-          <Card title="Traduzioni" body="IT ⇄ EN/ES/FR/DE con adattamento editoriale." />
+      <ChapterAltar id="servizi" number="V" title="Servizi Editoriali" subtitle="Supporto completo per autori e progetti affini." align="right" wide>
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+          {[
+            ["Coaching Autore", "Dall'idea al manoscritto."],
+            ["Editing & Impaginazione", "Revisione e impaginati per stampa e digitale."],
+            ["Pubblicazione (KDP/Ingram)", "ISBN, formati, prezzo, canali."],
+            ["Marketing & ADS", "Funnel, creatività, Amazon Ads e social."],
+            ["Ghostwriting", "Scrittura nel tuo stile, con fonti."],
+            ["Traduzioni", "IT ⇄ EN/ES/FR/DE con adattamento editoriale."],
+          ].map(([t, b]) => (
+            <Tilt key={t} className="glass rounded-xl p-5">
+              <h3 className="font-display font-semibold">{t}</h3>
+              <p className="text-[var(--ivory)]/70 text-sm mt-2">{b}</p>
+            </Tilt>
+          ))}
         </div>
-      </Section>
-
-      {/* NEWSLETTER */}
-      <section className="mx-auto max-w-7xl px-4 py-16 md:py-24">
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-6 md:p-10">
-          <div className="md:flex items-center justify-between gap-8">
-            <div className="max-w-2xl">
-              <h3 className="text-xl md:text-2xl font-bold">Newsletter del Risveglio</h3>
-              <p className="text-white/80 mt-2">
-                Aggiornamenti su libri, eventi e contenuti esclusivi. Zero spam.
-              </p>
-            </div>
-            <form
-              className="mt-6 md:mt-0 w-full md:w-[28rem]"
-              onSubmit={(e) => e.preventDefault()}
-            >
-              <div className="flex gap-3">
-                <input
-                  type="email"
-                  required
-                  placeholder="La tua email"
-                  className="flex-1 rounded-xl bg-black/40 border border-white/15 px-4 py-3 outline-none focus:ring-2 focus:ring-[#d4af37]/50"
-                />
-                <button className="btn btn-gold rounded-xl">Iscrivimi</button>
-              </div>
-              <p className="text-xs text-white/60 mt-2">
-                Iscrivendoti accetti l'informativa privacy.
-              </p>
-            </form>
-          </div>
-        </div>
-      </section>
+      </ChapterAltar>
 
       {/* CONTATTI */}
-      <section id="contatti" className="mx-auto max-w-7xl px-4 py-16 md:py-24">
-        <div className="grid md:grid-cols-2 gap-10">
-          <div>
-            <h2 className="text-2xl md:text-3xl font-bold">Contatti</h2>
-            <p className="text-white/80 mt-2">
-              Collaborazioni, interviste, eventi o pubblicazioni.
-            </p>
-            <div className="mt-6 space-y-3 text-white/90">
-              <p>
-                Email:{" "}
-                <a
-                  className="underline underline-offset-4 hover:text-gold"
-                  href="mailto:info@codicedellessere.it"
-                >
-                  info@codicedellessere.it
-                </a>
-              </p>
-              <p className="flex items-center gap-3">
-                <span>Social:</span>
+      <section id="contatti" className="relative z-10 min-h-screen flex items-center py-24">
+        <div className="mx-auto max-w-3xl px-4 w-full">
+          <Reveal>
+            <div className="glass rounded-2xl p-8 md:p-12 text-center">
+              <p className="eyebrow mb-2">Capitolo VI — Contatti</p>
+              <h2 className="font-display text-2xl md:text-3xl font-bold mb-4">Sei arrivato al cuore del Codice</h2>
+              <p className="text-[var(--ivory)]/80 mb-8">Collaborazioni, interviste, eventi, pubblicazioni o musica.</p>
+              <form className="grid sm:grid-cols-2 gap-4 text-left" onSubmit={(e) => e.preventDefault()}>
+                <input type="text" placeholder="Il tuo nome" className="px-4 py-3" />
+                <input type="email" required placeholder="you@example.com" className="px-4 py-3" />
+                <textarea rows={4} placeholder="Raccontami del tuo progetto" className="sm:col-span-2 px-4 py-3 resize-none" />
+                <button className="sm:col-span-2 btn btn-gold rounded-lg">Invia</button>
+              </form>
+              <div className="mt-8 flex flex-col items-center gap-3">
+                <a href="mailto:info@codicedellessere.it" className="underline hover:text-[var(--gold-bright)]">info@codicedellessere.it</a>
                 <SocialBar />
-              </p>
-            </div>
-          </div>
-
-          <form
-            className="rounded-2xl border border-white/10 bg-black/20 backdrop-blur-sm p-6 shadow-[0_0_30px_rgba(212,175,55,0.1)]"
-            onSubmit={(e) => e.preventDefault()}
-          >
-            <div className="grid sm:grid-cols-2 gap-5">
-              <div className="flex flex-col">
-                <label className="text-sm text-white/80 mb-1">Nome</label>
-                <input
-                  type="text"
-                  placeholder="Il tuo nome"
-                  className="rounded-xl bg-white/5 border border-white/15 px-4 py-3 text-white/90 placeholder-white/40 outline-none focus:ring-2 focus:ring-[#d4af37]/60 transition"
-                />
-              </div>
-
-              <div className="flex flex-col">
-                <label className="text-sm text-white/80 mb-1">Email</label>
-                <input
-                  type="email"
-                  required
-                  placeholder="you@example.com"
-                  className="rounded-xl bg-white/5 border border-white/15 px-4 py-3 text-white/90 placeholder-white/40 outline-none focus:ring-2 focus:ring-[#d4af37]/60 transition"
-                />
-              </div>
-
-              <div className="sm:col-span-2 flex flex-col">
-                <label className="text-sm text-white/80 mb-1">Messaggio</label>
-                <textarea
-                  rows={5}
-                  placeholder="Raccontami del tuo progetto"
-                  className="rounded-xl bg-white/5 border border-white/15 px-4 py-3 text-white/90 placeholder-white/40 outline-none focus:ring-2 focus:ring-[#d4af37]/60 transition resize-none"
-                />
               </div>
             </div>
-
-            <button className="mt-6 w-full btn btn-gold rounded-xl">Invia</button>
-          </form>
+          </Reveal>
         </div>
       </section>
 
-      <footer className="border-t border-white/10">
-        <div className="mx-auto max-w-7xl px-4 py-10 text-sm text-white/70">
-          <div className="flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-6 justify-between">
-            <div className="mb-2 md:mb-0">
-              <SocialBar size="sm" />
-            </div>
-
-            <p>© {new Date().getFullYear()} Codice dell'Essere • Tutti i diritti riservati</p>
-
-            <div className="flex items-center gap-6">
-              <a href="#" className="hover:text-gold">Privacy</a>
-              <a href="#" className="hover:text-gold">Cookie</a>
-              <a href="#" className="hover:text-gold">Contatti</a>
-            </div>
-          </div>
+      <footer className="relative z-10 border-t border-[var(--gold)]/15 bg-black/40">
+        <div className="mx-auto max-w-7xl px-4 py-8 text-sm text-[var(--ivory)]/60 flex flex-col md:flex-row items-center justify-between gap-3">
+          <p>© {new Date().getFullYear()} Codice dell'Essere</p>
+          <div className="flex gap-6"><a href="#" className="hover:text-[var(--gold-bright)]">Privacy</a><a href="#" className="hover:text-[var(--gold-bright)]">Cookie</a></div>
         </div>
       </footer>
     </div>
@@ -653,229 +845,109 @@ export default function App() {
 }
 
 /* ===========================
-   UI HELPERS
+   ALTARE DI CAPITOLO — pannello di vetro fluttuante, allineato ai lati del corridoio
 =========================== */
-function Nav({ href, children }: { href: string; children: React.ReactNode }) {
-  return <a href={href} className="hover:text-gold transition-colors">{children}</a>;
-}
-function Badge({ children }: { children: React.ReactNode }) {
+function ChapterAltar({
+  id, number, title, subtitle, align = "left", wide = false, children,
+}: { id: string; number: string; title: string; subtitle?: string; align?: "left" | "right"; wide?: boolean; children: React.ReactNode }) {
   return (
-    <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs tracking-wide">
-      {children}
-    </span>
-  );
-}
-function Section({
-  id,
-  title,
-  subtitle,
-  children,
-}: {
-  id?: string;
-  title: string;
-  subtitle?: string;
-  children: React.ReactNode;
-}) {
-  const headingRef = useRef<HTMLDivElement | null>(null);
-  const [inView, setInView] = useState(false);
-
-  useEffect(() => {
-    if (!headingRef.current) return;
-    const el = headingRef.current;
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setInView(true);
-          setTimeout(() => setInView(false), 1000);
-        }
-      },
-      { rootMargin: "-10% 0px -60% 0px", threshold: 0.2 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-
-  return (
-    <section id={id} className="mx-auto max-w-7xl px-4 py-16 md:py-24">
-      <div
-        ref={headingRef}
-        className={`section-heading flex items-end justify-between gap-4 mb-8 ${inView ? "inview" : ""}`}
-      >
-        <div>
-          <h2 className="text-2xl md:text-3xl font-bold">{title}</h2>
-          {subtitle && <p className="text-white/80 mt-2">{subtitle}</p>}
+    <section id={id} className="relative z-10 min-h-screen flex items-center py-20">
+      <div className="mx-auto max-w-7xl px-4 w-full">
+        <div className={`flex ${align === "right" ? "justify-end" : "justify-start"}`}>
+          <Reveal className={`glass rounded-2xl p-6 md:p-10 ${wide ? "w-full md:w-[42rem] lg:w-[52rem]" : "w-full md:w-[32rem]"}`}>
+            <div className="chapter-heading mb-5">
+              <p className="eyebrow">Capitolo {number} — {title}</p>
+              <h2 className="font-display text-2xl md:text-3xl font-bold mt-1">{title}</h2>
+              {subtitle && <p className="text-[var(--ivory)]/75 mt-2">{subtitle}</p>}
+            </div>
+            {children}
+          </Reveal>
         </div>
       </div>
-      {children}
     </section>
   );
 }
-function Card({ title, body }: { title: string; body: string }) {
+
+function TrackCard({
+  track, isPlaying, onToggle, bars, opening,
+}: { track: { title: string; subtitle: string; cover: string; audio: string; spotify?: string }; isPlaying: boolean; onToggle: () => void; bars: number[]; opening?: boolean }) {
+  const hasAudio = Boolean(track.audio);
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-      <h3 className="text-lg font-semibold">{title}</h3>
-      <p className="text-white/80 mt-2 text-sm leading-relaxed">{body}</p>
-    </div>
+    <Tilt className="rounded-xl overflow-hidden border border-[var(--gold)]/25 bg-black/40 h-full">
+      <div className="relative aspect-square bg-black/60">
+        <img src={track.cover} alt={track.title} className="absolute inset-0 w-full h-full object-cover object-top opacity-90" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
+        {opening && <span className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-[var(--gold)]/85 text-black text-[9px] font-semibold uppercase">Brano d'apertura</span>}
+        <div className="absolute bottom-3 left-3 right-3">
+          <h3 className="font-display text-base font-semibold leading-snug">{track.title}</h3>
+          {track.subtitle && <p className="text-[var(--ivory)]/75 text-xs mt-1 line-clamp-2">{track.subtitle}</p>}
+
+          {hasAudio ? (
+            <div className="mt-3 flex items-center gap-3">
+              <button onClick={onToggle} className="btn btn-gold btn-sm rounded-lg w-9 h-9 !p-0 shrink-0">{isPlaying ? "❚❚" : "▶"}</button>
+              <div className="wave flex-1">{(isPlaying ? bars : bars.map(() => 6)).map((h, i) => <i key={i} style={{ height: `${h}px` }} />)}</div>
+            </div>
+          ) : (
+            <a href={track.spotify} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-2 btn btn-gold btn-sm rounded-lg">
+              <span aria-hidden>♫</span> Ascolta su Spotify
+            </a>
+          )}
+        </div>
+      </div>
+    </Tilt>
   );
 }
 
-function Book({
-  img,
-  title,
-  subtitle,
-  href,
-  badge,
-}: {
-  img: string;
-  title: string;
-  subtitle: string;
-  href: string;
-  badge?: string;
-}) {
-  const isAvailable = Boolean(href);
-
+function BookTile({ img, title, href, badge }: { img: string; title: string; href: string; badge?: string }) {
   return (
-    <article className="rounded-2xl border border-white/10 bg-white/5 overflow-hidden transition-transform duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(212,175,55,0.2)]">
-      {/* AREA COPERTINA */}
-      <div className="relative w-full bg-black/40 flex items-center justify-center aspect-[3/4]">
-        {badge && (
-          <span className="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full bg-amber-500/80 text-black text-[10px] font-semibold tracking-wide uppercase">
-            {badge}
-          </span>
-        )}
-
-        {img && (
-          <img
-            src={img}
-            alt={title}
-            className="max-h-full max-w-full object-contain rounded-lg"
-            loading="lazy"
-          />
-        )}
+    <Tilt className="rounded-xl overflow-hidden border border-[var(--gold)]/20 bg-black/40">
+      <div className="relative aspect-[3/4]">
+        {badge && <span className="absolute top-2 left-2 z-10 px-2 py-0.5 rounded-full bg-[var(--gold)]/85 text-black text-[9px] font-semibold uppercase">{badge}</span>}
+        <img src={img} alt={title} className="w-full h-full object-cover" loading="lazy" />
       </div>
-
-      {/* TESTO */}
-      <div className="p-6">
-        <h3 className="font-semibold text-lg">{title}</h3>
-        <p className="text-white/80 text-sm mt-2">{subtitle}</p>
-
-        {isAvailable ? (
-          <a
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-4 inline-flex items-center btn btn-gold rounded-xl"
-          >
-            Acquista
-          </a>
-        ) : (
-          <span className="mt-4 inline-flex items-center bg-yellow-600/30 text-yellow-400 px-4 py-2 rounded-lg text-sm font-semibold">
-            In arrivo
-          </span>
-        )}
+      <div className="p-3">
+        <p className="text-sm font-semibold leading-snug">{title}</p>
+        <a href={href} target="_blank" rel="noopener noreferrer" className="mt-2 inline-block btn btn-gold btn-sm rounded-md text-xs">Acquista</a>
       </div>
-    </article>
+    </Tilt>
   );
 }
 
-/* ===========================
-   VIDEO EMBED
-=========================== */
 function VideoEmbed({ title, url }: { title: string; url: string }) {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-
   const { kind, embedUrl, tiktokId } = useMemo(() => {
     const u = (url || "").trim();
-    if (!u) return { kind: "empty", embedUrl: "", tiktokId: "" };
-
     if (u.includes("youtube.com") || u.includes("youtu.be")) {
       let id = "";
       if (u.includes("youtu.be/")) id = u.split("youtu.be/")[1].split(/[?&]/)[0];
       else if (u.includes("watch?v=")) id = u.split("watch?v=")[1].split("&")[0];
-      else if (u.includes("/shorts/")) id = u.split("/shorts/")[1].split(/[?&]/)[0];
       return { kind: "youtube", embedUrl: `https://www.youtube.com/embed/${id}`, tiktokId: "" };
     }
-
-    if (u.includes("tiktok.com")) {
-      const id = (u.split("/video/")[1] || "").split("?")[0];
-      return { kind: "tiktok", embedUrl: u, tiktokId: id };
-    }
-
-    return { kind: "unknown", embedUrl: u, tiktokId: "" };
+    if (u.includes("tiktok.com")) return { kind: "tiktok", embedUrl: u, tiktokId: (u.split("/video/")[1] || "").split("?")[0] };
+    return { kind: "unknown", embedUrl: "", tiktokId: "" };
   }, [url]);
 
   useEffect(() => {
     if (kind !== "tiktok") return;
-    const script = document.createElement("script");
-    script.src = "https://www.tiktok.com/embed.js";
-    script.async = true;
-    document.body.appendChild(script);
-  }, [kind, embedUrl]);
+    const s = document.createElement("script");
+    s.src = "https://www.tiktok.com/embed.js";
+    s.async = true;
+    document.body.appendChild(s);
+  }, [kind]);
 
   return (
-    <div className="rounded-2xl border border-white/10 overflow-hidden bg-white/5 transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(212,175,55,0.25)] flex flex-col items-center">
-      <div className="w-full text-center py-3 bg-white/5 border-b border-white/10">
-        <h3 className="text-lg font-semibold tracking-wide text-gold drop-shadow-[0_0_4px_rgba(212,175,55,0.4)]">
-          {title}
-        </h3>
+    <Tilt className="rounded-xl overflow-hidden border border-[var(--gold)]/20 bg-black/50">
+      <div className="text-center py-2 border-b border-[var(--gold)]/15">
+        <h3 className="font-display text-sm font-semibold text-[var(--gold-bright)]">{title}</h3>
       </div>
-
-      <div
-        className="w-full bg-black/40 flex items-center justify-center"
-        style={{
-          height: "540px",
-          aspectRatio: kind === "youtube" ? "21/9" : kind === "tiktok" ? "9/16" : undefined,
-        }}
-      >
-        {kind === "youtube" && embedUrl && (
-          <iframe
-            src={embedUrl}
-            title={title}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
-            className="w-full h-full"
-          />
+      <div className="bg-black/60 flex items-center justify-center" style={{ height: 260 }}>
+        {kind === "youtube" && <iframe src={embedUrl} title={title} allow="accelerometer; autoplay; encrypted-media; picture-in-picture" allowFullScreen className="w-full h-full" />}
+        {kind === "tiktok" && (
+          <blockquote className="tiktok-embed" cite={embedUrl} data-video-id={tiktokId} style={{ maxWidth: 240, width: "100%", margin: 0, height: "100%" }}>
+            <section></section>
+          </blockquote>
         )}
-
-        {kind === "tiktok" && embedUrl && (
-          <div ref={containerRef} className="flex items-center justify-center w-full h-full">
-            <blockquote
-              className="tiktok-embed"
-              cite={embedUrl}
-              data-video-id={tiktokId}
-              style={{ maxWidth: "360px", minWidth: "280px", width: "100%", margin: 0, height: "100%" }}
-            >
-              <section></section>
-            </blockquote>
-          </div>
-        )}
-
-        {(kind === "empty" || !embedUrl) && (
-          <div className="w-full h-full flex items-center justify-center text-white/60 text-sm p-4">
-            Video in arrivo
-          </div>
-        )}
+        {kind === "unknown" && <div className="text-[var(--ivory)]/50 text-sm">Video in arrivo</div>}
       </div>
-    </div>
-  );
-}
-
-/* ===========================
-   MISC
-=========================== */
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <div>
-      <label className="text-sm text-white/80">{label}</label>
-      {children}
-    </div>
-  );
-}
-function Aura() {
-  return (
-    <div className="absolute inset-0 opacity-30" aria-hidden>
-      <div className="absolute -top-40 -left-40 h-96 w-96 rounded-full bg-[#0a3320] blur-3xl" />
-      <div className="absolute -bottom-40 -right-40 h-[28rem] w-[28rem] rounded-full bg-[#d4af37] blur-3xl" />
-    </div>
+    </Tilt>
   );
 }
