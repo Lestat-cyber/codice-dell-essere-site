@@ -33,10 +33,10 @@ const TRACKS = [
     subtitle: "Il ritorno a te stesso, in musica.",
     cover: "/music/cover-return-within.png",
     audio: "/audio/return-within.mp3", // TODO: carica il file reale
-    spotify: "",
+    spotify: "https://open.spotify.com/track/1ckeiZhpJdV44HLnO4hp8M?si=0pOljwHLS_qyK64s0sv3sg&utm_source=copy-link",
   },
   {
-    title: "Ritorno al Centro (Return Within Italian Version)",
+    title: "Ritorno al Centro",
     subtitle: "La versione italiana di Return Within.",
     cover: "/music/cover-ritorno-al-centro.jpg", // TODO
     audio: "",
@@ -156,6 +156,8 @@ function Corridor3D() {
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(width, height);
+    renderer.domElement.style.transition = "opacity 1.1s ease";
+    renderer.domElement.style.opacity = "0.14";
     mount.appendChild(renderer.domElement);
 
     const gold = new THREE.Color("#c9a24a");
@@ -357,7 +359,10 @@ function Corridor3D() {
       return max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
     };
     const onScroll = () => {
-      targetZ = 4 - getScrollFrac() * totalDepth;
+      const frac = getScrollFrac();
+      targetZ = 4 - frac * totalDepth;
+      const revealed = Math.min(1, frac / 0.07);
+      renderer.domElement.style.opacity = String(0.14 + revealed * 0.86);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
@@ -843,10 +848,17 @@ function TrackCard({
           {track.subtitle && <p className="text-[var(--ivory)]/75 text-xs mt-1 line-clamp-2">{track.subtitle}</p>}
 
           {hasAudio ? (
-            <div className="mt-3 flex items-center gap-3">
-              <button onClick={onToggle} className="btn btn-gold btn-sm rounded-lg w-9 h-9 !p-0 shrink-0">{isPlaying ? "❚❚" : "▶"}</button>
-              <div className="wave flex-1">{(isPlaying ? bars : bars.map(() => 6)).map((h, i) => <i key={i} style={{ height: `${h}px` }} />)}</div>
-            </div>
+            <>
+              <div className="mt-3 flex items-center gap-3">
+                <button onClick={onToggle} className="btn btn-gold btn-sm rounded-lg w-9 h-9 !p-0 shrink-0">{isPlaying ? "❚❚" : "▶"}</button>
+                <div className="wave flex-1">{(isPlaying ? bars : bars.map(() => 6)).map((h, i) => <i key={i} style={{ height: `${h}px` }} />)}</div>
+              </div>
+              {track.spotify && (
+                <a href={track.spotify} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex items-center gap-1.5 text-xs text-[var(--gold-bright)]/85 hover:text-[var(--gold-bright)] underline underline-offset-2">
+                  <span aria-hidden>♫</span> Ascolta anche su Spotify
+                </a>
+              )}
+            </>
           ) : (
             <a href={track.spotify} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-2 btn btn-gold btn-sm rounded-lg">
               <span aria-hidden>♫</span> Ascolta su Spotify
