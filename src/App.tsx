@@ -26,7 +26,7 @@ const IMAGES = {
   authorPortrait: "/autore-ritratto.png",
   musicaBanner: "/musica-hero-chitarra.png",
 };
-// 🎵 I tuoi brani — "Return Within" si ascolta sul sito, gli altri due rimandano a Spotify (TODO: link reali)
+// 🎵 I tuoi brani — "Return Within" si ascolta sul sito, gli altri due rimandano a Spotify
 const TRACKS = [
   {
     title: "Return Within",
@@ -40,14 +40,14 @@ const TRACKS = [
     subtitle: "La versione italiana di Return Within.",
     cover: "/music/cover-ritorno-al-centro.jpg", // TODO
     audio: "",
-    spotify: "#", // TODO: link reale del brano su Spotify
+    spotify: "https://open.spotify.com/track/2MVcTqtyqnmTrejALk6MyU?si=oK1wIkg5RlexkF01WClfxA&utm_source=copy-link",
   },
   {
     title: "Il Tempo Presenta il Conto",
     subtitle: "",
     cover: "/music/cover-il-tempo-presenta-il-conto.jpg", // TODO
     audio: "",
-    spotify: "#", // TODO: link reale del brano su Spotify
+    spotify: "https://open.spotify.com/track/3snL7wGRqL5A55rjD9XmmE?si=sDq6BwH9STeuahrOd8FHmg&utm_source=copy-link&sci=spotify%3Acard-config%3A3IsfctUS9Wdmf5jNE72Yg4",
   },
 ];
 const ENTRY_TRACK = TRACKS[0];
